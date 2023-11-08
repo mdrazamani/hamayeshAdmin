@@ -5,7 +5,7 @@ import {UsersListWrapper} from './users-list/UsersList'
 const usersBreadcrumbs: Array<PageLink> = [
   {
     title: 'مدیریت تگ ها',
-    path: '/apps/newstag-management/newstags',
+    path: '/news/newstag-management/newstags',
     isSeparator: false,
     isActive: false,
   },
@@ -31,7 +31,7 @@ const NewsTagPage = () => {
           }
         />
       </Route>
-      <Route index element={<Navigate to='/apps/newstag-management/newstags' />} />
+      <Route index element={<Navigate to='/news/newstag-management/newstags' />} />
     </Routes>
   )
 }

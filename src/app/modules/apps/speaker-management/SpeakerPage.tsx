@@ -5,7 +5,7 @@ import {UsersListWrapper} from './users-list/UsersList'
 const usersBreadcrumbs: Array<PageLink> = [
   {
     title: 'مدیریت سخنرانان',
-    path: '/apps/speaker-management/speakers',
+    path: '/users/speaker-management/speakers',
     isSeparator: false,
     isActive: false,
   },

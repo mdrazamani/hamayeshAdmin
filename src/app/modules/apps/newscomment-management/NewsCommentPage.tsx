@@ -5,7 +5,7 @@ import {UsersListWrapper} from './users-list/UsersList'
 const usersBreadcrumbs: Array<PageLink> = [
   {
     title: 'مدیریت کامنت ها',
-    path: '/apps/newscomment-management/newscomments',
+    path: '/news/newscomment-management/newscomments',
     isSeparator: false,
     isActive: false,
   },
@@ -31,7 +31,7 @@ const NewsCommentPage = () => {
           }
         />
       </Route>
-      <Route index element={<Navigate to='/apps/newscomment-management/newscomments' />} />
+      <Route index element={<Navigate to='/news/newscomment-management/newscomments' />} />
     </Routes>
   )
 }

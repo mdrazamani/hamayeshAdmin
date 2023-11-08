@@ -47,34 +47,34 @@ const PrivateRoutes = () => {
         {/* Redirect to Dashboard after success login/registartion */}
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
-        <Route path='dashboard' element={<DashboardWrapper />} />
-        <Route path='builder' element={<BuilderPageWrapper />} />
-        <Route path='menu-test' element={<MenuTestPage />} />
+        {/* <Route path='dashboard' element={<DashboardWrapper />} /> */}
+        {/* <Route path='builder' element={<BuilderPageWrapper />} /> */}
+        {/* <Route path='menu-test' element={<MenuTestPage />} /> */}
         {/* Lazy Modules */}
-        <Route
+        {/* <Route
           path='crafted/pages/profile/*'
           element={
             <SuspensedView>
               <ProfilePage />
             </SuspensedView>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path='crafted/pages/wizards/*'
           element={
             <SuspensedView>
               <WizardsPage />
             </SuspensedView>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path='crafted/widgets/*'
           element={
             <SuspensedView>
               <WidgetsPage />
             </SuspensedView>
           }
-        />
+        /> */}
         <Route
           path='crafted/account/*'
           element={
@@ -83,17 +83,17 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         />
-        <Route
+        {/* <Route
           path='apps/chat/*'
           element={
             <SuspensedView>
               <ChatPage />
             </SuspensedView>
           }
-        />
+        /> */}
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/user-management/*'
+            path='users/user-management/*'
             element={
               <SuspensedView>
                 <UsersPage />
@@ -103,7 +103,7 @@ const PrivateRoutes = () => {
         )}
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/supporter-management/*'
+            path='users/supporter-management/*'
             element={
               <SuspensedView>
                 <SupporterPage />
@@ -113,7 +113,7 @@ const PrivateRoutes = () => {
         )}
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/speaker-management/*'
+            path='users/speaker-management/*'
             element={
               <SuspensedView>
                 <SpeakerPage />
@@ -144,7 +144,7 @@ const PrivateRoutes = () => {
         )}
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/organizer-management/*'
+            path='users/organizer-management/*'
             element={
               <SuspensedView>
                 <OrganizerPage />
@@ -155,7 +155,7 @@ const PrivateRoutes = () => {
 
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/newstag-management/*'
+            path='news/newstag-management/*'
             element={
               <SuspensedView>
                 <NewsTagPage />
@@ -166,7 +166,7 @@ const PrivateRoutes = () => {
 
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/newscomment-management/*'
+            path='news/newscomment-management/*'
             element={
               <SuspensedView>
                 <NewsCommentPage />
@@ -176,7 +176,7 @@ const PrivateRoutes = () => {
         )}
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/newscategory-management/*'
+            path='news/newscategory-management/*'
             element={
               <SuspensedView>
                 <NewsCategoryPage />
@@ -186,7 +186,7 @@ const PrivateRoutes = () => {
         )}
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
-            path='apps/news-management/*'
+            path='news/news-management/*'
             element={
               <SuspensedView>
                 <NewsPage />
@@ -196,7 +196,7 @@ const PrivateRoutes = () => {
         )}
         {(currentUser?.role === 'admin' || currentUser?.role === 'scientific') && (
           <Route
-            path='apps/articlecategories-management/*'
+            path='articles/articlecategories-management/*'
             element={
               <SuspensedView>
                 <ArticleCategoriesPage />
@@ -219,7 +219,7 @@ const PrivateRoutes = () => {
           currentUser?.role === 'referee' ||
           currentUser?.role === 'scientific') && (
           <Route
-            path='apps/article-management/*'
+            path='articles/article-management/*'
             element={
               <SuspensedView>
                 <ArticlesPage />
@@ -229,7 +229,7 @@ const PrivateRoutes = () => {
         )}
         {currentUser?.role === 'admin' && (
           <Route
-            path='apps/secretariat-management/*'
+            path='users/secretariat-management/*'
             element={
               <SuspensedView>
                 <SecretariatsPage />

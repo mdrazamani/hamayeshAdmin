@@ -5,7 +5,7 @@ import {UsersListWrapper} from './users-list/UsersList'
 const usersBreadcrumbs: Array<PageLink> = [
   {
     title: 'مدیریت دسته بندی مقالات',
-    path: '/apps/articlecategories-management/articlecategories',
+    path: '/articles/articlecategories-management/articlecategories',
     isSeparator: false,
     isActive: false,
   },
@@ -33,7 +33,7 @@ const ArticleCategoriesPage = () => {
       </Route>
       <Route
         index
-        element={<Navigate to='/apps/articlecategories-management/articlecategories' />}
+        element={<Navigate to='/articles/articlecategories-management/articlecategories' />}
       />
     </Routes>
   )
