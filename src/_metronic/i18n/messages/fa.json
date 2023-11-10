@@ -223,5 +223,7 @@
   "hamayesh.ISCCODE": "کد iSC همایش",
   "hamayesh.html": "محتوا اصلی همایش",
   "hamayesh.summary": "خلاصه ای از همایش",
-  "hamayesh.address": "آدرس محل برگزاری"
+  "hamayesh.address": "آدرس محل برگزاری",
+  "AUTH.INPUT.ARTICLES": "آپلود مقاله",
+  "AUTH.INPUT.PRESENTAIONS": "آپلود فایل ارائه" 
 }

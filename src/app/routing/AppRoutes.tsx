@@ -13,6 +13,7 @@ import {Logout, AuthPage, useAuth} from '../modules/auth'
 import {App} from '../App'
 import {AuthLayout} from '../modules/auth/AuthLayout'
 import VerifyEmailWrapper from '../modules/auth/components/VerifyEmailWrapper'
+import {finder} from '../../_metronic/helpers/HomePageFinder'
 
 /**
  * Base URL of the website.
@@ -37,7 +38,7 @@ const AppRoutes: FC = () => {
           {currentUser ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />
-              <Route index element={<Navigate to='/dashboard' />} />
+              <Route index element={<Navigate to={finder(currentUser?.role)} />} />
             </>
           ) : (
             <>

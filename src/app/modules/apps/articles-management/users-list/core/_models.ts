@@ -27,20 +27,8 @@ export type User = {
   description?: string
   category?: any
   userId?: any
-  articleFiles?: [
-    {
-      title: string
-      mimetype: string
-      size: number
-    }
-  ]
-  presentationFiles?: [
-    {
-      title: string
-      mimetype: string
-      size: number
-    }
-  ]
+  articleFiles?: string[]
+  presentationFiles?: string[]
   status?: string
   arbitration?: {
     refereeId: string

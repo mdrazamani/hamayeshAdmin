@@ -2,9 +2,10 @@ import {MenuItem} from './MenuItem'
 import {MenuInnerWithSub} from './MenuInnerWithSub'
 import {MegaMenu} from './MegaMenu'
 import {useIntl} from 'react-intl'
+import {useAuth} from '../../../../app/modules/auth'
 
 export function MenuInner() {
-  const intl = useIntl()
+  const {currentUser} = useAuth()
   return (
     <>
       {/* <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
@@ -94,75 +95,91 @@ export function MenuInner() {
           <MenuItem to='/crafted/widgets/feeds' title='Feeds' hasBullet={true} />
         </MenuInnerWithSub>
       </MenuInnerWithSub> */}
+      {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+        <MenuInnerWithSub
+          title='کاربران'
+          to='/users'
+          menuPlacement='bottom-start'
+          menuTrigger='click'
+        >
+          <MenuItem icon='shield-tick' to='/users/user-management/users' title='مدیریت کاربران' />
+          <MenuItem
+            icon='shield-tick'
+            to='/users/supporter-management/supporters'
+            title='مدیریت حامیان'
+          />
+          <MenuItem
+            icon='shield-tick'
+            to='/users/speaker-management/speakers'
+            title='مدیریت سخنرانان'
+          />
+          <MenuItem
+            icon='shield-tick'
+            to='/users/secretariat-management/secretariats'
+            title='مدیریت دبیرخانه ها'
+          />
+          <MenuItem
+            icon='shield-tick'
+            to='/users/organizer-management/organizers'
+            title='مدیریت برگذار کننده ها'
+          />
+        </MenuInnerWithSub>
+      )}
+      {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+        <MenuInnerWithSub title='اخبار' to='/news' menuPlacement='bottom-start' menuTrigger='click'>
+          <MenuItem
+            icon='shield-tick'
+            to='/news/newstag-management/newstags'
+            title='مدیریت تگ های خبر'
+          />
+          <MenuItem
+            icon='shield-tick'
+            to='/news/newscomment-management/newscomments'
+            title='مدیریت کامنت های خبر'
+          />
+          <MenuItem
+            icon='shield-tick'
+            to='/news/newscategory-management/newscategories'
+            title='مدیریت دسته بندی اخبار'
+          />
 
-      <MenuInnerWithSub
-        title='کاربران'
-        to='/users'
-        menuPlacement='bottom-start'
-        menuTrigger='click'
-      >
-        <MenuItem icon='shield-tick' to='/users/user-management/users' title='مدیریت کاربران' />
-        <MenuItem
-          icon='shield-tick'
-          to='/users/supporter-management/supporters'
-          title='مدیریت حامیان'
-        />
-        <MenuItem
-          icon='shield-tick'
-          to='/users/speaker-management/speakers'
-          title='مدیریت سخنرانان'
-        />
-        <MenuItem
-          icon='shield-tick'
-          to='/users/secretariat-management/secretariats'
-          title='مدیریت دبیرخانه ها'
-        />
-        <MenuItem
-          icon='shield-tick'
-          to='/users/organizer-management/organizers'
-          title='مدیریت برگذار کننده ها'
-        />
-      </MenuInnerWithSub>
+          <MenuItem icon='shield-tick' to='/news/news-management/news' title='مدیریت اخبار' />
+        </MenuInnerWithSub>
+      )}
 
-      <MenuInnerWithSub title='اخبار' to='/news' menuPlacement='bottom-start' menuTrigger='click'>
-        <MenuItem
-          icon='shield-tick'
-          to='/news/newstag-management/newstags'
-          title='مدیریت تگ های خبر'
-        />
-        <MenuItem
-          icon='shield-tick'
-          to='/news/newscomment-management/newscomments'
-          title='مدیریت کامنت های خبر'
-        />
-        <MenuItem
-          icon='shield-tick'
-          to='/news/newscategory-management/newscategories'
-          title='مدیریت دسته بندی اخبار'
-        />
+      {(currentUser?.role === 'admin' ||
+        currentUser?.role === 'referee' ||
+        currentUser?.role === 'scientific' ||
+        currentUser?.role === 'user') && (
+        <MenuInnerWithSub
+          title='مقالات'
+          to='/articles'
+          menuPlacement='bottom-start'
+          menuTrigger='click'
+        >
+          {currentUser?.role !== 'user' && currentUser?.role !== 'referee' && (
+            <MenuItem
+              icon='shield-tick'
+              to='/articles/articlecategories-management/articlecategories'
+              title='مدیریت دسته بندی مقالات'
+            />
+          )}
 
-        <MenuItem icon='shield-tick' to='/news/news-management/news' title='مدیریت اخبار' />
-      </MenuInnerWithSub>
-      <MenuInnerWithSub
-        title='مقالات'
-        to='/articles'
-        menuPlacement='bottom-start'
-        menuTrigger='click'
-      >
-        <MenuItem
-          icon='shield-tick'
-          to='/articles/articlecategories-management/articlecategories'
-          title='مدیریت دسته بندی مقالات'
-        />
-        <MenuItem
-          icon='shield-tick'
-          to='/articles/article-management/articles'
-          title='مدیریت مقالات'
-        />
-      </MenuInnerWithSub>
-      <MenuItem to='/apps/axies-management/axies' title='مدیریت محور ها' />
-      <MenuItem to='/apps/question-management/questions' title='مدیریت سوالات متداول' />
-      <MenuItem to='/apps/slider-management/sliders' title='مدیریت اسلایدر' />
+          <MenuItem
+            icon='shield-tick'
+            to='/articles/article-management/articles'
+            title='مدیریت مقالات'
+          />
+        </MenuInnerWithSub>
+      )}
+      {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+        <>
+          {' '}
+          <MenuItem to='/apps/axies-management/axies' title='مدیریت محور ها' />
+          <MenuItem to='/apps/question-management/questions' title='مدیریت سوالات متداول' />
+          <MenuItem to='/apps/slider-management/sliders' title='مدیریت اسلایدر' />
+        </>
+      )}
 
       {/* <MenuInnerWithSub
         isMega={true}

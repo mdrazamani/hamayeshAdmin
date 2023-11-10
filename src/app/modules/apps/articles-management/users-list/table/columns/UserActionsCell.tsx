@@ -5,7 +5,7 @@ import {MenuComponent} from '../../../../../../../_metronic/assets/ts/components
 import {ID, KTIcon, QUERIES} from '../../../../../../../_metronic/helpers'
 import {useListView} from '../../core/ListViewProvider'
 import {useQueryResponse} from '../../core/QueryResponseProvider'
-import {deleteUser} from '../../core/_requests'
+import {deleteUser, downloadArticles} from '../../core/_requests'
 
 type Props = {
   id: ID
@@ -29,6 +29,14 @@ const UserActionsCell: FC<Props> = ({id}) => {
     onSuccess: () => {
       // ✅ update detail view directly
       queryClient.invalidateQueries([`${QUERIES.USERS_LIST}-${query}`])
+    },
+  })
+
+  const downloadItem = useMutation(() => downloadArticles(id), {
+    // 💡 response of the mutation is passed to onSuccess
+    onSuccess: () => {
+      // ✅ update detail view directly
+      // queryClient.invalidateQueries([`${QUERIES.USERS_LIST}-${query}`])
     },
   })
 
@@ -64,6 +72,16 @@ const UserActionsCell: FC<Props> = ({id}) => {
             onClick={async () => await deleteItem.mutateAsync()}
           >
             حذف
+          </a>
+        </div>
+
+        <div className='menu-item px-3'>
+          <a
+            className='menu-link px-3'
+            data-kt-users-table-filter='delete_row'
+            onClick={async () => await downloadItem.mutateAsync()}
+          >
+            دانلود فایل ها
           </a>
         </div>
         {/* end::Menu item */}

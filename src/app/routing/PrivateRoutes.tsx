@@ -9,6 +9,7 @@ import {WithChildren} from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import {useAuth} from '../modules/auth'
 import ArticlesPage from '../modules/apps/articles-management/ArticlesPage'
+import {finder} from '../../_metronic/helpers/HomePageFinder'
 
 const PrivateRoutes = () => {
   const {currentUser} = useAuth()
@@ -45,7 +46,7 @@ const PrivateRoutes = () => {
     <Routes>
       <Route element={<MasterLayout />}>
         {/* Redirect to Dashboard after success login/registartion */}
-        <Route path='auth/*' element={<Navigate to='/dashboard' />} />
+        <Route path='auth/*' element={<Navigate to={finder(currentUser?.role)} />} />
         {/* Pages */}
         {/* <Route path='dashboard' element={<DashboardWrapper />} /> */}
         {/* <Route path='builder' element={<BuilderPageWrapper />} /> */}
@@ -217,7 +218,8 @@ const PrivateRoutes = () => {
         )}
         {(currentUser?.role === 'admin' ||
           currentUser?.role === 'referee' ||
-          currentUser?.role === 'scientific') && (
+          currentUser?.role === 'scientific' ||
+          currentUser?.role === 'user') && (
           <Route
             path='articles/article-management/*'
             element={

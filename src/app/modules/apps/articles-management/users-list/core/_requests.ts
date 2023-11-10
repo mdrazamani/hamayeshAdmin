@@ -35,6 +35,10 @@ const deleteUser = (userId: ID): Promise<void> => {
   return axios.delete(`${GET_USERS_URL}/${userId}`).then(() => {})
 }
 
+const downloadArticles = (userId: ID): Promise<void> => {
+  return axios.get(`${GET_USERS_URL}/download/all/${userId}`).then(() => {})
+}
+
 const deleteSelectedUsers = (userIds: Array<ID>): Promise<void> => {
   const requests = userIds.map((id) => axios.delete(`${GET_USERS_URL}/${id}`))
   return axios.all(requests).then(() => {})
@@ -51,4 +55,5 @@ export {
   createUser,
   updateUser,
   getAllCategories,
+  downloadArticles,
 }

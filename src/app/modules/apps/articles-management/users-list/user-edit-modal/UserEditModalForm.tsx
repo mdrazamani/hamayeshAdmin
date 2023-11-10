@@ -14,6 +14,7 @@ import {useAuth} from '../../../../auth'
 
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '../../../../../../build/ckeditor'
+import {profileImage} from '../../../../auth/core/_requests'
 
 type Props = {
   isUserLoading: boolean
@@ -89,6 +90,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
       ...user.arbitration,
       refereeId: user.arbitration?.refereeId || currentUser?.id,
     },
+    articleFiles: user.articleFiles,
   })
 
   useEffect(() => {
@@ -104,6 +106,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     setItemIdForUpdate(undefined)
   }
   const getChangedValues = (initialValues, currentValues) => {
+    debugger
     let changes = {}
     Object.keys(currentValues).forEach((key) => {
       // If the current form values are different from the initial ones, add them to the changes object.
@@ -111,7 +114,11 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
         changes[key] = currentValues[key]
       }
     })
-    return changes
+    return {
+      ...changes,
+      articleFiles: currentValues.articleFiles,
+      presentationFiles: currentValues.presentationFiles,
+    }
   }
 
   const formik = useFormik({
@@ -146,6 +153,54 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     label: `${user.title}`,
   }))
 
+  const handleImageChange = async (event, name) => {
+    const files = event.currentTarget.files
+    if (!files) return
+
+    try {
+      // Initialize the array if it doesn't exist in formik
+      const currentPaths = formik.values[name] || []
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+
+        const response = await profileImage(file, name)
+
+        if (response.data.status === 'success') {
+          debugger
+          const imagePath = response.data.data.articleFiles[0].path
+
+          // Push the imagePath to the array
+          currentPaths.push(imagePath)
+        } else {
+          // Handle errors for each file if necessary
+          console.error(
+            `Error uploading file ${i + 1}:`,
+            response.data.message || 'Error uploading file.'
+          )
+        }
+      }
+
+      // Set the updated array in formik
+      formik.setFieldValue(name, currentPaths)
+    } catch (error: any) {
+      // Handle any errors that occurred during the request
+      console.error('Error during image upload:', error)
+
+      const errorMessage = error.response ? error.response.data.message : error.message
+
+      // Set formik field error for the first file (or handle errors globally as needed)
+      formik.setFieldError(name, errorMessage)
+
+      // If you have a general 'status' field for displaying global form messages, you can use this too
+      formik.setStatus('Failed to upload image(s)')
+    }
+  }
+
+  useEffect(() => {
+    console.log('sdfasdwasdwws', formik.initialValues)
+  }, [formik.initialValues])
+
   return (
     <>
       <form id='kt_modal_add_user_form' className='form' onSubmit={formik.handleSubmit} noValidate>
@@ -161,6 +216,40 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           data-kt-scroll-offset='300px'
         >
           {/* begin::Input group */}
+
+          <div className='fv-row mb-7'>
+            {/* begin::Label */}
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.ARTICLES'})}
+            </label>
+            {/* end::Label */}
+
+            {/* begin::Input */}
+            <input
+              type='file'
+              className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+              onChange={(e) => handleImageChange(e, 'articleFiles')}
+              multiple
+            />
+          </div>
+
+          <div className='fv-row mb-7'>
+            {/* begin::Label */}
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.PRESENTAIONS'})}
+            </label>
+            {/* end::Label */}
+
+            {/* begin::Input */}
+            <input
+              type='file'
+              className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+              onChange={(e) => handleImageChange(e, 'presentationFiles')}
+              multiple
+            />
+          </div>
 
           {/* begin::Input group */}
           <div className='fv-row mb-7'>
