@@ -77,7 +77,7 @@
   --bs-font-sans-serif: Inter, Helvetica, "sans-serif";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-family: 'iranyekan';
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -188,9 +188,44 @@
   box-sizing: border-box;
 }
 
+
+
+
+
+
+
+
+
+
+
+@font-face {
+  font-family: 'iranyekan'; 
+  src: url('../fonts/iranyekan/woff2/iranyekanwebregular(fanum).woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
+  font-family: 'iranyekan' !important;
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -353,7 +388,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: var(--bs-font-monospace);
+  font-family: 'iranyekan';
   font-size: 1em;
 }
 
@@ -3145,7 +3180,7 @@ textarea.form-control-lg {
 .btn {
   --bs-btn-padding-x: 1.5rem;
   --bs-btn-padding-y: 0.775rem;
-  --bs-btn-font-family: ;
+  --bs-btn-font-family: 'iranyekan';
   --bs-btn-font-size: 1.1rem;
   --bs-btn-font-weight: 500;
   --bs-btn-line-height: 1.5;
@@ -3160,7 +3195,7 @@ textarea.form-control-lg {
   --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
   display: inline-block;
   padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
-  font-family: var(--bs-btn-font-family);
+  font-family: 'iranyekan';
   font-size: var(--bs-btn-font-size);
   font-weight: var(--bs-btn-font-weight);
   line-height: var(--bs-btn-line-height);
@@ -5967,7 +6002,7 @@ textarea.form-control-lg {
   z-index: var(--bs-tooltip-zindex);
   display: block;
   margin: var(--bs-tooltip-margin);
-  font-family: var(--bs-font-sans-serif);
+  font-family: 'iranyekan';
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6069,7 +6104,7 @@ textarea.form-control-lg {
   z-index: var(--bs-popover-zindex);
   display: block;
   max-width: var(--bs-popover-max-width);
-  font-family: var(--bs-font-sans-serif);
+  font-family: 'iranyekan';
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -11199,7 +11234,7 @@ textarea.form-control-lg {
 }
 
 .font-monospace {
-  font-family: var(--bs-font-monospace) !important;
+  font-family: 'iranyekan' !important;
 }
 
 .fs-1 {
@@ -47139,7 +47174,7 @@ body[data-kt-sticky-landing-header=on] {
 }
 
 html {
-  font-family: sans-serif;
+  font-family: 'iranyekan',sans-serif;
   text-size-adjust: 100%;
 }
 
@@ -47152,7 +47187,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 13px !important;
   font-weight: 400;
-  font-family: Inter, Helvetica, "sans-serif";
+  font-family: 'iranyekan', Inter, Helvetica, "sans-serif";
 }
 @media (max-width: 991.98px) {
   html,
