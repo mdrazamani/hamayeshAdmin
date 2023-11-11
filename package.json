@@ -14,6 +14,7 @@
     "bootstrap-icons": "^1.5.0",
     "chart.js": "4.3.0",
     "clsx": "1.1.1",
+    "file-saver": "^2.0.5",
     "formik": "2.2.9",
     "jalali-moment": "^3.3.11",
     "line-awesome": "1.3.0",

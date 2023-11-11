@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
+import { saveAs } from 'file-saver';
 import {ID, Response} from '../../../../../../_metronic/helpers'
 import {User, UsersQueryResponse} from './_models'
 
@@ -35,9 +36,30 @@ const deleteUser = (userId: ID): Promise<void> => {
   return axios.delete(`${GET_USERS_URL}/${userId}`).then(() => {})
 }
 
-const downloadArticles = (userId: ID): Promise<void> => {
-  return axios.get(`${GET_USERS_URL}/download/all/${userId}`).then(() => {})
-}
+// const downloadArticles = (userId: ID): Promise<void> => {
+//   return axios.get(`${GET_USERS_URL}/download/all/${userId}`).then((data) => {
+//     console.log(data);
+//     const link = document.createElement('a');
+//     const blob = new Blob([data.data], { type: 'application/zip' });
+//     const url = URL.createObjectURL(blob);
+
+//     link.href = url;
+//     link.download = 'articleFiles.zip';
+//     link.click();
+//   })
+// }
+
+const downloadArticles = (userId) => {
+  axios({
+    url: `${GET_USERS_URL}/download/all/${userId}`,
+    method: 'GET',
+    responseType: 'blob', // Important: responseType should be 'blob' for binary data
+  }).then((response) => {
+    const blob = new Blob([response.data], { type: 'application/zip' });
+    saveAs(blob, 'articleFiles.zip');
+  });
+};
+
 
 const deleteSelectedUsers = (userIds: Array<ID>): Promise<void> => {
   const requests = userIds.map((id) => axios.delete(`${GET_USERS_URL}/${id}`))
