@@ -594,8 +594,11 @@ const ProfileDetails: React.FC = () => {
                   {...formik.getFieldProps('degree')}
                 >
                   <option value=''> {intl.formatMessage({id: 'AUTH.INPUT.DEGREE'})}</option>
-                  <option value='male'> {intl.formatMessage({id: 'AUTH.INPUT.MALE'})}</option>
-                  <option value='female'> {intl.formatMessage({id: 'AUTH.INPUT.FEMALE'})}</option>
+                  <option value='diploma'>دیپلم</option>
+                  <option value='associate-degree'>کارشناسی دوساله</option>
+                  <option value='bachelor-degree'>کارشناسی</option>
+                  <option value='master-degree'>کارشناسی ارشد</option>
+                  <option value='doctorate-degree'>دکترا</option>
                 </select>
                 {formik.touched.degree && formik.errors.degree && (
                   <div className='fv-plugins-message-container'>

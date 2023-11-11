@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import {isNotEmpty, toAbsoluteUrl} from '../../../../../../_metronic/helpers'
+import {isNotEmpty} from '../../../../../../_metronic/helpers'
 import {initialUser, User} from '../core/_models'
 import clsx from 'clsx'
 import {useListView} from '../core/ListViewProvider'
@@ -63,8 +63,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     }
     setItemIdForUpdate(undefined)
   }
-
-  const blankImg = toAbsoluteUrl('/media/svg/avatars/blank.svg')
 
   const getChangedValues = (initialValues, currentValues) => {
     let changes = {}
@@ -232,7 +230,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='cancel'
             disabled={formik.isSubmitting || isUserLoading}
           >
-            Discard
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
 
           <button
@@ -241,10 +239,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >
-            <span className='indicator-label'>Submit</span>
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
-                Please wait...{' '}
+                {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}

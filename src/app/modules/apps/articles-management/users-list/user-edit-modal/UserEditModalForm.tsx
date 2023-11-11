@@ -86,10 +86,15 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     ...user,
     description: user.description,
     title: user.title,
-    arbitration: {
-      ...user.arbitration,
-      refereeId: user.arbitration?.refereeId || currentUser?.id,
-    },
+    ...(currentUser?.role === 'admin' || currentUser?.role === 'referee'
+      ? {
+          arbitration: {
+            ...user.arbitration,
+            refereeId: user.arbitration?.refereeId || currentUser?.id,
+          },
+        }
+      : {}),
+    ...(currentUser?.role === 'user' ? {userId: currentUser?.id} : {}),
     articleFiles: user.articleFiles,
   })
 
@@ -106,7 +111,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     setItemIdForUpdate(undefined)
   }
   const getChangedValues = (initialValues, currentValues) => {
-    debugger
     let changes = {}
     Object.keys(currentValues).forEach((key) => {
       // If the current form values are different from the initial ones, add them to the changes object.
@@ -167,8 +171,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
         const response = await profileImage(file, name)
 
         if (response.data.status === 'success') {
-          debugger
-          const imagePath = response.data.data.articleFiles[0].path
+          const imagePath = response.data.data[name][0].path
 
           // Push the imagePath to the array
           currentPaths.push(imagePath)
@@ -217,39 +220,43 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
         >
           {/* begin::Input group */}
 
-          <div className='fv-row mb-7'>
-            {/* begin::Label */}
-            <label className='fw-bold fs-6 mb-2'>
-              {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.ARTICLES'})}
-            </label>
-            {/* end::Label */}
+          {currentUser?.role === 'user' && (
+            <>
+              <div className='fv-row mb-7'>
+                {/* begin::Label */}
+                <label className='fw-bold fs-6 mb-2'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.ARTICLES'})}
+                </label>
+                {/* end::Label */}
 
-            {/* begin::Input */}
-            <input
-              type='file'
-              className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-              onChange={(e) => handleImageChange(e, 'articleFiles')}
-              multiple
-            />
-          </div>
+                {/* begin::Input */}
+                <input
+                  type='file'
+                  className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  onChange={(e) => handleImageChange(e, 'articleFiles')}
+                  multiple
+                />
+              </div>
 
-          <div className='fv-row mb-7'>
-            {/* begin::Label */}
-            <label className='fw-bold fs-6 mb-2'>
-              {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.PRESENTAIONS'})}
-            </label>
-            {/* end::Label */}
+              <div className='fv-row mb-7'>
+                {/* begin::Label */}
+                <label className='fw-bold fs-6 mb-2'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.PRESENTAIONS'})}
+                </label>
+                {/* end::Label */}
 
-            {/* begin::Input */}
-            <input
-              type='file'
-              className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-              onChange={(e) => handleImageChange(e, 'presentationFiles')}
-              multiple
-            />
-          </div>
+                {/* begin::Input */}
+                <input
+                  type='file'
+                  className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  onChange={(e) => handleImageChange(e, 'presentationFiles')}
+                  multiple
+                />
+              </div>
+            </>
+          )}
 
           {/* begin::Input group */}
           <div className='fv-row mb-7'>
@@ -536,7 +543,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='cancel'
             disabled={formik.isSubmitting || isUserLoading}
           >
-            Discard
+            {intl.formatMessage({id: 'AUTH.BOTTUN.CANCEL'})}
           </button>
 
           <button
@@ -545,10 +552,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             data-kt-users-modal-action='submit'
             disabled={isUserLoading || formik.isSubmitting || !formik.isValid || !formik.touched}
           >
-            <span className='indicator-label'>Submit</span>
+            <span className='indicator-label'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.BOTTUN.SUBMIT'})}
+            </span>
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
-                Please wait...{' '}
+                {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}
