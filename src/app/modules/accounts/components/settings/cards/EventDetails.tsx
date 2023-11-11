@@ -9,7 +9,7 @@ import {fetchCities, fetchStates, profileImage, updateEvent} from '../../../../a
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '../../../../../../build/ckeditor'
 
-import DatePicker from "../../../../d-components/calendar";
+import DatePicker from '../../../../d-components/calendar'
 import changeFormat from '../../../../d-components/dateConverter'
 
 const EventDetails = (eventDetails: any) => {
@@ -100,15 +100,19 @@ const EventDetails = (eventDetails: any) => {
         changes[key] = currentValues[key]
       }
     })
-    return {...changes , dates : {
-      start: changeFormat(currentValues.start),
-      end: changeFormat(currentValues.end),
-      startArticle: changeFormat(currentValues.startArticle),
-      endArticle:changeFormat(currentValues.endArticle),
-      refeeResult:changeFormat(currentValues.refeeResult),
-      editArticle: changeFormat(currentValues.editArticle),
-      lastRegistration: changeFormat(currentValues.lastRegistration),
-    }}
+    return {
+      ...changes,
+      writingArticles: currentValues.writingArticles,
+      // dates: {
+      //   start: changeFormat(currentValues.dates.start),
+      //   end: changeFormat(currentValues.dates.end),
+      //   startArticle: changeFormat(currentValues.dates.startArticle),
+      //   endArticle: changeFormat(currentValues.dates.endArticle),
+      //   refeeResult: changeFormat(currentValues.dates.refeeResult),
+      //   editArticle: changeFormat(currentValues.dates.editArticle),
+      //   lastRegistration: changeFormat(currentValues.dates.lastRegistration),
+      // },
+    }
   }
 
   const [loading, setLoading] = useState(false)
@@ -119,7 +123,7 @@ const EventDetails = (eventDetails: any) => {
     validationSchema: updaetSchema,
     onSubmit: (values, {setSubmitting, setFieldError, setStatus, resetForm}) => {
       setLoading(true)
-
+      debugger
       const changedValues = getChangedValues(formik.initialValues, values)
       updateEvent(changedValues)
         .then((res) => {
@@ -198,26 +202,64 @@ const EventDetails = (eventDetails: any) => {
       formik.setStatus('Failed to upload image(s)')
     }
   }
-  const handleWritings = async (event, name) => {
-    const files = event.currentTarget.files
-    if (!files) return
+  const transformResponseData = (responseData) => {
+    const {name, path, mimetype} = responseData
 
+    // Extracting title from the name (assuming the name contains the title)
+    const title = name.split('.')[0]
+
+    // Mapping file format based on mimetype
+    const format = (() => {
+      if (mimetype.includes('pdf')) return 'pdf'
+      if (mimetype.includes('word')) return 'doc'
+      if (mimetype.includes('pptx') || mimetype.includes('ppt')) return 'pptx'
+
+      // Add more mappings for other formats as needed
+      return 'unknown'
+    })()
+
+    // Mapping image paths based on file format
+    const imagePaths = {
+      pdf: 'public\\uploads\\writingArticles\\pdf.png',
+      doc: 'public\\uploads\\writingArticles\\word.jpg',
+      pptx: 'public\\uploads\\writingArticles\\powerpoint.png',
+      // Add more mappings for other formats as needed
+      unknown: 'public\\uploads\\writingArticles\\default.png', // Default image path for unknown formats
+    }
+
+    // Setting the image path based on the file format
+    const image = imagePaths[format] || imagePaths.unknown
+
+    // Setting the image path (you may need to adjust this based on your file structure)
+
+    // Creating the transformed object
+    const transformedObject = {
+      title,
+      image,
+      format,
+      description: `فایل ${format}`, // You can customize the description as needed
+      path, // You may want to set this to something meaningful based on your requirements
+    }
+
+    return transformedObject
+  }
+
+  // Example usage within your handleWritings function
+  const handleWritings = async (event, name) => {
     try {
-      // Initialize the array if it doesn't exist in formik
+      const files = event.currentTarget.files
+      if (!files) return
+
       const currentPaths = formik.values[name] || []
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
-
         const response = await profileImage(file, name)
 
         if (response.data.status === 'success') {
-          const imagePath = response.data.data[name][0]
-
-          // Push the imagePath to the array
-          currentPaths.push(imagePath)
+          const transformedData = transformResponseData(response.data.data[name][0])
+          currentPaths.files.push(transformedData)
         } else {
-          // Handle errors for each file if necessary
           console.error(
             `Error uploading file ${i + 1}:`,
             response.data.message || 'Error uploading file.'
@@ -225,25 +267,19 @@ const EventDetails = (eventDetails: any) => {
         }
       }
 
-      // Set the updated array in formik
-      formik.setFieldValue("writingArticles.files", currentPaths)
-    } catch (error: any) {
-      // Handle any errors that occurred during the request
+      formik.setFieldValue('writingArticles', currentPaths)
+    } catch (error) {
       console.error('Error during image upload:', error)
 
       const errorMessage = error.response ? error.response.data.message : error.message
-
-      // Set formik field error for the first file (or handle errors globally as needed)
-      formik.setFieldError("writingArticles.files", errorMessage)
-
-      // If you have a general 'status' field for displaying global form messages, you can use this too
+      formik.setFieldError('writingArticles', errorMessage)
       formik.setStatus('Failed to upload image(s)')
     }
   }
 
   useEffect(() => {
-    console.log("sssssssssssssssss" , formik.values.writingArticles);
-  } , [formik.values])
+    console.log('sssssssssssssssss', formik.values.writingArticles)
+  }, [formik.values])
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -283,7 +319,7 @@ const EventDetails = (eventDetails: any) => {
                     )}
                   </div>
 
-                  <div className='col-lg-12 fv-row' style={{marginTop: "50px"}}>
+                  <div className='col-lg-12 fv-row' style={{marginTop: '50px'}}>
                     <textarea
                       className='form-control form-control-lg form-control-solid'
                       placeholder='Last name'
@@ -299,7 +335,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "100px"}}>
+            <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'hamayesh.headerImage'})}
               </label>
@@ -330,7 +366,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "100px"}}>
+            <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'AUTH.INPUT.UPLOAD'})}
               </label>
@@ -343,7 +379,7 @@ const EventDetails = (eventDetails: any) => {
                 />
               </div>
             </div>
-            <div className='row mb-6' style={{marginTop: "100px"}}>
+            <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'hamayesh.poster'})}
               </label>
@@ -374,7 +410,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "100px"}}>
+            <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'AUTH.INPUT.UPLOAD'})}
               </label>
@@ -388,7 +424,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "100px"}}>
+            <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.ISCCODE'})}
@@ -409,7 +445,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='fv-row mb-7' style={{marginTop: "100px"}}>
+            <div className='fv-row mb-7' style={{marginTop: '100px'}}>
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-2'>
                 {' '}
@@ -437,7 +473,7 @@ const EventDetails = (eventDetails: any) => {
               {/* end::Input */}
             </div>
 
-            <div className='fv-row mb-7' style={{marginTop: "100px"}}>
+            <div className='fv-row mb-7' style={{marginTop: '100px'}}>
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-2'>
                 {' '}
@@ -465,87 +501,112 @@ const EventDetails = (eventDetails: any) => {
               {/* end::Input */}
             </div>
 
-
-            <div className='row mb-6' style={{marginTop: "100px"}}>
+            <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.dates.start'})}
               </label>
               <div className='col-lg-8'>
-                <DatePicker value={formik.values.dates.start} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"start"} />
-              </div>         
+                <DatePicker
+                  value={formik.values.dates.start}
+                  containerClass='col-lg-12'
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  name={'start'}
+                />
+              </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "20px"}}>
+            <div className='row mb-6' style={{marginTop: '20px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.dates.end'})}
               </label>
               <div className='col-lg-8'>
-                <DatePicker value={formik.values.dates.end} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"end"} />
-              </div>         
+                <DatePicker
+                  value={formik.values.dates.end}
+                  containerClass='col-lg-12'
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  name={'end'}
+                />
+              </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "20px"}}>
+            <div className='row mb-6' style={{marginTop: '20px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.dates.startArticle'})}
               </label>
               <div className='col-lg-8'>
-                <DatePicker 
-                  containerClass="col-lg-12" 
-                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' 
-                  name={"startArticle"}
+                <DatePicker
+                  containerClass='col-lg-12'
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  name={'startArticle'}
                   value={formik.values.dates.endArticle}
                 />
-              </div>         
+              </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "20px"}}>
+            <div className='row mb-6' style={{marginTop: '20px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.dates.endArticle'})}
               </label>
               <div className='col-lg-8'>
-                <DatePicker value={formik.values.dates.endArticle} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"endArticle"} />
-              </div>         
+                <DatePicker
+                  value={formik.values.dates.endArticle}
+                  containerClass='col-lg-12'
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  name={'endArticle'}
+                />
+              </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "20px"}}>
+            <div className='row mb-6' style={{marginTop: '20px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.dates.refeeResult'})}
               </label>
               <div className='col-lg-8'>
-                <DatePicker value={formik.values.dates.refeeResult} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"refeeResult"} />
-              </div>         
+                <DatePicker
+                  value={formik.values.dates.refeeResult}
+                  containerClass='col-lg-12'
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  name={'refeeResult'}
+                />
+              </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "20px"}}>
+            <div className='row mb-6' style={{marginTop: '20px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.dates.editArticle'})}
               </label>
               <div className='col-lg-8'>
-                <DatePicker value={formik.values.dates.editArticle} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"editArticle"} />
-              </div>         
+                <DatePicker
+                  value={formik.values.dates.editArticle}
+                  containerClass='col-lg-12'
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  name={'editArticle'}
+                />
+              </div>
             </div>
 
-            <div className='row mb-6' style={{marginTop: "20px"}}>
+            <div className='row mb-6' style={{marginTop: '20px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.dates.lastRegistration'})}
               </label>
               <div className='col-lg-8'>
-                <DatePicker value={formik.values.dates.lastRegistration} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"lastRegistration"} />
-              </div>         
+                <DatePicker
+                  value={formik.values.dates.lastRegistration}
+                  containerClass='col-lg-12'
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  name={'lastRegistration'}
+                />
+              </div>
             </div>
 
-
-
-
-
-            <div className='fv-row mb-7' style={{marginTop: "100px"}}>
+            <div className='fv-row mb-7' style={{marginTop: '100px'}}>
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-2'>
                 {' '}
@@ -573,7 +634,7 @@ const EventDetails = (eventDetails: any) => {
               {/* end::Input */}
             </div>
 
-            <div className='row mb-6' style={{marginTop: "20px"}}>
+            <div className='row mb-6' style={{marginTop: '20px'}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'article.files'})}
               </label>
@@ -588,10 +649,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-
-
-
-            <div className='row mb-6' style={{marginTop: "100px"}}>
+            <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.address'})}
@@ -610,7 +668,7 @@ const EventDetails = (eventDetails: any) => {
                 )}
               </div>
             </div>
-        
+
             <div className='row mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 <span className='required'> {intl.formatMessage({id: 'AUTH.INPUT.STATE'})}</span>
@@ -663,10 +721,7 @@ const EventDetails = (eventDetails: any) => {
                 )}
               </div>
             </div>
-
-
           </div>
-
 
           <div className='card-footer d-flex justify-content-end py-6 px-9'>
             <button type='submit' className='btn btn-primary' disabled={loading}>
