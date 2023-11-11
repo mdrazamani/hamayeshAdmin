@@ -10,6 +10,7 @@ import {CKEditor} from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '../../../../../../build/ckeditor'
 
 import DatePicker from "../../../../d-components/calendar";
+import changeFormat from '../../../../d-components/dateConverter'
 
 const EventDetails = (eventDetails: any) => {
   const intl = useIntl()
@@ -99,7 +100,15 @@ const EventDetails = (eventDetails: any) => {
         changes[key] = currentValues[key]
       }
     })
-    return changes
+    return {...changes , dates : {
+      start: changeFormat(currentValues.start),
+      end: changeFormat(currentValues.end),
+      startArticle: changeFormat(currentValues.startArticle),
+      endArticle:changeFormat(currentValues.endArticle),
+      refeeResult:changeFormat(currentValues.refeeResult),
+      editArticle: changeFormat(currentValues.editArticle),
+      lastRegistration: changeFormat(currentValues.lastRegistration),
+    }}
   }
 
   const [loading, setLoading] = useState(false)
@@ -148,33 +157,93 @@ const EventDetails = (eventDetails: any) => {
   })
 
   const handleImageChange = async (event, name) => {
-    const file = event.currentTarget.files[0]
-    if (!file) return
+    const files = event.currentTarget.files
+    if (!files) return
 
     try {
-      const response = await profileImage(file, name)
+      // Initialize the array if it doesn't exist in formik
+      const currentPaths = formik.values[name] || []
 
-      if (response.data.status === 'success') {
-        const imagePath = response.data.data[name][0].path
-        formik.setFieldValue(name, imagePath)
-      } else {
-        // If the request was technically successful, but the application
-        // returned an error (e.g., file not supported, file too large, etc.)
-        throw new Error(response.data.message || 'Error uploading file.')
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+
+        const response = await profileImage(file, name)
+
+        if (response.data.status === 'success') {
+          const imagePath = response.data.data[name][0].path
+
+          // Push the imagePath to the array
+          currentPaths.push(imagePath)
+        } else {
+          // Handle errors for each file if necessary
+          console.error(
+            `Error uploading file ${i + 1}:`,
+            response.data.message || 'Error uploading file.'
+          )
+        }
       }
+
+      // Set the updated array in formik
+      formik.setFieldValue(name, currentPaths)
     } catch (error: any) {
-      // Here you handle any errors that occurred during the request
+      // Handle any errors that occurred during the request
       console.error('Error during image upload:', error)
 
       const errorMessage = error.response ? error.response.data.message : error.message
 
-      // Set formik field error for image field
+      // Set formik field error for the first file (or handle errors globally as needed)
       formik.setFieldError(name, errorMessage)
 
       // If you have a general 'status' field for displaying global form messages, you can use this too
-      formik.setStatus('Failed to upload image.')
+      formik.setStatus('Failed to upload image(s)')
     }
   }
+  const handleWritings = async (event, name) => {
+    const files = event.currentTarget.files
+    if (!files) return
+
+    try {
+      // Initialize the array if it doesn't exist in formik
+      const currentPaths = formik.values[name] || []
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+
+        const response = await profileImage(file, name)
+
+        if (response.data.status === 'success') {
+          const imagePath = response.data.data[name][0]
+
+          // Push the imagePath to the array
+          currentPaths.push(imagePath)
+        } else {
+          // Handle errors for each file if necessary
+          console.error(
+            `Error uploading file ${i + 1}:`,
+            response.data.message || 'Error uploading file.'
+          )
+        }
+      }
+
+      // Set the updated array in formik
+      formik.setFieldValue("writingArticles.files", currentPaths)
+    } catch (error: any) {
+      // Handle any errors that occurred during the request
+      console.error('Error during image upload:', error)
+
+      const errorMessage = error.response ? error.response.data.message : error.message
+
+      // Set formik field error for the first file (or handle errors globally as needed)
+      formik.setFieldError("writingArticles.files", errorMessage)
+
+      // If you have a general 'status' field for displaying global form messages, you can use this too
+      formik.setStatus('Failed to upload image(s)')
+    }
+  }
+
+  useEffect(() => {
+    console.log("sssssssssssssssss" , formik.values.writingArticles);
+  } , [formik.values])
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -201,10 +270,10 @@ const EventDetails = (eventDetails: any) => {
 
               <div className='col-lg-8'>
                 <div className='row'>
-                  <div className='col-lg-6 fv-row'>
+                  <div className='col-lg-12 fv-row'>
                     <textarea
                       className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                      placeholder='First name'
+                      placeholder='title'
                       {...formik.getFieldProps('faTitle')}
                     />
                     {formik.touched.faTitle && formik.errors.faTitle && (
@@ -214,7 +283,7 @@ const EventDetails = (eventDetails: any) => {
                     )}
                   </div>
 
-                  <div className='col-lg-6 fv-row'>
+                  <div className='col-lg-12 fv-row' style={{marginTop: "50px"}}>
                     <textarea
                       className='form-control form-control-lg form-control-solid'
                       placeholder='Last name'
@@ -229,7 +298,8 @@ const EventDetails = (eventDetails: any) => {
                 </div>
               </div>
             </div>
-            <div className='row mb-6'>
+
+            <div className='row mb-6' style={{marginTop: "100px"}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'hamayesh.headerImage'})}
               </label>
@@ -260,7 +330,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='row mb-6'>
+            <div className='row mb-6' style={{marginTop: "100px"}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'AUTH.INPUT.UPLOAD'})}
               </label>
@@ -273,7 +343,7 @@ const EventDetails = (eventDetails: any) => {
                 />
               </div>
             </div>
-            <div className='row mb-6'>
+            <div className='row mb-6' style={{marginTop: "100px"}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'hamayesh.poster'})}
               </label>
@@ -304,7 +374,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='row mb-6'>
+            <div className='row mb-6' style={{marginTop: "100px"}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'AUTH.INPUT.UPLOAD'})}
               </label>
@@ -318,7 +388,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='row mb-6'>
+            <div className='row mb-6' style={{marginTop: "100px"}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.ISCCODE'})}
@@ -339,7 +409,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-            <div className='fv-row mb-7'>
+            <div className='fv-row mb-7' style={{marginTop: "100px"}}>
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-2'>
                 {' '}
@@ -367,7 +437,7 @@ const EventDetails = (eventDetails: any) => {
               {/* end::Input */}
             </div>
 
-            <div className='fv-row mb-7'>
+            <div className='fv-row mb-7' style={{marginTop: "100px"}}>
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-2'>
                 {' '}
@@ -395,7 +465,133 @@ const EventDetails = (eventDetails: any) => {
               {/* end::Input */}
             </div>
 
-            <div className='row mb-6'>
+
+            <div className='row mb-6' style={{marginTop: "100px"}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.dates.start'})}
+              </label>
+              <div className='col-lg-8'>
+                <DatePicker value={formik.values.dates.start} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"start"} />
+              </div>         
+            </div>
+
+            <div className='row mb-6' style={{marginTop: "20px"}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.dates.end'})}
+              </label>
+              <div className='col-lg-8'>
+                <DatePicker value={formik.values.dates.end} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"end"} />
+              </div>         
+            </div>
+
+            <div className='row mb-6' style={{marginTop: "20px"}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.dates.startArticle'})}
+              </label>
+              <div className='col-lg-8'>
+                <DatePicker 
+                  containerClass="col-lg-12" 
+                  class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' 
+                  name={"startArticle"}
+                  value={formik.values.dates.endArticle}
+                />
+              </div>         
+            </div>
+
+            <div className='row mb-6' style={{marginTop: "20px"}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.dates.endArticle'})}
+              </label>
+              <div className='col-lg-8'>
+                <DatePicker value={formik.values.dates.endArticle} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"endArticle"} />
+              </div>         
+            </div>
+
+            <div className='row mb-6' style={{marginTop: "20px"}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.dates.refeeResult'})}
+              </label>
+              <div className='col-lg-8'>
+                <DatePicker value={formik.values.dates.refeeResult} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"refeeResult"} />
+              </div>         
+            </div>
+
+            <div className='row mb-6' style={{marginTop: "20px"}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.dates.editArticle'})}
+              </label>
+              <div className='col-lg-8'>
+                <DatePicker value={formik.values.dates.editArticle} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"editArticle"} />
+              </div>         
+            </div>
+
+            <div className='row mb-6' style={{marginTop: "20px"}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.dates.lastRegistration'})}
+              </label>
+              <div className='col-lg-8'>
+                <DatePicker value={formik.values.dates.lastRegistration} containerClass="col-lg-12" class='form-control form-control-lg form-control-solid mb-3 mb-lg-0' name={"lastRegistration"} />
+              </div>         
+            </div>
+
+
+
+
+
+            <div className='fv-row mb-7' style={{marginTop: "100px"}}>
+              {/* begin::Label */}
+              <label className='required fw-bold fs-6 mb-2'>
+                {' '}
+                {intl.formatMessage({id: 'article.help'})}
+              </label>
+              {/* end::Label */}
+
+              {/* begin::Input */}
+              <CKEditor
+                editor={ClassicEditor.Editor}
+                data={formik.values.writingArticles.description}
+                onChange={(event, editor) => {
+                  const data = editor.getData()
+                  formik.setFieldValue('writingArticlesDescription', Data)
+                }}
+                onBlur={() => formik.setTouched({...formik.touched, description: true})}
+              />
+              {formik.touched.description && formik.errors.description && (
+                <div className='fv-plugins-message-container'>
+                  <div className='fv-help-block'>
+                    <span role='alert'>{formik.errors.description}</span>
+                  </div>
+                </div>
+              )}
+              {/* end::Input */}
+            </div>
+
+            <div className='row mb-6' style={{marginTop: "20px"}}>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                {intl.formatMessage({id: 'article.files'})}
+              </label>
+              <div className='col-lg-8'>
+                <input
+                  type='file'
+                  // accept='image/*'
+                  className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  multiple
+                  onChange={(e) => handleWritings(e, 'writingArticles')}
+                />
+              </div>
+            </div>
+
+
+
+
+            <div className='row mb-6' style={{marginTop: "100px"}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.address'})}
@@ -414,7 +610,7 @@ const EventDetails = (eventDetails: any) => {
                 )}
               </div>
             </div>
-
+        
             <div className='row mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 <span className='required'> {intl.formatMessage({id: 'AUTH.INPUT.STATE'})}</span>
@@ -468,10 +664,7 @@ const EventDetails = (eventDetails: any) => {
               </div>
             </div>
 
-                  {/* {} */}
-                <div style={{marginTop: "50px"}}></div>
-                <DatePicker name={"test1"} />
-                  {/* {} */}
+
           </div>
 
 

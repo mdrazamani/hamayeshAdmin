@@ -224,6 +224,17 @@
   "hamayesh.html": "محتوا اصلی همایش",
   "hamayesh.summary": "خلاصه ای از همایش",
   "hamayesh.address": "آدرس محل برگزاری",
+  "hamayesh.dates": "تاریخ های مهم",
+  "hamayesh.dates.start": "شروع همایش",
+  "hamayesh.dates.end": "اتمام همایش",
+  "hamayesh.dates.startArticle": "آغاز ارسال مقاله",
+  "hamayesh.dates.endArticle": "پایان ارسال مقاله",
+  "hamayesh.dates.refeeResult": "اعلام نتایج داوری",
+  "hamayesh.dates.editArticle": "پایان ویرایش مقاله",
+  "hamayesh.dates.lastRegistration": "پایان ثبت نام",
   "AUTH.INPUT.ARTICLES": "آپلود مقاله",
-  "AUTH.INPUT.PRESENTAIONS": "آپلود فایل ارائه" 
+  "AUTH.INPUT.PRESENTAIONS": "آپلود فایل ارائه",
+
+  "article.help": "متن راهنما نگارش مقاله",
+  "article.files": "آپلود فایل های راهنما"
 }

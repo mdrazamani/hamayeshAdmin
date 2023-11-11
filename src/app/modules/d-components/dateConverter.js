@@ -18,7 +18,7 @@ const convertNumber = (number) => {
   return number.replace(/[۰-۹]/g, (match) => latinNumerals[match])
 }
 
-export default (persianDate) => {
+export default function changeFormat(persianDate) {
   return moment(convertNumber(persianDate), 'jYYYY/jMM/jDD')
     .locale('en')
     .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
