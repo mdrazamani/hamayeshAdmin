@@ -103,15 +103,15 @@ const EventDetails = (eventDetails: any) => {
     return {
       ...changes,
       writingArticles: currentValues.writingArticles,
-      // dates: {
-      //   start: changeFormat(currentValues.dates.start),
-      //   end: changeFormat(currentValues.dates.end),
-      //   startArticle: changeFormat(currentValues.dates.startArticle),
-      //   endArticle: changeFormat(currentValues.dates.endArticle),
-      //   refeeResult: changeFormat(currentValues.dates.refeeResult),
-      //   editArticle: changeFormat(currentValues.dates.editArticle),
-      //   lastRegistration: changeFormat(currentValues.dates.lastRegistration),
-      // },
+      dates: {
+        start: changeFormat(currentValues.dates.start),
+        end: changeFormat(currentValues.dates.end),
+        startArticle: changeFormat(currentValues.dates.startArticle),
+        endArticle: changeFormat(currentValues.dates.endArticle),
+        refeeResult: changeFormat(currentValues.dates.refeeResult),
+        editArticle: changeFormat(currentValues.dates.editArticle),
+        lastRegistration: changeFormat(currentValues.dates.lastRegistration),
+      },
     }
   }
 
@@ -123,7 +123,6 @@ const EventDetails = (eventDetails: any) => {
     validationSchema: updaetSchema,
     onSubmit: (values, {setSubmitting, setFieldError, setStatus, resetForm}) => {
       setLoading(true)
-      debugger
       const changedValues = getChangedValues(formik.initialValues, values)
       updateEvent(changedValues)
         .then((res) => {
@@ -278,7 +277,7 @@ const EventDetails = (eventDetails: any) => {
   }
 
   useEffect(() => {
-    console.log('sssssssssssssssss', formik.values.writingArticles)
+    console.log('sssssssssssssssss', formik.values.dates.refeeResult)
   }, [formik.values])
 
   return (
@@ -511,7 +510,7 @@ const EventDetails = (eventDetails: any) => {
                   value={formik.values.dates.start}
                   containerClass='col-lg-12'
                   class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                  name={'start'}
+                  name={'dates.start'}
                 />
               </div>
             </div>
@@ -526,7 +525,8 @@ const EventDetails = (eventDetails: any) => {
                   value={formik.values.dates.end}
                   containerClass='col-lg-12'
                   class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                  name={'end'}
+                  name={'dates.end'}
+                  formik={formik}
                 />
               </div>
             </div>
@@ -540,8 +540,9 @@ const EventDetails = (eventDetails: any) => {
                 <DatePicker
                   containerClass='col-lg-12'
                   class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                  name={'startArticle'}
-                  value={formik.values.dates.endArticle}
+                  name={'dates.startArticle'}
+                  value={formik.values.dates.startArticle}
+                  formik={formik}
                 />
               </div>
             </div>
@@ -556,7 +557,8 @@ const EventDetails = (eventDetails: any) => {
                   value={formik.values.dates.endArticle}
                   containerClass='col-lg-12'
                   class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                  name={'endArticle'}
+                  name={'dates.endArticle'}
+                  formik={formik}
                 />
               </div>
             </div>
@@ -571,7 +573,8 @@ const EventDetails = (eventDetails: any) => {
                   value={formik.values.dates.refeeResult}
                   containerClass='col-lg-12'
                   class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                  name={'refeeResult'}
+                  name={'dates.refeeResult'}
+                  formik={formik}
                 />
               </div>
             </div>
@@ -586,7 +589,8 @@ const EventDetails = (eventDetails: any) => {
                   value={formik.values.dates.editArticle}
                   containerClass='col-lg-12'
                   class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                  name={'editArticle'}
+                  name={'dates.editArticle'}
+                  formik={formik}
                 />
               </div>
             </div>
@@ -599,9 +603,10 @@ const EventDetails = (eventDetails: any) => {
               <div className='col-lg-8'>
                 <DatePicker
                   value={formik.values.dates.lastRegistration}
+                  formik={formik}
                   containerClass='col-lg-12'
                   class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
-                  name={'lastRegistration'}
+                  name={'dates.lastRegistration'}
                 />
               </div>
             </div>

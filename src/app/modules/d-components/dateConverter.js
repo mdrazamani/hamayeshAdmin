@@ -18,8 +18,15 @@ const convertNumber = (number) => {
   return number.replace(/[۰-۹]/g, (match) => latinNumerals[match])
 }
 
-export default function changeFormat(persianDate) {
-  return moment(convertNumber(persianDate), 'jYYYY/jMM/jDD')
-    .locale('en')
-    .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+export default function changeFormat(dateString) {
+  // Attempt to parse the date as Jalali
+  const jalaliDate = moment(convertNumber(dateString), 'jYYYY/jMM/jDD', true)
+
+  // Check if the parsed date is valid Jalali
+  if (jalaliDate.isValid()) {
+    return jalaliDate.locale('en').format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+  } else {
+    // If not valid Jalali, assume it's Gregorian and return as is
+    return dateString
+  }
 }
