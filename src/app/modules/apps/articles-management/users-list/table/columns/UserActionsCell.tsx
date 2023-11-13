@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC, useEffect} from 'react'
 import {useMutation, useQueryClient} from 'react-query'

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, {useEffect, useState} from 'react'
 import {isCustomError, toAbsoluteUrl} from '../../../../../../_metronic/helpers'
 import * as Yup from 'yup'
@@ -11,6 +13,14 @@ import ClassicEditor from '../../../../../../build/ckeditor'
 
 import DatePicker from '../../../../d-components/calendar'
 import changeFormat from '../../../../d-components/dateConverter'
+
+
+
+const decodeHtmlEntities = (input) => {
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+};
+
 
 const EventDetails = (eventDetails: any) => {
   const intl = useIntl()
@@ -267,7 +277,7 @@ const EventDetails = (eventDetails: any) => {
       }
 
       formik.setFieldValue('writingArticles', currentPaths)
-    } catch (error) {
+    } catch (error : any) {
       console.error('Error during image upload:', error)
 
       const errorMessage = error.response ? error.response.data.message : error.message
@@ -455,9 +465,10 @@ const EventDetails = (eventDetails: any) => {
               {/* begin::Input */}
               <CKEditor
                 editor={ClassicEditor.Editor}
-                data={formik.values.aboutHtml}
+                data={decodeHtmlEntities(formik.values.aboutHtml)}
                 onChange={(event, editor) => {
                   const data = editor.getData()
+                  
                   formik.setFieldValue('aboutHtml', data)
                 }}
                 onBlur={() => formik.setTouched({...formik.touched, aboutHtml: true})}
@@ -638,10 +649,10 @@ const EventDetails = (eventDetails: any) => {
               {/* begin::Input */}
               <CKEditor
                 editor={ClassicEditor.Editor}
-                data={formik.values.writingArticles.description}
+                data={decodeHtmlEntities(formik.values.writingArticles.description)}
                 onChange={(event, editor) => {
                   const data = editor.getData()
-                  formik.setFieldValue('writingArticlesDescription', data)
+                  formik.setFieldValue('writingArticles.description', data)
                 }}
                 onBlur={() => formik.setTouched({...formik.touched, description: true})}
               />

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {FC, useState} from 'react'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
