@@ -472,15 +472,32 @@ const EventDetails = (eventDetails: any) => {
               {/* end::Input */}
             </div>
 
-            <div className='fv-row mb-7' style={{marginTop: '100px'}}>
-              {/* begin::Label */}
+            <div className='row mb-6' style={{marginTop: '100px'}}>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'hamayesh.summary'})}
+              </label>
+
+              <div className='col-lg-8'>
+                <textarea
+                  className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  placeholder='description'
+                  {...formik.getFieldProps('description')}
+                />
+                {formik.touched.description && formik.errors.description && (
+                  <div className='fv-plugins-message-container'>
+                    <div className='fv-help-block'>{formik.errors.description}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* <div className='fv-row mb-7' style={{marginTop: '100px'}}>
               <label className='required fw-bold fs-6 mb-2'>
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.summary'})}
               </label>
-              {/* end::Label */}
 
-              {/* begin::Input */}
               <CKEditor
                 editor={ClassicEditor.Editor}
                 data={formik.values.description}
@@ -497,8 +514,7 @@ const EventDetails = (eventDetails: any) => {
                   </div>
                 </div>
               )}
-              {/* end::Input */}
-            </div>
+            </div> */}
 
             <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
@@ -625,7 +641,7 @@ const EventDetails = (eventDetails: any) => {
                 data={formik.values.writingArticles.description}
                 onChange={(event, editor) => {
                   const data = editor.getData()
-                  formik.setFieldValue('writingArticlesDescription', Data)
+                  formik.setFieldValue('writingArticlesDescription', data)
                 }}
                 onBlur={() => formik.setTouched({...formik.touched, description: true})}
               />
