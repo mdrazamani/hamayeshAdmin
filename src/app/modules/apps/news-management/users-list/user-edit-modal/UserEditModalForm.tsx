@@ -14,6 +14,8 @@ import {ILocation} from '../../../../auth'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '../../../../../../build/ckeditor'
 import Select from 'react-select'
+import DatePicker from '../../../../d-components/calendar'
+import changeFormat from '../../../../d-components/dateConverter'
 
 type Props = {
   isUserLoading: boolean
@@ -144,7 +146,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
         changes[key] = currentValues[key]
       }
     })
-    return changes
+    return {...changes, publishDate: changeFormat(currentValues.publishDate)}
   }
 
   const formik = useFormik({
@@ -340,6 +342,29 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               </div>
             )}
             {/* end::Input */}
+          </div>
+
+          <div className='fv-row mb-7'>
+            {/* begin::Label */}
+            <label className='required fw-bold fs-6 mb-2'>
+              {intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
+            </label>
+            {/* end::Label */}
+
+            {/* begin::Input */}
+            <DatePicker
+              containerClass='col-lg-12'
+              class='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+              name={'publishDate'}
+              value={formik.values.publishDate}
+              formik={formik}
+            />
+            {/* end::Input */}
+            {formik.touched.publishDate && formik.errors.publishDate && (
+              <div className='fv-plugins-message-container'>
+                <span role='alert'>{formik.errors.publishDate}</span>
+              </div>
+            )}
           </div>
 
           <div className='fv-row mb-7'>
