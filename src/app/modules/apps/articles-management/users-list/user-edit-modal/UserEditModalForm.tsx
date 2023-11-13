@@ -340,6 +340,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               {/* end::Label */}
 
               {/* begin::Input */}
+
               <CKEditor
                 editor={ClassicEditor.Editor}
                 data={formik.values?.arbitration?.message}

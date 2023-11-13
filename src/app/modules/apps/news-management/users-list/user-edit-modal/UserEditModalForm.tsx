@@ -180,6 +180,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     value: user.id || '', // Ensure it's always a string
     label: `${user.title}`,
   }))
+
   return (
     <>
       <form id='kt_modal_add_user_form' className='form' onSubmit={formik.handleSubmit} noValidate>
