@@ -155,10 +155,9 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     onSubmit: async (values, {setSubmitting}) => {
       setSubmitting(true)
 
-      const changedValues = getChangedValues(formik.initialValues, values)
-
       try {
         if (isNotEmpty(values.id)) {
+          const changedValues = getChangedValues(formik.initialValues, values)
           await updateUser(values.id, changedValues)
         } else {
           await createUser(values)

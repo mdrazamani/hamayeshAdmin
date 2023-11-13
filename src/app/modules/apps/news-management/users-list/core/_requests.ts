@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {ID, Response} from '../../../../../../_metronic/helpers'
+import changeFormat from '../../../../d-components/dateConverter'
 import {User, UsersQueryResponse} from './_models'
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -19,6 +20,7 @@ const getUserById = (slug: ID): Promise<User | undefined> => {
 }
 
 const createUser = (user: User): Promise<User | undefined> => {
+  user['publishDate'] = changeFormat(user['publishDate'])
   return axios
     .post(GET_USERS_URL, user)
     .then((response: AxiosResponse<Response<User>>) => response.data)
