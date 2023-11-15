@@ -247,8 +247,8 @@ const ProfileDetails: React.FC = () => {
                   <img
                     className='image-input-wrapper w-125px h-125px'
                     src={
-                      currentUser?.profileImage
-                        ? `${process.env.REACT_APP_BASE_URL}/${currentUser.profileImage}`
+                      formik.values?.profileImage
+                        ? `${process.env.REACT_APP_BASE_URL}/${formik.values?.profileImage}`
                         : toAbsoluteUrl('/media/avatars/blank.png')
                     }
                     alt='Profile'

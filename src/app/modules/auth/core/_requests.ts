@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {AuthModel, ILocation, UserModel} from './_models'
 
 const API_URL = process.env.REACT_APP_API_URL
 
