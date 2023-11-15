@@ -106,6 +106,13 @@ const ProfileDetails: React.FC = () => {
     city: '',
     job: '',
     profileImage: '',
+    socials: {
+      facebook: '',
+      twitter: '',
+      linkedIn: '',
+      whatsapp: '',
+      telegram: '',
+    },
     // acceptTerms: false,
   }
 
@@ -603,6 +610,118 @@ const ProfileDetails: React.FC = () => {
                 {formik.touched.degree && formik.errors.degree && (
                   <div className='fv-plugins-message-container'>
                     <div className='fv-help-block'>{formik.errors.degree}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                <span className='required'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.socials.facebook'})}
+                </span>
+              </label>
+
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='text'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.facebook'})}
+                  {...formik.getFieldProps('socials.facebook')}
+                />
+                {formik.touched.socials?.facebook && formik.errors.socials?.facebook && (
+                  <div className='fv-plugins-message-container'>
+                    <div className='fv-help-block'>{formik.errors.socials?.facebook}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                <span className='required'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.socials.twitter'})}
+                </span>
+              </label>
+
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='text'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.twitter'})}
+                  {...formik.getFieldProps('socials.twitter')}
+                />
+                {formik.touched.socials?.twitter && formik.errors.socials?.twitter && (
+                  <div className='fv-plugins-message-container'>
+                    <div className='fv-help-block'>{formik.errors.socials?.twitter}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                <span className='required'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.socials.linkedIn'})}
+                </span>
+              </label>
+
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='text'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.linkedIn'})}
+                  {...formik.getFieldProps('socials.linkedIn')}
+                />
+                {formik.touched.socials?.linkedIn && formik.errors.socials?.linkedIn && (
+                  <div className='fv-plugins-message-container'>
+                    <div className='fv-help-block'>{formik.errors.socials?.linkedIn}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                <span className='required'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.socials.telegram'})}
+                </span>
+              </label>
+
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='text'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.telegram'})}
+                  {...formik.getFieldProps('socials.telegram')}
+                />
+                {formik.touched.socials?.telegram && formik.errors.socials?.telegram && (
+                  <div className='fv-plugins-message-container'>
+                    <div className='fv-help-block'>{formik.errors.socials?.telegram}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                <span className='required'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.socials.whatsapp'})}
+                </span>
+              </label>
+
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='text'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.whatsapp'})}
+                  {...formik.getFieldProps('socials.whatsapp')}
+                />
+                {formik.touched.socials?.whatsapp && formik.errors.socials?.whatsapp && (
+                  <div className='fv-plugins-message-container'>
+                    <div className='fv-help-block'>{formik.errors.socials?.whatsapp}</div>
                   </div>
                 )}
               </div>

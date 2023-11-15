@@ -236,5 +236,10 @@
   "AUTH.INPUT.PRESENTAIONS": "آپلود فایل ارائه",
 
   "article.help": "متن راهنما نگارش مقاله",
-  "article.files": "آپلود فایل های راهنما"
+  "article.files": "آپلود فایل های راهنما",
+  "AUTH.INPUT.socials.whatsapp": "whatsapp number",
+  "AUTH.INPUT.socials.telegram": "telegram link",
+  "AUTH.INPUT.socials.linkedIn": "linkedIn link",
+  "AUTH.INPUT.socials.twitter": "twitter link",
+  "AUTH.INPUT.socials.facebook": "facebook link"
 }

@@ -65,6 +65,14 @@ export interface UserModel {
   degree?: string
   emailVerifiedAt?: Date
   passwordConfirmation?: string
+  socials: {
+    facebook: string
+    twitter: string
+    linkedIn: string
+    whatsapp: string
+    telegram: string
+    // add other platforms as needed
+  }
 }
 // This should reflect the structure of your state/city data
 export interface ILocation {
