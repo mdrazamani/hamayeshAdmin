@@ -10,7 +10,7 @@ import {createUser, updateUser} from '../core/_requests'
 import {useQueryResponse} from '../core/QueryResponseProvider'
 import {useIntl} from 'react-intl'
 import {profileImage} from '../../../../auth/core/_requests'
-
+import './images.css'
 type Props = {
   isUserLoading: boolean
   user: User
@@ -42,41 +42,65 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
   const {setItemIdForUpdate} = useListView()
   const {refetch} = useQueryResponse()
 
+  const handleRemoveImage = (imagePathToRemove) => {
+    const updatedImages = formik.values.images?.filter(
+      (imagePath) => imagePath.path !== imagePathToRemove
+    )
+    formik.setFieldValue('images', updatedImages)
+  }
+
   const handleImageChange = async (event) => {
-    const file = event.currentTarget.files[0]
-    if (!file) return
+    const files = event.currentTarget.files
+    if (!files) return
 
     try {
-      const response = await profileImage(file, 'supporter_logo')
+      // Initialize the array if it doesn't exist in formik
+      const currentPaths = formik.values['images'] || []
 
-      if (response.data.status === 'success') {
-        const imagePath = response.data.data.supporter_logo[0].path
-        formik.setFieldValue('logo', imagePath)
-      } else {
-        // If the request was technically successful, but the application
-        // returned an error (e.g., file not supported, file too large, etc.)
-        throw new Error(response.data.message || 'Error uploading file.')
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+
+        const response = await profileImage(file, 'images')
+
+        if (response.data.status === 'success') {
+          const imagePath = response.data.data['images'][0].path
+          const imageName = response.data.data['images'][0].name
+
+          const newImage = {
+            path: imagePath,
+            title: imageName, // Generate or set title as needed
+          }
+          currentPaths.push(newImage)
+        } else {
+          // Handle errors for each file if necessary
+          console.error(
+            `Error uploading file ${i + 1}:`,
+            response.data.message || 'Error uploading file.'
+          )
+        }
       }
+
+      // Set the updated array in formik
+      formik.setFieldValue('images', currentPaths)
     } catch (error: any) {
-      // Here you handle any errors that occurred during the request
+      // Handle any errors that occurred during the request
       console.error('Error during image upload:', error)
 
       const errorMessage = error.response ? error.response.data.message : error.message
 
-      // Set formik field error for image field
-      formik.setFieldError('logo', errorMessage)
+      // Set formik field error for the first file (or handle errors globally as needed)
+      formik.setFieldError('images', errorMessage)
 
       // If you have a general 'status' field for displaying global form messages, you can use this too
-      formik.setStatus('Failed to upload image.')
+      formik.setStatus('Failed to upload image(s)')
     }
   }
-
   const [userForEdit] = useState<User>({
     ...user,
-    logo: user.logo || initialUser.logo,
-    name: user.name || initialUser.name,
-    link: user.link || initialUser.link,
-    supportType: user.supportType || initialUser.supportType,
+    images: user.images || initialUser.images,
+    category: user.category || initialUser.category,
+    description: user.description || initialUser.description,
+    isActive: user.isActive || initialUser.isActive,
   })
 
   const cancel = (withRefresh?: boolean) => {
@@ -86,9 +110,8 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     setItemIdForUpdate(undefined)
   }
 
-  const blankImg = toAbsoluteUrl('/media/svg/avatars/blank.svg')
-
   const getChangedValues = (initialValues, currentValues) => {
+    debugger
     let changes = {}
     Object.keys(currentValues).forEach((key) => {
       // If the current form values are different from the initial ones, add them to the changes object.
@@ -96,7 +119,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
         changes[key] = currentValues[key]
       }
     })
-    return changes
+    return {...changes, images: currentValues.images}
   }
 
   const formik = useFormik({
@@ -128,10 +151,8 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
   })
 
   useEffect(() => {
-    console.log(formik.values.logo)
+    console.log(formik.values.images)
   }, [formik.values])
-
-  const userAvatarImg = toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${formik.values.logo}`)
 
   return (
     <>
@@ -151,64 +172,36 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='d-block fw-bold fs-6 mb-5'>
-              {intl.formatMessage({id: 'AUTH.INPUT.IMAGE'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.GALLERY.IMAGE'})}
             </label>
             {/* end::Label */}
 
             {/* begin::Image input */}
-            <div
-              className='image-input image-input-outline'
-              data-kt-image-input='true'
-              style={{backgroundImage: `url('${blankImg}')`}}
-            >
-              {/* begin::Preview existing avatar */}
-              <div
-                className='image-input-wrapper w-125px h-125px'
-                style={{backgroundImage: `url('${userAvatarImg}')`}}
-              ></div>
-              {/* end::Preview existing avatar */}
+            <div className='image-gallery'>
+              {formik.values.images?.map((imagePath, index) => {
+                const userAvatarImg = toAbsoluteUrl(
+                  `${process.env.REACT_APP_BASE_URL}/${imagePath.path}`
+                )
+                return (
+                  <div key={index} className='image-container'>
+                    {/* Image Preview */}
+                    <div
+                      className='image-input-wrapper w-125px h-125px'
+                      style={{backgroundImage: `url('${userAvatarImg}')`}}
+                    ></div>
 
-              {/* begin::Label */}
-              {/* <label
-              className='btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow'
-              data-kt-image-input-action='change'
-              data-bs-toggle='tooltip'
-              title='Change avatar'
-            >
-              <i className='bi bi-pencil-fill fs-7'></i>
-
-              <input type='file' name='avatar' accept='.png, .jpg, .jpeg' />
-              <input type='hidden' name='avatar_remove' />
-            </label> */}
-              {/* end::Label */}
-
-              {/* begin::Cancel */}
-              {/* <span
-              className='btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow'
-              data-kt-image-input-action='cancel'
-              data-bs-toggle='tooltip'
-              title='Cancel avatar'
-            >
-              <i className='bi bi-x fs-2'></i>
-            </span> */}
-              {/* end::Cancel */}
-
-              {/* begin::Remove */}
-              {/* <span
-              className='btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow'
-              data-kt-image-input-action='remove'
-              data-bs-toggle='tooltip'
-              title='Remove avatar'
-            >
-              <i className='bi bi-x fs-2'></i>
-            </span> */}
-              {/* end::Remove */}
+                    {/* Remove Button */}
+                    <button
+                      type='button'
+                      className='btn btn-danger btn-sm'
+                      onClick={() => handleRemoveImage(imagePath.path)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )
+              })}
             </div>
-            {/* end::Image input */}
-
-            {/* begin::Hint */}
-            {/* <div className='form-text'>Allowed file types: png, jpg, jpeg.</div> */}
-            {/* end::Hint */}
           </div>
           {/* end::Input group */}
 
@@ -227,38 +220,38 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               accept='image/*'
               className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
               onChange={handleImageChange}
+              multiple
             />
           </div>
           {/* begin::Input group */}
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.NAME'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
             <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.NAME'})}
-              {...formik.getFieldProps('name')}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
+              {...formik.getFieldProps('category')}
               type='text'
-              name='name'
+              name='category'
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
-                {'is-invalid': formik.touched.name && formik.errors.name},
+                {'is-invalid': formik.touched.category && formik.errors.category},
                 {
-                  'is-valid': formik.touched.name && !formik.errors.name,
+                  'is-valid': formik.touched.category && !formik.errors.category,
                 }
               )}
               autoComplete='off'
               disabled={formik.isSubmitting || isUserLoading}
             />
-            {formik.touched.name && formik.errors.name && (
+            {formik.touched.category && formik.errors.category && (
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block'>
-                  <span role='alert'>{formik.errors.name}</span>
+                  <span role='alert'>{formik.errors.category}</span>
                 </div>
               </div>
             )}
@@ -269,69 +262,55 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
               {' '}
-              {intl.formatMessage({id: 'AUTH.INPUT.LINK'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
 
             {/* end::Label */}
 
             {/* begin::Input */}
-            <input
-              placeholder={intl.formatMessage({id: 'AUTH.INPUT.LINK'})}
-              {...formik.getFieldProps('link')}
-              type='text'
-              name='link'
+            <textarea
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
+              {...formik.getFieldProps('description')}
+              name='description'
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
-                {'is-invalid': formik.touched.link && formik.errors.link},
+                {'is-invalid': formik.touched.description && formik.errors.description},
                 {
-                  'is-valid': formik.touched.link && !formik.errors.link,
+                  'is-valid': formik.touched.description && !formik.errors.description,
                 }
               )}
               autoComplete='off'
               disabled={formik.isSubmitting || isUserLoading}
             />
-            {formik.touched.link && formik.errors.link && (
+            {formik.touched.description && formik.errors.description && (
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block'>
-                  <span role='alert'>{formik.errors.link}</span>
+                  <span role='alert'>{formik.errors.description}</span>
                 </div>
               </div>
             )}
             {/* end::Input */}
           </div>
 
-          {/* begin::Input group */}
           <div className='fv-row mb-7'>
             {/* begin::Label */}
-            <label className='required fw-bold fs-6 mb-2'>نوع حمایت</label>
-            {/* end::Label */}
-
-            {/* begin::Input */}
-            <select
-              placeholder={'نوع حمایت'}
-              {...formik.getFieldProps('supportType')}
-              className={clsx(
-                'form-control form-control-solid mb-3 mb-lg-0',
-                {'is-invalid': formik.touched.supportType && formik.errors.supportType},
-                {
-                  'is-valid': formik.touched.supportType && !formik.errors.supportType,
-                }
-              )}
-              name='supportType'
-              autoComplete='off'
-              disabled={formik.isSubmitting || isUserLoading}
-            >
-              <option value=''>نوع حمایت</option>
-              <option value='Financial'> حامی مالی</option>
-              <option value='Academic'>حامی علمی</option>
-            </select>
+            <div className='form-check form-check-custom form-check-solid'>
+              <input
+                {...formik.getFieldProps('isActive')}
+                className='form-check-input'
+                type='checkbox'
+                id='flexCheckDefault'
+                checked={formik.values.isActive}
+              />
+              <label className='fw-bold form-check-label' htmlFor='flexCheckDefault'>
+                فعال باشد
+              </label>
+            </div>
             {/* end::Input */}
-            {formik.touched.supportType && formik.errors.supportType && (
-              <div className='fv-plugins-message-container'>
-                <span role='alert'>{formik.errors.supportType}</span>
-              </div>
-            )}
           </div>
+
+          {/* begin::Input group */}
+
           {/* end::Input group */}
 
           {/* end::Input group */}
@@ -363,7 +342,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {(formik.isSubmitting || isUserLoading) && (
               <span className='indicator-progress'>
                 {intl.formatMessage({id: 'AUTH.BOTTUN.LOADING'})}
-
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}

@@ -48,10 +48,10 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     if (!file) return
 
     try {
-      const response = await profileImage(file, 'logo')
+      const response = await profileImage(file, 'organizer_logo')
 
       if (response.data.status === 'success') {
-        const imagePath = response.data.data.logo[0].path
+        const imagePath = response.data.data.organizer_logo[0].path
         formik.setFieldValue('logo', imagePath)
       } else {
         // If the request was technically successful, but the application

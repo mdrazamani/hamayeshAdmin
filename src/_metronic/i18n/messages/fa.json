@@ -241,5 +241,10 @@
   "AUTH.INPUT.socials.telegram": "telegram link",
   "AUTH.INPUT.socials.linkedIn": "linkedIn link",
   "AUTH.INPUT.socials.twitter": "twitter link",
-  "AUTH.INPUT.socials.facebook": "facebook link"
+  "AUTH.INPUT.socials.facebook": "facebook link",
+  "GALERY.TABLE.GALERY": "دسته بندی",
+  "GALERY.TABLE.SLUG": "نامک",
+  "GALERY.TABLE.CREATEDAT": "تاریخ ساخت",
+  "MODAL.ADD.GALLERY": "افزودن / ویرایش گالری",
+  "AUTH.INPUT.GALLERY.IMAGE": "عکس ها"
 }

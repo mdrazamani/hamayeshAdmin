@@ -41,6 +41,7 @@ const PrivateRoutes = () => {
   )
 
   const AxiesPage = lazy(() => import('../modules/apps/axies-management/AxiesPage'))
+  const GalleryPage = lazy(() => import('../modules/apps/gallery-management/GalleryPage'))
 
   return (
     <Routes>
@@ -212,6 +213,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <AxiesPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='apps/gallery-management/*'
+            element={
+              <SuspensedView>
+                <GalleryPage />
               </SuspensedView>
             }
           />

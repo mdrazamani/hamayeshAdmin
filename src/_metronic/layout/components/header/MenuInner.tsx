@@ -178,6 +178,7 @@ export function MenuInner() {
           <MenuItem to='/apps/axies-management/axies' title='مدیریت محور ها' />
           <MenuItem to='/apps/question-management/questions' title='مدیریت سوالات متداول' />
           <MenuItem to='/apps/slider-management/sliders' title='مدیریت اسلایدر' />
+          <MenuItem to='/apps/gallery-management/galleries' title='مدیریت گالری' />
         </>
       )}
 
