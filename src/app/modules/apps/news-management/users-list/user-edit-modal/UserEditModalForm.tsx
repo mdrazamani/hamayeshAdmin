@@ -13,8 +13,7 @@ import {useQueryResponse} from '../core/QueryResponseProvider'
 import {useIntl} from 'react-intl'
 import {fetchCities, fetchStates, profileImage} from '../../../../auth/core/_requests'
 import {ILocation} from '../../../../auth'
-import {CKEditor} from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '../../../../../../build/ckeditor'
+import MainCkeditor from '../../../../ckeditor/MainCkeditor'
 import Select from 'react-select'
 import DatePicker from '../../../../d-components/calendar'
 import changeFormat from '../../../../d-components/dateConverter'
@@ -323,17 +322,11 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               {' '}
               {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
-            {/* end::Label */}
 
-            {/* begin::Input */}
-            <CKEditor
-              editor={ClassicEditor.Editor}
-              data={formik.values.description}
-              onChange={(event, editor) => {
-                const data = editor.getData()
-                formik.setFieldValue('description', data)
-              }}
-              onBlur={() => formik.setTouched({...formik.touched, description: true})}
+            <MainCkeditor
+              formik={formik}
+              formikValue={formik.values.description}
+              formikName={'description'}
             />
             {formik.touched.description && formik.errors.description && (
               <div className='fv-plugins-message-container'>

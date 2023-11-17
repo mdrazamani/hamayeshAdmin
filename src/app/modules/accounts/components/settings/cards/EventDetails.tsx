@@ -8,19 +8,11 @@ import {ILocation} from '../../../../auth'
 import {useIntl} from 'react-intl'
 import {updateUser} from '../../../core/_requests'
 import {fetchCities, fetchStates, profileImage, updateEvent} from '../../../../auth/core/_requests'
-import {CKEditor} from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '../../../../../../build/ckeditor'
 
 import DatePicker from '../../../../d-components/calendar'
 import changeFormat from '../../../../d-components/dateConverter'
 
-
-
-const decodeHtmlEntities = (input) => {
-  var doc = new DOMParser().parseFromString(input, "text/html");
-  return doc.documentElement.textContent;
-};
-
+import MainCkeditor from '../../../../ckeditor/MainCkeditor'
 
 const EventDetails = (eventDetails: any) => {
   const intl = useIntl()
@@ -277,7 +269,7 @@ const EventDetails = (eventDetails: any) => {
       }
 
       formik.setFieldValue('writingArticles', currentPaths)
-    } catch (error : any) {
+    } catch (error: any) {
       console.error('Error during image upload:', error)
 
       const errorMessage = error.response ? error.response.data.message : error.message
@@ -460,26 +452,20 @@ const EventDetails = (eventDetails: any) => {
                 {' '}
                 {intl.formatMessage({id: 'hamayesh.html'})}
               </label>
-              {/* end::Label */}
 
-              {/* begin::Input */}
-              <CKEditor
-                editor={ClassicEditor.Editor}
-                data={decodeHtmlEntities(formik.values.aboutHtml)}
-                onChange={(event, editor) => {
-                  const data = editor.getData()
-                  
-                  formik.setFieldValue('aboutHtml', data)
-                }}
-                onBlur={() => formik.setTouched({...formik.touched, aboutHtml: true})}
+              <MainCkeditor
+                formik={formik}
+                formikValue={formik.values.aboutHtml}
+                formikName={'aboutHtml'}
               />
-              {formik.touched.aboutHtml && formik.errors.aboutHtml && (
+
+              {/* {formik.touched.aboutHtml && formik.errors.aboutHtml && (
                 <div className='fv-plugins-message-container'>
                   <div className='fv-help-block'>
-                    <span role='alert'>{formik.errors.aboutHtml}</span>
+                    <span role='alert'>{HTMLContent(formik.errors.aboutHtml)}</span>
                   </div>
                 </div>
-              )}
+              )} */}
               {/* end::Input */}
             </div>
 
@@ -502,30 +488,6 @@ const EventDetails = (eventDetails: any) => {
                 )}
               </div>
             </div>
-
-            {/* <div className='fv-row mb-7' style={{marginTop: '100px'}}>
-              <label className='required fw-bold fs-6 mb-2'>
-                {' '}
-                {intl.formatMessage({id: 'hamayesh.summary'})}
-              </label>
-
-              <CKEditor
-                editor={ClassicEditor.Editor}
-                data={formik.values.description}
-                onChange={(event, editor) => {
-                  const data = editor.getData()
-                  formik.setFieldValue('description', data)
-                }}
-                onBlur={() => formik.setTouched({...formik.touched, description: true})}
-              />
-              {formik.touched.description && formik.errors.description && (
-                <div className='fv-plugins-message-container'>
-                  <div className='fv-help-block'>
-                    <span role='alert'>{formik.errors.description}</span>
-                  </div>
-                </div>
-              )}
-            </div> */}
 
             <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>
@@ -644,25 +606,20 @@ const EventDetails = (eventDetails: any) => {
                 {' '}
                 {intl.formatMessage({id: 'article.help'})}
               </label>
-              {/* end::Label */}
 
-              {/* begin::Input */}
-              <CKEditor
-                editor={ClassicEditor.Editor}
-                data={decodeHtmlEntities(formik.values.writingArticles.description)}
-                onChange={(event, editor) => {
-                  const data = editor.getData()
-                  formik.setFieldValue('writingArticles.description', data)
-                }}
-                onBlur={() => formik.setTouched({...formik.touched, description: true})}
+              <MainCkeditor
+                formik={formik}
+                formikValue={formik.values.writingArticles.description}
+                formikName={'writingArticles.description'}
               />
-              {formik.touched.description && formik.errors.description && (
+
+              {/* {formik.touched.description && formik.errors.description && (
                 <div className='fv-plugins-message-container'>
                   <div className='fv-help-block'>
                     <span role='alert'>{formik.errors.description}</span>
                   </div>
                 </div>
-              )}
+              )} */}
               {/* end::Input */}
             </div>
 

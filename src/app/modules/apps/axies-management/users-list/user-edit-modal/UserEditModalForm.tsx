@@ -11,8 +11,8 @@ import {UsersListLoading} from '../components/loading/UsersListLoading'
 import {createUser, getAllUsers, updateUser} from '../core/_requests'
 import {useQueryResponse} from '../core/QueryResponseProvider'
 import {useIntl} from 'react-intl'
-import {CKEditor} from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '../../../../../../build/ckeditor'
+
+import MainCkeditor from '../../../../ckeditor/MainCkeditor'
 
 type Props = {
   isUserLoading: boolean
@@ -161,18 +161,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               {' '}
               {intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
             </label>
-            {/* end::Label */}
 
-            {/* begin::Input */}
-            <CKEditor
-              editor={ClassicEditor.Editor}
-              data={formik.values.description}
-              onChange={(event, editor) => {
-                const data = editor.getData()
-                formik.setFieldValue('description', data)
-              }}
-              onBlur={() => formik.setTouched({...formik.touched, description: true})}
+            <MainCkeditor
+              formik={formik}
+              formikValue={formik.values.description}
+              formikName={'description'}
             />
+
             {formik.touched.description && formik.errors.description && (
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block'>

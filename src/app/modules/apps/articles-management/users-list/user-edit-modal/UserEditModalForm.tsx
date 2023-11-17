@@ -14,9 +14,9 @@ import {useIntl} from 'react-intl'
 import Select from 'react-select'
 import {useAuth} from '../../../../auth'
 
-import {CKEditor} from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '../../../../../../build/ckeditor'
 import {profileImage} from '../../../../auth/core/_requests'
+
+import MainCkeditor from '../../../../ckeditor/MainCkeditor'
 
 type Props = {
   isUserLoading: boolean
@@ -339,18 +339,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 {' '}
                 {intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
               </label>
-              {/* end::Label */}
 
-              {/* begin::Input */}
-
-              <CKEditor
-                editor={ClassicEditor.Editor}
-                data={formik.values?.arbitration?.message}
-                onChange={(event, editor) => {
-                  const data = editor.getData()
-                  formik.setFieldValue('arbitration.message', data)
-                }}
+              <MainCkeditor
+                formik={formik}
+                formikValue={formik.values?.arbitration?.message}
+                formikName={'arbitration.message'}
               />
+
               {formik.touched?.arbitration?.message && formik.errors?.arbitration?.message && (
                 <div className='fv-plugins-message-container'>
                   <div className='fv-help-block'>
