@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '../../../build/ckeditor'
+import './style.css'
 
 const decodeHtmlEntities = (input: any) => {
   if (input !== null) {
@@ -28,28 +29,38 @@ export default function MainCkeditor({formik, formikValue, formikName}) {
     formik.setFieldValue(formikName, editorContent)
   }
 
-  const jsGetElement = (type) => {
+  const jsGetElement = (type: any) => {
     let elements = document.getElementsByClassName('ck-restricted-editing_mode_standard')
 
-    if (elements.length > 0) {
-      for (let i = 0; i < elements.length; i++) {
-        const element = elements[i] as HTMLElement
-
-        if (type == 'dark') {
-          element.style.backgroundColor = 'rgb(30, 30, 45)'
-          element.style.color = 'white'
-        } else {
-          element.style.backgroundColor = 'white'
-          element.style.color = 'rgb(7, 20, 55)'
-        }
+    const applyStyles = (element) => {
+      if (type === 'dark') {
+        element.style.backgroundColor = 'rgb(30, 30, 45)'
+        element.style.color = 'white'
+      } else {
+        element.style.backgroundColor = 'white'
+        element.style.color = 'rgb(7, 20, 55)'
       }
     }
-  }
 
-  console.log(
-    "ocalStorage.getItem('kt_theme_mode_value'): ",
-    localStorage.getItem('kt_theme_mode_value')
-  )
+    // MutationObserver برای رصد تغییرات در استایل المنت‌ها
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          applyStyles(mutation.target)
+        }
+      })
+    })
+
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i]
+
+      // اعمال استایل‌ها هنگام بارگذاری
+      applyStyles(element)
+
+      // استفاده از MutationObserver برای هر المنت
+      observer.observe(element, {attributes: true})
+    }
+  }
 
   if (
     localStorage.getItem('kt_theme_mode_value') &&
