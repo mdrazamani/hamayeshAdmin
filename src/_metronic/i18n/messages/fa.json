@@ -67,9 +67,7 @@
   "AUTH.INPUT.STATE": "استان",
   "AUTH.INPUT.CITY": "شهر",
   "AUTH.BOTTUN.SUBMIT": "تایید",
-
   "AUTH.BOTTUN.CANCEL": "لغو",
-
   "AUTH.BOTTUN.LOADING": "در حال انجام ...",
   "AUTH.INPUT.CONFIRM_PASSWORD": "تأیید رمز عبور",
   "AUTH.INPUT.HELPER": "از 8 یا بیشتر کاراکتر با ترکیبی از حروف، اعداد و نمادها استفاده کنید.",
@@ -78,7 +76,6 @@
   "AUTH.INPUT.PROFILEDETAIL": "اطلاعات کاربری",
   "AUTH.INPUT.IMAGE": "آواتار",
   "AUTH.INPUT.UPLOAD": "آپلود عکس",
-
   "AUTH.VALIDATION.INVALID": "{name} معتبر نیست",
   "AUTH.VALIDATION.REQUIRED": "{name} اجباری است",
   "AUTH.VALIDATION.MIN_LENGTH": "حداقل طول {name} {min} کاراکتر است",
@@ -234,7 +231,6 @@
   "hamayesh.dates.lastRegistration": "پایان ثبت نام",
   "AUTH.INPUT.ARTICLES": "آپلود مقاله",
   "AUTH.INPUT.PRESENTAIONS": "آپلود فایل ارائه",
-
   "article.help": "متن راهنما نگارش مقاله",
   "article.files": "آپلود فایل های راهنما",
   "AUTH.INPUT.socials.whatsapp": "whatsapp number",
@@ -246,5 +242,7 @@
   "GALERY.TABLE.SLUG": "نامک",
   "GALERY.TABLE.CREATEDAT": "تاریخ ساخت",
   "MODAL.ADD.GALLERY": "افزودن / ویرایش گالری",
-  "AUTH.INPUT.GALLERY.IMAGE": "عکس ها"
+  "AUTH.INPUT.GALLERY.IMAGE": "عکس ها",
+  "MODAL.ADD.NEWS": "افزودن / ویرایش خبر",
+  "AUTH.INPUT.PUBLISHDATE": "تاریخ انتشار"
 }

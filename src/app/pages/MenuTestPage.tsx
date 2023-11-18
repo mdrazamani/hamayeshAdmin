@@ -4,6 +4,9 @@ import SVG from 'react-inlinesvg'
 import {toAbsoluteUrl} from '../../_metronic/helpers'
 
 const MenuTestPage: FC = () => {
+  const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
+  const savedLanguage = savedLangSetting.selectedLang
+  const isRtlLanguage = ['fa'].includes(savedLanguage)
   return (
     <div className='row'>
       <div className='card card-custom'>
@@ -34,7 +37,7 @@ const MenuTestPage: FC = () => {
                 </div>
                 <div
                   data-kt-menu-trigger='click'
-                  data-kt-menu-placement='bottom-end'
+                  data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
                   className='menu-item me-lg-2'
                 >
                   <span className='menu-link py-3'>
@@ -47,7 +50,7 @@ const MenuTestPage: FC = () => {
                   >
                     <div
                       data-kt-menu-trigger='click'
-                      data-kt-menu-placement='left-start'
+                      data-kt-menu-placement={isRtlLanguage ? 'left-start' : 'right-start'}
                       className='menu-item'
                     >
                       <span className='menu-link py-3'>
@@ -95,7 +98,7 @@ const MenuTestPage: FC = () => {
                         </div>
                         <div
                           data-kt-menu-trigger='click'
-                          data-kt-menu-placement='left-start'
+                          data-kt-menu-placement={isRtlLanguage ? 'left-start' : 'right-start'}
                           className='menu-item'
                         >
                           <span className='menu-link py-3'>
@@ -211,7 +214,7 @@ const MenuTestPage: FC = () => {
                         </div>
                         <div
                           data-kt-menu-trigger='hover'
-                          data-kt-menu-placement='left-start'
+                          data-kt-menu-placement={isRtlLanguage ? 'left-start' : 'right-start'}
                           className='menu-item'
                         >
                           <span className='menu-link py-3'>
@@ -329,7 +332,7 @@ const MenuTestPage: FC = () => {
                     </div>
                     <div
                       data-kt-menu-trigger='click'
-                      data-kt-menu-placement='left-start'
+                      data-kt-menu-placement={isRtlLanguage ? 'left-start' : 'right-start'}
                       className='menu-item'
                     >
                       <span className='menu-link py-3'>
@@ -484,7 +487,7 @@ const MenuTestPage: FC = () => {
                 </div>
                 <div
                   data-kt-menu-trigger='click'
-                  data-kt-menu-placement='bottom-end'
+                  data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
                   className='menu-item me-lg-2'
                 >
                   <span className='menu-link py-3'>
@@ -538,7 +541,7 @@ const MenuTestPage: FC = () => {
                 </div>
                 <div
                   data-kt-menu-trigger='click'
-                  data-kt-menu-placement='bottom-end'
+                  data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
                   className='menu-item me-lg-2'
                 >
                   <span className='menu-link py-3'>
@@ -658,7 +661,7 @@ const MenuTestPage: FC = () => {
               data-kt-menu-target='#kt_header_search_menu'
               data-kt-menu-trigger='click'
               data-kt-menu-permanent='true'
-              data-kt-menu-placement='bottom-end'
+              data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
             >
               <div className='btn btn-icon btn-active-light-primary w-30px h-30px w-lg-40px h-lg-40px'>
                 <span className=' fs-2 text-lg-1'>
@@ -761,7 +764,7 @@ const MenuTestPage: FC = () => {
                 <div className='menu-sub menu-sub-accordion menu-active-bg'>
                   <div
                     data-kt-menu-trigger='click'
-                    data-kt-menu-placement='left-start'
+                    data-kt-menu-placement={isRtlLanguage ? 'left-start' : 'right-start'}
                     data-kt-menu-overflow='true'
                     className='menu-item'
                   >

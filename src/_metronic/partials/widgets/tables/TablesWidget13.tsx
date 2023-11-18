@@ -7,6 +7,9 @@ type Props = {
 }
 
 const TablesWidget13: React.FC<Props> = ({className}) => {
+  const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
+  const savedLanguage = savedLangSetting.selectedLang
+  const isRtlLanguage = ['fa'].includes(savedLanguage)
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -57,7 +60,7 @@ const TablesWidget13: React.FC<Props> = ({className}) => {
             <div
               className='menu-item px-3'
               data-kt-menu-trigger='hover'
-              data-kt-menu-placement='left-start'
+              data-kt-menu-placement={isRtlLanguage ? 'left-start' : 'right-start'}
               data-kt-menu-flip='left-start, top'
             >
               {/* begin::Menu item */}

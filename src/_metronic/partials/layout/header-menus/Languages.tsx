@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import axios from 'axios'
 import clsx from 'clsx'
 import {FC} from 'react'
 import {toAbsoluteUrl} from '../../../helpers'
@@ -10,11 +11,11 @@ const languages = [
     name: 'Persian',
     flag: toAbsoluteUrl('/media/flags/iran.svg'),
   },
-  // {
-  //   lang: 'en',
-  //   name: 'English',
-  //   flag: toAbsoluteUrl('/media/flags/united-states.svg'),
-  // },
+  {
+    lang: 'en',
+    name: 'English',
+    flag: toAbsoluteUrl('/media/flags/united-states.svg'),
+  },
   // {
   //   lang: 'zh',
   //   name: 'Mandarin',
@@ -45,6 +46,7 @@ const languages = [
 const Languages: FC = () => {
   const lang = useLang()
   const currentLanguage = languages.find((x) => x.lang === lang)
+
   return (
     <div
       className='menu-item px-5'

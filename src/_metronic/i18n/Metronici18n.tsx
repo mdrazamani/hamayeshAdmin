@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, {FC, createContext, useContext} from 'react'
 import {WithChildren} from '../helpers'
 
@@ -23,9 +24,22 @@ function getConfig(): Props {
 }
 
 // Side effect
-export function setLanguage(lang: string) {
+export async function setLanguage(lang: string) {
   localStorage.setItem(I18N_CONFIG_KEY, JSON.stringify({selectedLang: lang}))
-  window.location.reload()
+  const API_URL = process.env.REACT_APP_API_URL
+  const URL = `${API_URL}/set-language`
+  try {
+    // Making API request to inform the backend about language change
+    await axios.post(URL, {language: lang})
+
+    // Updating local storage and refreshing page
+    // Set a delay (e.g., 1000 milliseconds = 1 second) before reloading the page
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000) // Adjust the delay as needed
+  } catch (error) {
+    console.error('Error changing language:', error)
+  }
 }
 
 const I18nContext = createContext<Props>(initialState)

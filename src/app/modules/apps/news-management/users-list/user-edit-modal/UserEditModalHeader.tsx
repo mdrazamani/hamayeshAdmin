@@ -9,7 +9,7 @@ const UserEditModalHeader = () => {
   return (
     <div className='modal-header'>
       {/* begin::Modal title */}
-      <h2 className='fw-bolder'> {intl.formatMessage({id: 'MODAL.ADD.CATEGORY'})}</h2>
+      <h2 className='fw-bolder'> {intl.formatMessage({id: 'MODAL.ADD.NEWS'})}</h2>
       {/* end::Modal title */}
 
       {/* begin::Close */}

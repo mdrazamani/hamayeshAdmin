@@ -2,6 +2,9 @@
 import {FC} from 'react'
 
 const Dropdown3: FC = () => {
+  const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
+  const savedLanguage = savedLangSetting.selectedLang
+  const isRtlLanguage = ['fa'].includes(savedLanguage)
   return (
     <div
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3'
@@ -37,7 +40,7 @@ const Dropdown3: FC = () => {
       <div
         className='menu-item px-3'
         data-kt-menu-trigger='hover'
-        data-kt-menu-placement='left-start'
+        data-kt-menu-placement={isRtlLanguage ? 'left-start' : 'right-start'}
         data-kt-menu-flip='center, top'
       >
         <a href='#' className='menu-link px-3'>

@@ -341,7 +341,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
-              {intl.formatMessage({id: 'AUTH.INPUT.CATEGORY'})}
+              {intl.formatMessage({id: 'AUTH.INPUT.PUBLISHDATE'})}
             </label>
             {/* end::Label */}
 
