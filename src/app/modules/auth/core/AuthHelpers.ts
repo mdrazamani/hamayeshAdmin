@@ -49,9 +49,9 @@ const removeAuth = () => {
   }
 }
 
-export function setupAxios(axios: any) {
+export function setupAxios(axios: any, savedLanguage: any) {
   axios.defaults.headers.Accept = 'application/json'
-  axios.defaults.headers.common['Accept-Language'] = 'fa'
+  axios.defaults.headers.common['Accept-Language'] = savedLanguage
   axios.interceptors.request.use(
     (config: {headers: {Authorization: string}}) => {
       const auth = getAuth()

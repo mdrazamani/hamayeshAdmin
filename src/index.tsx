@@ -52,7 +52,7 @@ htmlTag.style.direction = isRtlLanguage ? 'rtl' : 'ltr'
  *
  * @see https://github.com/axios/axios#interceptors
  */
-setupAxios(axios)
+setupAxios(axios, savedLanguage)
 Chart.register(...registerables)
 
 const queryClient = new QueryClient()
