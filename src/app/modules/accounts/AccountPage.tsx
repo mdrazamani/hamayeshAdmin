@@ -4,23 +4,28 @@ import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Overview} from './components/Overview'
 import {Settings} from './components/settings/Settings'
 import {AccountHeader} from './AccountHeader'
-
-const accountBreadCrumbs: Array<PageLink> = [
-  {
-    title: 'ناحیه کاربری',
-    path: '/crafted/account/overview',
-    isSeparator: false,
-    isActive: false,
-  },
-  {
-    title: '',
-    path: '',
-    isSeparator: true,
-    isActive: false,
-  },
-]
+import {useIntl} from 'react-intl'
 
 const AccountPage: React.FC = () => {
+  const intl = useIntl()
+
+  const accountBreadCrumbs: Array<PageLink> = [
+    {
+      title: intl.formatMessage({
+        id: 'ACCOUNT.SETTINGS',
+      }),
+      path: '/crafted/account/overview',
+      isSeparator: false,
+      isActive: false,
+    },
+    {
+      title: '',
+      path: '',
+      isSeparator: true,
+      isActive: false,
+    },
+  ]
+
   return (
     <Routes>
       <Route
@@ -35,7 +40,11 @@ const AccountPage: React.FC = () => {
           path='overview'
           element={
             <>
-              <PageTitle breadcrumbs={accountBreadCrumbs}>نمایش</PageTitle>
+              <PageTitle breadcrumbs={accountBreadCrumbs}>
+                {intl.formatMessage({
+                  id: 'ACCOUNT.SHOW',
+                })}
+              </PageTitle>
               <Overview />
             </>
           }
@@ -44,7 +53,11 @@ const AccountPage: React.FC = () => {
           path='settings'
           element={
             <>
-              <PageTitle breadcrumbs={accountBreadCrumbs}>تنظیمات</PageTitle>
+              <PageTitle breadcrumbs={accountBreadCrumbs}>
+                {intl.formatMessage({
+                  id: 'SETTING.ACCOUNT',
+                })}
+              </PageTitle>
               <Settings />
             </>
           }

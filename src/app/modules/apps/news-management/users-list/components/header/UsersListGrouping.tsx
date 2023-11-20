@@ -1,3 +1,4 @@
+import {useIntl} from 'react-intl'
 import {useMutation, useQueryClient} from 'react-query'
 import {QUERIES} from '../../../../../../../_metronic/helpers'
 import {useListView} from '../../core/ListViewProvider'
@@ -17,11 +18,12 @@ const UsersListGrouping = () => {
       clearSelected()
     },
   })
+  const intl = useIntl()
 
   return (
     <div className='d-flex justify-content-end align-items-center'>
       <div className='fw-bolder me-5'>
-        <span className='me-2'>{selected.length}</span> انتخاب شده
+        <span className='me-2'>{selected.length}</span> Selected
       </div>
 
       <button
@@ -29,7 +31,9 @@ const UsersListGrouping = () => {
         className='btn btn-danger'
         onClick={async () => await deleteSelectedItems.mutateAsync()}
       >
-        حذف موارد
+        {intl.formatMessage({
+          id: 'DELETE.SELECTED',
+        })}{' '}
       </button>
     </div>
   )

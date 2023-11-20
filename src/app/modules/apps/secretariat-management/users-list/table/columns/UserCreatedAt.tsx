@@ -5,6 +5,9 @@ type Props = {
 }
 
 const UserCreatedAt: FC<Props> = ({created_at}) => {
+  const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
+  const savedLanguage = savedLangSetting.selectedLang
+
   // Check if 'created_at' is provided
   if (!created_at) return null
 
@@ -25,15 +28,22 @@ const UserCreatedAt: FC<Props> = ({created_at}) => {
   }
 
   // Specify Persian locale and calendar
-  const persianLocale = 'fa-IR'
-  const persianOptions = {
-    ...options,
-    calendar: 'persian',
-    numberingSystem: 'latn', // use 'latn' for Latin numerals, or 'arab' for Arabic numerals
+  // Locale and additional options based on savedLanguage
+  let locale = savedLanguage === 'fa' ? 'fa-IR' : 'en-US'
+  let additionalOptions = {}
+
+  if (savedLanguage === 'fa') {
+    additionalOptions = {
+      calendar: 'persian',
+      numberingSystem: 'latn',
+    }
   }
 
+  // Combine the common and additional options
+  const finalOptions = {...options, ...additionalOptions}
+
   // Format the date based on the user's locale
-  const formattedDate = new Intl.DateTimeFormat(persianLocale, persianOptions).format(date)
+  const formattedDate = new Intl.DateTimeFormat(locale, finalOptions).format(date)
 
   return <div className='badge badge-light fw-bolder'>{formattedDate}</div>
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '../../../build/ckeditor'
+import Editor from '../../../build/ckeditor'
 import './style.css'
 
 const decodeHtmlEntities = (input: any) => {
@@ -62,19 +62,19 @@ export default function MainCkeditor({formik, formikValue, formikName}) {
     }
   }
 
-  if (
-    localStorage.getItem('kt_theme_mode_value') &&
-    localStorage.getItem('kt_theme_mode_value') == 'dark'
-  )
-    jsGetElement('dark')
-  else jsGetElement('light')
+  // if (
+  //   localStorage.getItem('kt_theme_mode_value') &&
+  //   localStorage.getItem('kt_theme_mode_value') == 'dark'
+  // )
+  //   jsGetElement('dark')
+  // else jsGetElement('light')
 
   return (
     <CKEditor
-      editor={ClassicEditor.Editor}
+      editor={Editor.Editor}
       data={editorContent}
       onChange={(event, editor) => {
-        const data = editor.getData()
+        const data = (editor as any).getData()
         setEditorContent(data)
       }}
       onBlur={handleEditorBlur}

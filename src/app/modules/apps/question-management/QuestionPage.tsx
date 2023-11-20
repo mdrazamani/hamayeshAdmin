@@ -1,23 +1,33 @@
+import {useIntl} from 'react-intl'
 import {Navigate, Outlet, Route, Routes} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../../_metronic/layout/core'
 import {UsersListWrapper} from './users-list/UsersList'
 
-const usersBreadcrumbs: Array<PageLink> = [
-  {
-    title: 'مدیریت سوالات متداول',
-    path: '/apps/question-management/questions',
-    isSeparator: false,
-    isActive: false,
-  },
-  {
-    title: '',
-    path: '',
-    isSeparator: true,
-    isActive: false,
-  },
-]
-
 const QuestionPage = () => {
+  const intl = useIntl()
+  const questionManagementTitle = intl.formatMessage({
+    id: 'MENU.QUESTIONS.MANAGEMENT',
+    defaultMessage: 'مدیریت سوالات',
+  })
+  const usersListManagementTitle = intl.formatMessage({
+    id: 'MENU.QUESTIONS.MANAGEMENT.LIST',
+    defaultMessage: 'مدیریت کاربران',
+  })
+  const usersBreadcrumbs: Array<PageLink> = [
+    {
+      title: questionManagementTitle,
+      path: '/apps/question-management/questions',
+      isSeparator: false,
+      isActive: false,
+    },
+    {
+      title: '',
+      path: '',
+      isSeparator: true,
+      isActive: false,
+    },
+  ]
+
   return (
     <Routes>
       <Route element={<Outlet />}>
@@ -25,7 +35,7 @@ const QuestionPage = () => {
           path='questions'
           element={
             <>
-              <PageTitle breadcrumbs={usersBreadcrumbs}>لیست سوالات</PageTitle>
+              <PageTitle breadcrumbs={usersBreadcrumbs}>{usersListManagementTitle}</PageTitle>
               <UsersListWrapper />
             </>
           }

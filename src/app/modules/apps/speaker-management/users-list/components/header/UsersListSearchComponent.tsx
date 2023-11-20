@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from 'react'
+import {useIntl} from 'react-intl'
 import {initialQueryState, KTIcon, useDebounce} from '../../../../../../../_metronic/helpers'
 import {useQueryRequest} from '../../core/QueryRequestProvider'
 
@@ -21,7 +22,7 @@ const UsersListSearchComponent = () => {
     [debouncedSearchTerm] // Only call effect if debounced search term changes
     // More details about useDebounce: https://usehooks.com/useDebounce/
   )
-
+  const intl = useIntl()
   return (
     <div className='card-title'>
       {/* begin::Search */}
@@ -31,7 +32,9 @@ const UsersListSearchComponent = () => {
           type='text'
           data-kt-user-table-filter='search'
           className='form-control form-control-solid w-250px ps-14'
-          placeholder='جستجو سخنرانان'
+          placeholder={intl.formatMessage({
+            id: 'SEARCH.SPEAKER',
+          })}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

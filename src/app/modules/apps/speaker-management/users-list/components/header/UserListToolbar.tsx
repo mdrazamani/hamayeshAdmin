@@ -1,3 +1,4 @@
+import {useIntl} from 'react-intl'
 import {KTIcon} from '../../../../../../../_metronic/helpers'
 import {useListView} from '../../core/ListViewProvider'
 
@@ -6,7 +7,7 @@ const UsersListToolbar = () => {
   const openAddUserModal = () => {
     setItemIdForUpdate(null)
   }
-
+  const intl = useIntl()
   return (
     <div className='d-flex justify-content-end' data-kt-user-table-toolbar='base'>
       {/* <UsersListFilter /> */}
@@ -21,7 +22,9 @@ const UsersListToolbar = () => {
       {/* begin::Add user */}
       <button type='button' className='btn btn-primary' onClick={openAddUserModal}>
         <KTIcon iconName='plus' className='fs-2' />
-        افزودن سخنران
+        {intl.formatMessage({
+          id: 'ADD.SPEAKER',
+        })}{' '}
       </button>
       {/* end::Add user */}
     </div>

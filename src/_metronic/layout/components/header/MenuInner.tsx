@@ -6,6 +6,8 @@ import {useAuth} from '../../../../app/modules/auth'
 
 export function MenuInner() {
   const {currentUser} = useAuth()
+  const intl = useIntl()
+
   return (
     <>
       {/* <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
@@ -97,53 +99,66 @@ export function MenuInner() {
       </MenuInnerWithSub> */}
       {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
         <MenuInnerWithSub
-          title='کاربران'
+          title={intl.formatMessage({id: 'MENU.USERS'})}
           to='/users'
           menuPlacement='bottom-start'
           menuTrigger='click'
         >
-          <MenuItem icon='shield-tick' to='/users/user-management/users' title='مدیریت کاربران' />
+          <MenuItem
+            icon='shield-tick'
+            to='/users/user-management/users'
+            title={intl.formatMessage({id: 'MENU.USERS.MANAGEMENT'})}
+          />
           <MenuItem
             icon='shield-tick'
             to='/users/supporter-management/supporters'
-            title='مدیریت حامیان'
+            title={intl.formatMessage({id: 'MENU.SUPPORTERS.MANAGEMENT'})}
           />
           <MenuItem
             icon='shield-tick'
             to='/users/speaker-management/speakers'
-            title='مدیریت سخنرانان'
+            title={intl.formatMessage({id: 'MENU.SPEAKERS.MANAGEMENT'})}
           />
           <MenuItem
             icon='shield-tick'
             to='/users/secretariat-management/secretariats'
-            title='مدیریت دبیرخانه ها'
+            title={intl.formatMessage({id: 'MENU.SECRETARIATES.MANAGEMENT'})}
           />
           <MenuItem
             icon='shield-tick'
             to='/users/organizer-management/organizers'
-            title='مدیریت برگذار کننده ها'
+            title={intl.formatMessage({id: 'MENU.ORGANIZER.MANAGEMENT'})}
           />
         </MenuInnerWithSub>
       )}
       {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
-        <MenuInnerWithSub title='اخبار' to='/news' menuPlacement='bottom-start' menuTrigger='click'>
+        <MenuInnerWithSub
+          title={intl.formatMessage({id: 'MENU.NEWS'})}
+          to='/news'
+          menuPlacement='bottom-start'
+          menuTrigger='click'
+        >
           <MenuItem
             icon='shield-tick'
             to='/news/newstag-management/newstags'
-            title='مدیریت تگ های خبر'
+            title={intl.formatMessage({id: 'MENU.NEWSTAG.MANEGMENT'})}
           />
           <MenuItem
             icon='shield-tick'
             to='/news/newscomment-management/newscomments'
-            title='مدیریت کامنت های خبر'
+            title={intl.formatMessage({id: 'MENU.NEWSCOMMENT.MANEGMENT'})}
           />
           <MenuItem
             icon='shield-tick'
             to='/news/newscategory-management/newscategories'
-            title='مدیریت دسته بندی اخبار'
+            title={intl.formatMessage({id: 'MENU.NEWSCATEGORY.MANEGMENT'})}
           />
 
-          <MenuItem icon='shield-tick' to='/news/news-management/news' title='مدیریت اخبار' />
+          <MenuItem
+            icon='shield-tick'
+            to='/news/news-management/news'
+            title={intl.formatMessage({id: 'MENU.NEWS.MANEGMENT'})}
+          />
         </MenuInnerWithSub>
       )}
 
@@ -152,7 +167,7 @@ export function MenuInner() {
         currentUser?.role === 'scientific' ||
         currentUser?.role === 'user') && (
         <MenuInnerWithSub
-          title='مقالات'
+          title={intl.formatMessage({id: 'MENU.ARTICLE'})}
           to='/articles'
           menuPlacement='bottom-start'
           menuTrigger='click'
@@ -161,24 +176,36 @@ export function MenuInner() {
             <MenuItem
               icon='shield-tick'
               to='/articles/articlecategories-management/articlecategories'
-              title='مدیریت دسته بندی مقالات'
+              title={intl.formatMessage({id: 'MENU.ARTICLECATEGORY.MANAGEMENT'})}
             />
           )}
 
           <MenuItem
             icon='shield-tick'
             to='/articles/article-management/articles'
-            title='مدیریت مقالات'
+            title={intl.formatMessage({id: 'MENU.ARTICLES.MANAGEMENT'})}
           />
         </MenuInnerWithSub>
       )}
       {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
         <>
           {' '}
-          <MenuItem to='/apps/axies-management/axies' title='مدیریت محور ها' />
-          <MenuItem to='/apps/question-management/questions' title='مدیریت سوالات متداول' />
-          <MenuItem to='/apps/slider-management/sliders' title='مدیریت اسلایدر' />
-          <MenuItem to='/apps/gallery-management/galleries' title='مدیریت گالری' />
+          <MenuItem
+            to='/apps/axies-management/axies'
+            title={intl.formatMessage({id: 'MENU.AXIES.MANAGEMENT'})}
+          />
+          <MenuItem
+            to='/apps/question-management/questions'
+            title={intl.formatMessage({id: 'MENU.QUESTIONS.MANAGEMENT'})}
+          />
+          <MenuItem
+            to='/apps/slider-management/sliders'
+            title={intl.formatMessage({id: 'MENU.SLIDER.MANAGEMENT'})}
+          />
+          <MenuItem
+            to='/apps/gallery-management/galleries'
+            title={intl.formatMessage({id: 'MENU.GALLERY.MANAGEMENT'})}
+          />
         </>
       )}
 

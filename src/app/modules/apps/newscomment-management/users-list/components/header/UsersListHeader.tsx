@@ -9,11 +9,9 @@ const UsersListHeader = () => {
     <div className='card-header border-0 pt-6'>
       <UsersListSearchComponent />
       {/* begin::Card toolbar */}
-      <div className='card-toolbar'>
-        {/* begin::Group actions */}
-        {selected.length > 0 && <UsersListGrouping />}
-        {/* end::Group actions */}
-      </div>
+      {/* <div className='card-toolbar'>
+        {selected.length > 0 ? <UsersListGrouping /> : <UsersListToolbar />}
+      </div> */}
       {/* end::Card toolbar */}
     </div>
   )

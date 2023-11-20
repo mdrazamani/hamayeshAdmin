@@ -37,7 +37,7 @@ const MenuTestPage: FC = () => {
                 </div>
                 <div
                   data-kt-menu-trigger='click'
-                  data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
+                  data-kt-menu-placement={isRtlLanguage ? 'bottom-end' : 'bottom-start'}
                   className='menu-item me-lg-2'
                 >
                   <span className='menu-link py-3'>
@@ -487,7 +487,7 @@ const MenuTestPage: FC = () => {
                 </div>
                 <div
                   data-kt-menu-trigger='click'
-                  data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
+                  data-kt-menu-placement={isRtlLanguage ? 'bottom-end' : 'bottom-start'}
                   className='menu-item me-lg-2'
                 >
                   <span className='menu-link py-3'>
@@ -541,7 +541,7 @@ const MenuTestPage: FC = () => {
                 </div>
                 <div
                   data-kt-menu-trigger='click'
-                  data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
+                  data-kt-menu-placement={isRtlLanguage ? 'bottom-end' : 'bottom-start'}
                   className='menu-item me-lg-2'
                 >
                   <span className='menu-link py-3'>
@@ -661,7 +661,7 @@ const MenuTestPage: FC = () => {
               data-kt-menu-target='#kt_header_search_menu'
               data-kt-menu-trigger='click'
               data-kt-menu-permanent='true'
-              data-kt-menu-placement={isRtlLanguage ? 'bottom-start' : 'bottom-end'}
+              data-kt-menu-placement={isRtlLanguage ? 'bottom-end' : 'bottom-start'}
             >
               <div className='btn btn-icon btn-active-light-primary w-30px h-30px w-lg-40px h-lg-40px'>
                 <span className=' fs-2 text-lg-1'>

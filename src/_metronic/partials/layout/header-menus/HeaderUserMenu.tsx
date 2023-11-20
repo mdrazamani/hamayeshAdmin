@@ -4,8 +4,11 @@ import {Link} from 'react-router-dom'
 import {useAuth} from '../../../../app/modules/auth'
 import {Languages} from './Languages'
 import {toAbsoluteUrl} from '../../../helpers'
+import {useIntl} from 'react-intl'
 
 const HeaderUserMenu: FC = () => {
+  const intl = useIntl()
+
   const {currentUser, logout} = useAuth()
   return (
     <div
@@ -126,13 +129,17 @@ const HeaderUserMenu: FC = () => {
 
       <div className='menu-item px-5 my-1'>
         <Link to='/crafted/account/settings' className='menu-link px-5'>
-          ناحیه کاربری
+          {intl.formatMessage({
+            id: 'ACCOUNT.SETTINGS',
+          })}{' '}
         </Link>
       </div>
 
       <div className='menu-item px-5'>
         <a onClick={logout} className='menu-link px-5'>
-          خروج
+          {intl.formatMessage({
+            id: 'ACCOUNT.EXIT',
+          })}{' '}
         </a>
       </div>
     </div>

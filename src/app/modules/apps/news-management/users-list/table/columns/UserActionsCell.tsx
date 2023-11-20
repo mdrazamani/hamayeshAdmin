@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC, useEffect} from 'react'
+import {useIntl} from 'react-intl'
 import {useMutation, useQueryClient} from 'react-query'
 import {MenuComponent} from '../../../../../../../_metronic/assets/ts/components'
 import {ID, KTIcon, QUERIES} from '../../../../../../../_metronic/helpers'
@@ -15,6 +16,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
   const {setItemIdForUpdate} = useListView()
   const {query} = useQueryResponse()
   const queryClient = useQueryClient()
+  const intl = useIntl()
 
   useEffect(() => {
     MenuComponent.reinitialization()
@@ -40,7 +42,9 @@ const UserActionsCell: FC<Props> = ({id}) => {
         data-kt-menu-trigger='click'
         data-kt-menu-placement='bottom-end'
       >
-        اقدام ها
+        {intl.formatMessage({
+          id: 'COL.ACTIONS',
+        })}{' '}
         <KTIcon iconName='down' className='fs-5 m-0' />
       </a>
       {/* begin::Menu */}
@@ -51,7 +55,9 @@ const UserActionsCell: FC<Props> = ({id}) => {
         {/* begin::Menu item */}
         <div className='menu-item px-3'>
           <a className='menu-link px-3' onClick={openEditModal}>
-            ویرایش
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.EDIT',
+            })}{' '}
           </a>
         </div>
         {/* end::Menu item */}
@@ -63,7 +69,9 @@ const UserActionsCell: FC<Props> = ({id}) => {
             data-kt-users-table-filter='delete_row'
             onClick={async () => await deleteItem.mutateAsync()}
           >
-            حذف
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.REMOVE',
+            })}{' '}
           </a>
         </div>
         {/* end::Menu item */}

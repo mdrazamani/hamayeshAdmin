@@ -1,23 +1,33 @@
+import {useIntl} from 'react-intl'
 import {Navigate, Outlet, Route, Routes} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../../_metronic/layout/core'
 import {UsersListWrapper} from './users-list/UsersList'
 
-const usersBreadcrumbs: Array<PageLink> = [
-  {
-    title: 'مدیریت دسته بندی اخبار',
-    path: '/news/newscategory-management/newscategories',
-    isSeparator: false,
-    isActive: false,
-  },
-  {
-    title: '',
-    path: '',
-    isSeparator: true,
-    isActive: false,
-  },
-]
-
 const NewsCategoryPage = () => {
+  const intl = useIntl()
+  const newsCategoryManagementTitle = intl.formatMessage({
+    id: 'MENU.NEWSCATEGORY.MANEGMENT',
+    defaultMessage: 'مدیریت دسته بندی ها',
+  })
+  const usersListManagementTitle = intl.formatMessage({
+    id: 'MENU.NEWSCATEGORY.MANAGEMENT.LIST',
+    defaultMessage: 'مدیریت کاربران',
+  })
+  const usersBreadcrumbs: Array<PageLink> = [
+    {
+      title: newsCategoryManagementTitle,
+      path: '/news/newscategory-management/newscategories',
+      isSeparator: false,
+      isActive: false,
+    },
+    {
+      title: '',
+      path: '',
+      isSeparator: true,
+      isActive: false,
+    },
+  ]
+
   return (
     <Routes>
       <Route element={<Outlet />}>
@@ -25,7 +35,7 @@ const NewsCategoryPage = () => {
           path='newscategories'
           element={
             <>
-              <PageTitle breadcrumbs={usersBreadcrumbs}>لیست دسته بندی</PageTitle>
+              <PageTitle breadcrumbs={usersBreadcrumbs}>{usersListManagementTitle}</PageTitle>
               <UsersListWrapper />
             </>
           }

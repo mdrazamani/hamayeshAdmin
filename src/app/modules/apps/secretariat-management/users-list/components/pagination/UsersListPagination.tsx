@@ -4,20 +4,22 @@ import {useQueryResponseLoading, useQueryResponsePagination} from '../../core/Qu
 import {useQueryRequest} from '../../core/QueryRequestProvider'
 import {PaginationState} from '../../../../../../../_metronic/helpers'
 import {useMemo} from 'react'
+import {useIntl} from 'react-intl'
 
-const mappedLabel = (label: string): string => {
+const mappedLabel = (label: string, savedLanguage): string => {
   if (label === '&laquo; Previous') {
-    return 'قبلی'
+    return savedLanguage === 'fa' ? 'قبلی' : 'Previous'
   }
 
   if (label === 'Next &raquo;') {
-    return 'بعدی'
+    return savedLanguage === 'fa' ? 'بعدی' : 'Next'
   }
 
   return label
 }
 
 const UsersListPagination = () => {
+  const intl = useIntl()
   const pagination = useQueryResponsePagination()
   const isLoading = useQueryResponseLoading()
   const {updateState} = useQueryRequest()
@@ -28,6 +30,8 @@ const UsersListPagination = () => {
 
     updateState({page, items_per_page: pagination.items_per_page || 10})
   }
+  const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
+  const savedLanguage = savedLangSetting.selectedLang
 
   const PAGINATION_PAGES_COUNT = 5
   const sliceLinks = (pagination?: PaginationState) => {
@@ -106,12 +110,14 @@ const UsersListPagination = () => {
               })}
             >
               <a onClick={() => updatePage(1)} style={{cursor: 'pointer'}} className='page-link'>
-                اولین صفحه
+                {intl.formatMessage({
+                  id: 'FIRST.PAGE',
+                })}
               </a>
             </li>
             {paginationLinks
               ?.map((link) => {
-                return {...link, label: mappedLabel(link.label)}
+                return {...link, label: mappedLabel(link.label, savedLanguage)}
               })
               .map((link) => (
                 <li
@@ -131,7 +137,7 @@ const UsersListPagination = () => {
                     onClick={() => updatePage(link.page)}
                     style={{cursor: 'pointer'}}
                   >
-                    {mappedLabel(link.label)}
+                    {mappedLabel(link.label, savedLanguage)}
                   </a>
                 </li>
               ))}
@@ -145,7 +151,9 @@ const UsersListPagination = () => {
                 style={{cursor: 'pointer'}}
                 className='page-link'
               >
-                آخرین صفحه
+                {intl.formatMessage({
+                  id: 'LAST.PAGE',
+                })}{' '}
               </a>
             </li>
           </ul>

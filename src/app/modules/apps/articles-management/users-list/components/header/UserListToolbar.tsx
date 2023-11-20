@@ -1,5 +1,5 @@
+import {useIntl} from 'react-intl'
 import {KTIcon} from '../../../../../../../_metronic/helpers'
-import {useAuth} from '../../../../../auth'
 import {useListView} from '../../core/ListViewProvider'
 
 const UsersListToolbar = () => {
@@ -7,9 +7,7 @@ const UsersListToolbar = () => {
   const openAddUserModal = () => {
     setItemIdForUpdate(null)
   }
-
-  const {currentUser} = useAuth()
-
+  const intl = useIntl()
   return (
     <div className='d-flex justify-content-end' data-kt-user-table-toolbar='base'>
       {/* <UsersListFilter /> */}
@@ -22,13 +20,12 @@ const UsersListToolbar = () => {
       {/* end::Export */}
 
       {/* begin::Add user */}
-      {currentUser?.role === 'user' && (
-        <button type='button' className='btn btn-primary' onClick={openAddUserModal}>
-          <KTIcon iconName='plus' className='fs-2' />
-          افزودن مقاله
-        </button>
-      )}
-
+      <button type='button' className='btn btn-primary' onClick={openAddUserModal}>
+        <KTIcon iconName='plus' className='fs-2' />
+        {intl.formatMessage({
+          id: 'ADD.ARTICLE',
+        })}{' '}
+      </button>
       {/* end::Add user */}
     </div>
   )

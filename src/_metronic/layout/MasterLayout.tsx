@@ -70,12 +70,7 @@ const MasterLayout: FC<WithChildren> = ({children}) => {
 
       {/* begin:: Drawers */}
       {eventDetails && <ActivityDrawer eventDetails={eventDetails} />}
-      <DrawerMessenger />
       {/* end:: Drawers */}
-
-      {/* begin:: Modals */}
-      <InviteUsers />
-      <UpgradePlan />
       {/* end:: Modals */}
       {/* <RightToolbar /> */}
       <ScrollTop />

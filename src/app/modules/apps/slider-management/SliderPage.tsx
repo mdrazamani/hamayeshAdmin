@@ -1,23 +1,33 @@
+import {useIntl} from 'react-intl'
 import {Navigate, Outlet, Route, Routes} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../../_metronic/layout/core'
 import {UsersListWrapper} from './users-list/UsersList'
 
-const usersBreadcrumbs: Array<PageLink> = [
-  {
-    title: 'مدیریت اسلایدر',
-    path: '/apps/slider-management/sliders',
-    isSeparator: false,
-    isActive: false,
-  },
-  {
-    title: '',
-    path: '',
-    isSeparator: true,
-    isActive: false,
-  },
-]
-
 const SliderPage = () => {
+  const intl = useIntl()
+  const sliderManagementTitle = intl.formatMessage({
+    id: 'MENU.SLIDER.MANAGEMENT',
+    defaultMessage: 'مدیریت حامیان',
+  })
+  const usersListManagementTitle = intl.formatMessage({
+    id: 'MENU.SLIDER.MANAGEMENT.LIST',
+    defaultMessage: 'مدیریت کاربران',
+  })
+  const usersBreadcrumbs: Array<PageLink> = [
+    {
+      title: sliderManagementTitle,
+      path: '/apps/slider-management/sliders',
+      isSeparator: false,
+      isActive: false,
+    },
+    {
+      title: '',
+      path: '',
+      isSeparator: true,
+      isActive: false,
+    },
+  ]
+
   return (
     <Routes>
       <Route element={<Outlet />}>
@@ -25,7 +35,7 @@ const SliderPage = () => {
           path='sliders'
           element={
             <>
-              <PageTitle breadcrumbs={usersBreadcrumbs}>لیست اسلایدر ها</PageTitle>
+              <PageTitle breadcrumbs={usersBreadcrumbs}>{usersListManagementTitle}</PageTitle>
               <UsersListWrapper />
             </>
           }

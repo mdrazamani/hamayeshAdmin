@@ -2,6 +2,7 @@
 import axios from 'axios'
 import clsx from 'clsx'
 import {FC} from 'react'
+import {useIntl} from 'react-intl'
 import {toAbsoluteUrl} from '../../../helpers'
 import {useLang, setLanguage} from '../../../i18n/Metronici18n'
 
@@ -46,7 +47,7 @@ const languages = [
 const Languages: FC = () => {
   const lang = useLang()
   const currentLanguage = languages.find((x) => x.lang === lang)
-
+  const intl = useIntl()
   return (
     <div
       className='menu-item px-5'
@@ -56,7 +57,9 @@ const Languages: FC = () => {
     >
       <a href='#' className='menu-link px-5'>
         <span className='menu-title position-relative'>
-          Language
+          {intl.formatMessage({
+            id: 'ACCOUNT.LANGUAGE',
+          })}{' '}
           <span className='fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0'>
             {currentLanguage?.name}{' '}
             <img
