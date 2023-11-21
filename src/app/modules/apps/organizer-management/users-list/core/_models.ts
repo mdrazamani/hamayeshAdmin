@@ -10,17 +10,16 @@ export type Address = {
 
 export type Details = {
   address: Address
-  description?: string
   emails: string[]
   phoneNumbers: string[]
 }
 
 export type Socials = {
-  facebook?: string | null
-  twitter?: string | null
-  linkedIn?: string | null
-  whatsapp?: string | null
-  telegram?: string | null
+  facebook: string
+  twitter: string
+  linkedIn: string
+  whatsapp: string
+  telegram: string
 }
 
 export type User = {
@@ -33,6 +32,7 @@ export type User = {
   socials?: Socials
   createdAt?: Date
   updatedAt?: Date
+  description?: string
 }
 
 export type UsersQueryResponse = Response<Array<User>>
@@ -49,5 +49,11 @@ export const initialOrganizer: User = {
     emails: [],
     phoneNumbers: [],
   },
-  socials: {},
+  socials: {
+    facebook: '',
+    twitter: '',
+    linkedIn: '',
+    whatsapp: '',
+    telegram: '',
+  },
 }

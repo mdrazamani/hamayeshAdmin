@@ -111,7 +111,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
   }
 
   const getChangedValues = (initialValues, currentValues) => {
-    debugger
     let changes = {}
     Object.keys(currentValues).forEach((key) => {
       // If the current form values are different from the initial ones, add them to the changes object.

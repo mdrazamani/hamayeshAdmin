@@ -24,16 +24,6 @@ const MasterLayout: FC<WithChildren> = ({children}) => {
   const {currentUser} = useAuth()
 
   useEffect(() => {
-    setTimeout(() => {
-      MenuComponent.reinitialization()
-    }, 500)
-  }, [location.key])
-
-  useEffect(() => {
-    themeModeSwitchHelper(mode)
-  }, [mode])
-
-  useEffect(() => {
     if (currentUser?.role === 'admin') {
       getEventDetails()
         .then((data) => setEventDetails(data.data.data))
@@ -42,6 +32,15 @@ const MasterLayout: FC<WithChildren> = ({children}) => {
 
     // similarly for fetchCities if needed
   }, [currentUser])
+  useEffect(() => {
+    setTimeout(() => {
+      MenuComponent.reinitialization()
+    }, 500)
+  }, [location.key])
+
+  useEffect(() => {
+    themeModeSwitchHelper(mode)
+  }, [mode])
 
   return (
     <PageDataProvider>

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import Editor from '../../../build/ckeditor'
+import {useThemeMode} from '../../../_metronic/partials/layout/theme-mode/ThemeModeProvider'
 import './style.css'
-
 const decodeHtmlEntities = (input: any) => {
   if (input !== null) {
     return input.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
@@ -13,10 +13,21 @@ const decodeHtmlEntities = (input: any) => {
 
 export default function MainCkeditor({formik, formikValue, formikName}) {
   const [editorContent, setEditorContent] = useState('')
+  const {mode} = useThemeMode()
 
   // useEffect(() => {
   //   setEditorContent(decodeHtmlEntities(formikValue))
   // }, [formikValue])
+
+  useEffect(() => {
+    const observers: MutationObserver[] = [] // Array to hold all MutationObserver instances
+    jsGetElement(mode, observers)
+
+    return () => {
+      // Disconnect each MutationObserver instance
+      observers.forEach((observer) => observer.disconnect())
+    }
+  }, [mode])
 
   useEffect(() => {
     if (formikValue !== undefined) {
@@ -29,7 +40,7 @@ export default function MainCkeditor({formik, formikValue, formikName}) {
     formik.setFieldValue(formikName, editorContent)
   }
 
-  const jsGetElement = (type: any) => {
+  const jsGetElement = (type: any, observers: MutationObserver[]) => {
     let elements = document.getElementsByClassName('ck-restricted-editing_mode_standard')
 
     const applyStyles = (element) => {
@@ -43,13 +54,6 @@ export default function MainCkeditor({formik, formikValue, formikName}) {
     }
 
     // MutationObserver برای رصد تغییرات در استایل المنت‌ها
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          applyStyles(mutation.target)
-        }
-      })
-    })
 
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i]
@@ -57,8 +61,16 @@ export default function MainCkeditor({formik, formikValue, formikName}) {
       // اعمال استایل‌ها هنگام بارگذاری
       applyStyles(element)
 
-      // استفاده از MutationObserver برای هر المنت
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            applyStyles(mutation.target)
+          }
+        })
+      })
+
       observer.observe(element, {attributes: true})
+      observers.push(observer) // Add the observer to the array
     }
   }
 

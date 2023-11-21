@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import * as Yup from 'yup'
 import {FieldArray, FormikProvider, useFormik} from 'formik'
-import {isNotEmpty, toAbsoluteUrl} from '../../../../../../_metronic/helpers'
+import {isCustomError, isNotEmpty, toAbsoluteUrl} from '../../../../../../_metronic/helpers'
 import {User} from '../core/_models'
 import clsx from 'clsx'
 import {useListView} from '../core/ListViewProvider'
@@ -128,9 +128,19 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
   }
 
   const formik = useFormik({
-    initialValues: userForEdit,
+    initialValues: {
+      ...userForEdit, // make sure userForEdit has the correct structure
+      // ... other fields
+      socials: userForEdit.socials || {
+        facebook: '',
+        twitter: '',
+        linkedIn: '',
+        whatsapp: '',
+        telegram: '',
+      },
+    },
     validationSchema: editUserSchema,
-    onSubmit: async (values, {setSubmitting}) => {
+    onSubmit: async (values, {setSubmitting, setStatus, setFieldError}) => {
       setSubmitting(true)
 
       const changedValues = getChangedValues(formik.initialValues, values)
@@ -141,17 +151,32 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             ...changedValues,
             details: {...values?.details, emails, phoneNumbers},
           })
+          cancel(true)
         } else {
           await createUser({
             ...values,
             details: {...values?.details, emails, phoneNumbers},
           })
+          cancel(true)
         }
-      } catch (ex) {
-        console.error(ex)
+      } catch (error: any) {
+        setSubmitting(false)
+
+        if (isCustomError(error)) {
+          const errorMessage = error.response.data.message
+          setStatus(errorMessage)
+
+          const fieldErrors = error.response.data.errors
+          if (fieldErrors) {
+            Object.keys(fieldErrors).forEach((field) => {
+              setFieldError(field, fieldErrors[field].join(', '))
+            })
+          }
+        } else {
+          setStatus('The registration details are incorrect.')
+        }
       } finally {
         setSubmitting(true)
-        cancel(true)
       }
     },
   })
@@ -336,25 +361,23 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Input */}
             <textarea
               placeholder={intl.formatMessage({id: 'AUTH.INPUT.DESCRIPTION'})}
-              {...formik.getFieldProps('details.description')}
-              name='details.description'
+              {...formik.getFieldProps('description')}
+              name='description'
               className={clsx(
                 'form-control form-control-solid mb-3 mb-lg-0',
                 {
-                  'is-invalid':
-                    formik.touched.details?.description && formik.errors.details?.description,
+                  'is-invalid': formik.touched?.description && formik.errors?.description,
                 },
                 {
-                  'is-valid':
-                    formik.touched.details?.description && !formik.errors.details?.description,
+                  'is-valid': formik.touched?.description && !formik.errors?.description,
                 }
               )}
               disabled={formik.isSubmitting || isUserLoading}
             />
-            {formik.touched.details?.description && formik.errors.details?.description && (
+            {formik.touched?.description && formik.errors?.description && (
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block'>
-                  <span role='alert'>{formik.errors.details?.description}</span>
+                  <span role='alert'>{formik.errors?.description}</span>
                 </div>
               </div>
             )}
@@ -543,6 +566,137 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {formik.touched.details?.address?.city && formik.errors.details?.address?.city && (
               <div className='fv-plugins-message-container'>
                 <span role='alert'>{formik.errors.details?.address?.city}</span>
+              </div>
+            )}
+          </div>
+          <div className='fv-row mb-7'>
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.socials.facebook'})}
+            </label>
+
+            <input
+              type='text'
+              className={clsx(
+                'form-control form-control-solid mb-3 mb-lg-0',
+                {
+                  'is-invalid': formik.touched.socials?.facebook && formik.errors.socials?.facebook,
+                },
+                {
+                  'is-valid': formik.touched.socials?.facebook && !formik.errors.socials?.facebook,
+                }
+              )}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.facebook'})}
+              {...formik.getFieldProps('socials.facebook')}
+            />
+            {formik.touched.socials?.facebook && formik.errors.socials?.facebook && (
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>{formik.errors.socials?.facebook}</div>
+              </div>
+            )}
+          </div>
+          <div className='fv-row mb-7'>
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.socials.telegram'})}
+            </label>
+
+            <input
+              type='text'
+              className={clsx(
+                'form-control form-control-solid mb-3 mb-lg-0',
+                {
+                  'is-invalid': formik.touched.socials?.telegram && formik.errors.socials?.telegram,
+                },
+                {
+                  'is-valid': formik.touched.socials?.telegram && !formik.errors.socials?.telegram,
+                }
+              )}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.telegram'})}
+              {...formik.getFieldProps('socials.telegram')}
+            />
+            {formik.touched.socials?.telegram && formik.errors.socials?.telegram && (
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>{formik.errors.socials?.telegram}</div>
+              </div>
+            )}
+          </div>
+          <div className='fv-row mb-7'>
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.socials.whatsapp'})}
+            </label>
+
+            <input
+              type='text'
+              className={clsx(
+                'form-control form-control-solid mb-3 mb-lg-0',
+                {
+                  'is-invalid': formik.touched.socials?.whatsapp && formik.errors.socials?.whatsapp,
+                },
+                {
+                  'is-valid': formik.touched.socials?.whatsapp && !formik.errors.socials?.whatsapp,
+                }
+              )}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.whatsapp'})}
+              {...formik.getFieldProps('socials.whatsapp')}
+            />
+            {formik.touched.socials?.whatsapp && formik.errors.socials?.whatsapp && (
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>{formik.errors.socials?.whatsapp}</div>
+              </div>
+            )}
+          </div>
+          <div className='fv-row mb-7'>
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.socials.linkedIn'})}
+            </label>
+
+            <input
+              type='text'
+              className={clsx(
+                'form-control form-control-solid mb-3 mb-lg-0',
+                {
+                  'is-invalid': formik.touched.socials?.linkedIn && formik.errors.socials?.linkedIn,
+                },
+                {
+                  'is-valid': formik.touched.socials?.linkedIn && !formik.errors.socials?.linkedIn,
+                }
+              )}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.linkedIn'})}
+              {...formik.getFieldProps('socials.linkedIn')}
+            />
+            {formik.touched.socials?.linkedIn && formik.errors.socials?.linkedIn && (
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>{formik.errors.socials?.linkedIn}</div>
+              </div>
+            )}
+          </div>
+
+          <div className='fv-row mb-7'>
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.socials.twitter'})}
+            </label>
+
+            <input
+              type='text'
+              className={clsx(
+                'form-control form-control-solid mb-3 mb-lg-0',
+                {
+                  'is-invalid': formik.touched.socials?.twitter && formik.errors.socials?.twitter,
+                },
+                {
+                  'is-valid': formik.touched.socials?.twitter && !formik.errors.socials?.twitter,
+                }
+              )}
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.socials.twitter'})}
+              {...formik.getFieldProps('socials.twitter')}
+            />
+            {formik.touched.socials?.twitter && formik.errors.socials?.twitter && (
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>{formik.errors.socials?.twitter}</div>
               </div>
             )}
           </div>

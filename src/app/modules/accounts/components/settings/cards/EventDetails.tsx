@@ -132,11 +132,11 @@ const EventDetails = (eventDetails: any) => {
           setSubmitting(false)
 
           // Set the success message
-          setSuccessMessage(res.data.message)
+          // setSuccessMessage(res.data.message)
 
           // Clear any previous status or errors
           setStatus('')
-          resetForm({values: res.data.data}) // Reset the form with the new data
+          // resetForm({values: res.data.data}) // Reset the form with the new data
         })
         .catch((error) => {
           setSubmitting(false)
