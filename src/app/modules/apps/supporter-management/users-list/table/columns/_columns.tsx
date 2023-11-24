@@ -10,6 +10,9 @@ import {UserSelectionHeader} from './UserSelectionHeader'
 import {User} from '../../core/_models'
 import {UserCreatedAt} from './UserCreatedAt'
 
+const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
+const savedLanguage = savedLangSetting.selectedLang
+
 const usersColumns: ReadonlyArray<Column<User>> = [
   {
     Header: (props) => <UserSelectionHeader tableProps={props} />,
@@ -36,7 +39,15 @@ const usersColumns: ReadonlyArray<Column<User>> = [
       <UserCustomHeader tableProps={props} title='SUPPORTER.TABLE.TYPE' className='min-w-125px' />
     ),
     id: 'supportType',
-    Cell: ({...props}) => <UserTwoStepsCell phoneNumber={props.data[props.row.index].faType} />,
+    Cell: ({...props}) => (
+      <UserTwoStepsCell
+        phoneNumber={
+          savedLanguage === 'fa'
+            ? props.data[props.row.index].faType
+            : props.data[props.row.index].supportType
+        }
+      />
+    ),
   },
   {
     Header: (props) => (

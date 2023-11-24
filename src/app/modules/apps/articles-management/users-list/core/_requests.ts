@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import { saveAs } from 'file-saver';
+import {saveAs} from 'file-saver'
 import {ID, Response} from '../../../../../../_metronic/helpers'
 import {User, UsersQueryResponse} from './_models'
 
@@ -55,11 +55,10 @@ const downloadArticles = (userId) => {
     method: 'GET',
     responseType: 'blob', // Important: responseType should be 'blob' for binary data
   }).then((response) => {
-    const blob = new Blob([response.data], { type: 'application/zip' });
-    saveAs(blob, 'articleFiles.zip');
-  });
-};
-
+    const blob = new Blob([response.data], {type: 'application/zip'})
+    saveAs(blob, 'articleFiles.zip')
+  })
+}
 
 const deleteSelectedUsers = (userIds: Array<ID>): Promise<void> => {
   const requests = userIds.map((id) => axios.delete(`${GET_USERS_URL}/${id}`))

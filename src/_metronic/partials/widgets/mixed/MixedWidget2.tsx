@@ -5,17 +5,20 @@ import {KTIcon} from '../../../helpers'
 import {getCSSVariableValue} from '../../../assets/ts/_utils'
 import {Dropdown1} from '../../content/dropdown/Dropdown1'
 import {useThemeMode} from '../../layout/theme-mode/ThemeModeProvider'
+import {useIntl} from 'react-intl'
 
 type Props = {
   className: string
   chartColor: string
   strokeColor: string
   chartHeight: string
+  data?: any
 }
 
-const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, strokeColor}) => {
+const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, strokeColor, data}) => {
   const chartRef = useRef<HTMLDivElement | null>(null)
   const {mode} = useThemeMode()
+  const intl = useIntl()
   const refreshChart = () => {
     if (!chartRef.current) {
       return
@@ -46,9 +49,8 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
     <div className={`card ${className}`}>
       {/* begin::Header */}
       <div className={`card-header border-0 py-5 bg-${chartColor}`}>
-        <h3 className='card-title fw-bold text-white'>Sales Statistics</h3>
-        <div className='card-toolbar'>
-          {/* begin::Menu */}
+        <h3 className='card-title fw-bold text-white'>{intl.formatMessage({id: 'MENU.USERS'})}</h3>
+        {/* <div className='card-toolbar'>
           <button
             type='button'
             className='btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color- border-0 me-n3'
@@ -59,8 +61,7 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
             <KTIcon iconName='category' className='fs-2' />
           </button>
           <Dropdown1 />
-          {/* end::Menu */}
-        </div>
+        </div> */}
       </div>
       {/* end::Header */}
       {/* begin::Body */}
@@ -73,46 +74,24 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
         {/* end::Chart */}
         {/* begin::Stats */}
         <div className='card-p mt-n20 position-relative'>
-          {/* begin::Row */}
-          <div className='row g-0'>
-            {/* begin::Col */}
-            <div className='col bg-light-warning px-6 py-8 rounded-2 me-7 mb-7'>
-              <KTIcon iconName='chart-simple' className='fs-3x text-warning d-block my-2' />
-              <a href='#' className='text-warning fw-semibold fs-6'>
-                Weekly Sales
-              </a>
+          {/* Rows for items */}
+          {data && data.length > 0 && (
+            <div className='row g-0'>
+              {data.map((item, index) => (
+                <div
+                  key={index}
+                  className={`col-xl-6 bg-light-danger px-6 py-8 rounded-2 ${
+                    index % 2 === 0 ? 'me-4' : ''
+                  } mb-4`}
+                >
+                  <KTIcon iconName='abstract-26' className='fs-3x text-danger d-block my-2' />
+                  <a href='#' className='text-danger fw-semibold fs-6 mt-2'>
+                    Item Orders
+                  </a>
+                </div>
+              ))}
             </div>
-            {/* end::Col */}
-            {/* begin::Col */}
-            <div className='col bg-light-primary px-6 py-8 rounded-2 mb-7'>
-              <KTIcon iconName='plus' className='fs-3x text-primary d-block my-2' />
-              <a href='#' className='text-primary fw-semibold fs-6'>
-                New Users
-              </a>
-            </div>
-            {/* end::Col */}
-          </div>
-          {/* end::Row */}
-          {/* begin::Row */}
-          <div className='row g-0'>
-            {/* begin::Col */}
-            <div className='col bg-light-danger px-6 py-8 rounded-2 me-7'>
-              <KTIcon iconName='abstract-26' className='fs-3x text-danger d-block my-2' />
-              <a href='#' className='text-danger fw-semibold fs-6 mt-2'>
-                Item Orders
-              </a>
-            </div>
-            {/* end::Col */}
-            {/* begin::Col */}
-            <div className='col bg-light-success px-6 py-8 rounded-2'>
-              <KTIcon iconName='sms' className='fs-3x text-success d-block my-2' />
-              <a href='#' className='text-success fw-semibold fs-6 mt-2'>
-                Bug Reports
-              </a>
-            </div>
-            {/* end::Col */}
-          </div>
-          {/* end::Row */}
+          )}
         </div>
         {/* end::Stats */}
       </div>

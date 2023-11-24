@@ -179,7 +179,7 @@
   "MODAL.ADD.ORGANIZER": "Add / Edit Organizers",
   "AUTH.INPUT.ADDRESS": "Address",
   "TAG.TABLE.TITLE": "Title",
-  "TAG.TABLE.SLUG": "namek",
+  "TAG.TABLE.SLUG": "slug",
   "TAG.TABLE.CREATEDAT": "Created Date",
   "MODAL.ADD.TAG": "Add / edit tags",
   "COMMENT.TABLE.FULLNAME": "User Information",
@@ -192,7 +192,7 @@
   "AUTH.INPUT.IP": "IP",
   "AUTH.INPUT.STATUS": "Status",
   "CATEGORY.TABLE.TITLE": "Title",
-  "CATEGORY.TABLE.SLUG": "namek",
+  "CATEGORY.TABLE.SLUG": "slug",
   "CATEGORY.TABLE.CREATEDAT": "Creation date",
   "AUTH.INPUT.CATEGORY": "Category",
   "MODAL.ADD.COMMENT": "Add / edit comments",
@@ -239,7 +239,7 @@
   "AUTH.INPUT.socials.twitter": "twitter link",
   "AUTH.INPUT.socials.facebook": "facebook link",
   "GALERY.TABLE.GALERY": "Category",
-  "GALLERY.TABLE.SLUG": "namek",
+  "GALLERY.TABLE.SLUG": "slug",
   "GALERY.TABLE.CREATEDAT": "Created Date",
   "MODAL.ADD.GALLERY": "Add / Edit Gallery",
   "AUTH.INPUT.GALLERY.IMAGE": "Photos",
@@ -320,5 +320,9 @@
   "SETTING.ACCOUNT": "Edit Information",
   "THEME.LIGHT": "Light",
   "THEME.DARK": "Dark",
-  "THEME.SYSTEM": "System"
+  "THEME.SYSTEM": "System",
+  "COL.ACTIONS.DOWNLOAD": "Download Files",
+  "DASH.CREATE.USER": "Click here to create a new user",
+  "DASH.CREATE.USER.BTN": "Start now",
+  "DASH.CREATE.USER.DESC": "Easily add new users to your system with user creation process."
 }

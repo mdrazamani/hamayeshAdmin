@@ -10,6 +10,9 @@ import {UserSelectionHeader} from './UserSelectionHeader'
 import {User} from '../../core/_models'
 import {UserCreatedAt} from './UserCreatedAt'
 
+const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
+const savedLanguage = savedLangSetting.selectedLang
+
 const usersColumns: ReadonlyArray<Column<User>> = [
   {
     Header: (props) => <UserSelectionHeader tableProps={props} />,
@@ -27,7 +30,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='USER.TABLE.ROLE' className='min-w-125px' />
     ),
-    accessor: 'faRole',
+    accessor: savedLanguage === 'fa' ? 'faRole' : 'role',
   },
   {
     Header: (props) => (

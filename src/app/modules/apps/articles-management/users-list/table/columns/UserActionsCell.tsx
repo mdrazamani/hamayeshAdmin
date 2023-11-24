@@ -6,7 +6,7 @@ import {MenuComponent} from '../../../../../../../_metronic/assets/ts/components
 import {ID, KTIcon, QUERIES} from '../../../../../../../_metronic/helpers'
 import {useListView} from '../../core/ListViewProvider'
 import {useQueryResponse} from '../../core/QueryResponseProvider'
-import {deleteUser} from '../../core/_requests'
+import {deleteUser, downloadArticles} from '../../core/_requests'
 
 type Props = {
   id: ID
@@ -34,6 +34,16 @@ const UserActionsCell: FC<Props> = ({id}) => {
     },
   })
 
+  const downloadItem = useMutation(
+    async () => {
+      return downloadArticles(id)
+    },
+    {
+      onSuccess: () => {
+        // Code for success
+      },
+    }
+  )
   return (
     <>
       <a
@@ -71,6 +81,18 @@ const UserActionsCell: FC<Props> = ({id}) => {
           >
             {intl.formatMessage({
               id: 'COL.ACTIONS.REMOVE',
+            })}{' '}
+          </a>
+        </div>
+
+        <div className='menu-item px-3'>
+          <a
+            className='menu-link px-3'
+            data-kt-users-table-filter='delete_row'
+            onClick={async () => await downloadItem.mutateAsync()}
+          >
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.DOWNLOAD',
             })}{' '}
           </a>
         </div>

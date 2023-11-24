@@ -319,5 +319,9 @@
   "SETTING.ACCOUNT": "ویرایش اطلاعات",
   "THEME.LIGHT": "روشن",
   "THEME.DARK": "تیره",
-  "THEME.SYSTEM": "سیستم"
+  "THEME.SYSTEM": "سیستم",
+  "COL.ACTIONS.DOWNLOAD": "دانلود فایل ها",
+  "DASH.CREATE.USER": "برای ساخت کاربر جدید اقدام کنید",
+  "DASH.CREATE.USER.BTN": "شروع کنید",
+  "DASH.CREATE.USER.DESC": "با فرایند ایجاد کاربری ساده، کاربران جدید را به سیستم خود اضافه کنید."
 }
