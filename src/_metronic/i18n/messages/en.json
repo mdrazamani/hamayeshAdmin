@@ -324,5 +324,9 @@
   "COL.ACTIONS.DOWNLOAD": "Download Files",
   "DASH.CREATE.USER": "Click here to create a new user",
   "DASH.CREATE.USER.BTN": "Start now",
-  "DASH.CREATE.USER.DESC": "Easily add new users to your system with user creation process."
+  "DASH.CREATE.USER.DESC": "Easily add new users to your system with user creation process.",
+  "AUTH.INPUT.RATE": "Rate :",
+  "AUTH.INPUT.FILES": "Upload files",
+  "ARTICLE.TABLE.RATE": "Rate",
+  "AUTH.INPUT.REFEREESEC": "Referee section"
 }

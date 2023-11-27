@@ -1,9 +1,9 @@
 // @ts-nocheck
 
-import {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import {isNotEmpty} from '../../../../../../_metronic/helpers'
+import {isNotEmpty, KTSVG} from '../../../../../../_metronic/helpers'
 import {User} from '../core/_models'
 import clsx from 'clsx'
 import {useListView} from '../core/ListViewProvider'
@@ -203,8 +203,8 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
   }
 
   useEffect(() => {
-    console.log('sdfasdwasdwws', formik.initialValues)
-  }, [formik.initialValues])
+    console.log('sdfasdwasdwws', formik.values)
+  }, [formik.values])
 
   return (
     <>
@@ -330,33 +330,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* end::Input */}
           </div>
 
-          {/* begin::Input group */}
-
-          {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
-            <div className='fv-row mb-7'>
-              {/* begin::Label */}
-              <label className='required fw-bold fs-6 mb-2'>
-                {' '}
-                {intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
-              </label>
-
-              <MainCkeditor
-                formik={formik}
-                formikValue={formik.values?.arbitration?.message}
-                formikName={'arbitration.message'}
-              />
-
-              {formik.touched?.arbitration?.message && formik.errors?.arbitration?.message && (
-                <div className='fv-plugins-message-container'>
-                  <div className='fv-help-block'>
-                    <span role='alert'>{formik.errors?.arbitration?.message}</span>
-                  </div>
-                </div>
-              )}
-              {/* end::Input */}
-            </div>
-          )}
-
           <div className='fv-row mb-7'>
             {/* begin::Label */}
             <label className='required fw-bold fs-6 mb-2'>
@@ -391,6 +364,94 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               </div>
             )}
           </div>
+          <label className='fw-bold fs-3 mb-2 mt-10'>
+            {intl.formatMessage({id: 'AUTH.INPUT.REFEREESEC'})}
+          </label>
+          <div className='separator border-5 mb-15'></div>
+
+          {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
+            <>
+              <div className='fv-row mb-7'>
+                {/* begin::Label */}
+                <label className='fw-bold fs-6 mb-2'>
+                  {' '}
+                  {intl.formatMessage({id: 'AUTH.INPUT.FILES'})}
+                </label>
+                {/* end::Label */}
+
+                {/* begin::Input */}
+                <input
+                  type='file'
+                  className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
+                  onChange={(e) => handleImageChange(e, 'arbitration.files')}
+                  multiple
+                />
+              </div>
+            </>
+          )}
+
+          <div className='fv-row mb-7'>
+            {/* begin::Label */}
+            <label className='fw-bold fs-6 mb-2'>
+              {' '}
+              {intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
+            </label>
+
+            {/* end::Label */}
+
+            {/* begin::Input */}
+            <textarea
+              placeholder={intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
+              {...formik.getFieldProps('arbitration.message')}
+              name='arbitration.message'
+              className={clsx(
+                'form-control form-control-solid mb-3 mb-lg-0',
+                {
+                  'is-invalid':
+                    formik.touched.arbitration?.message && formik.errors.arbitration?.message,
+                },
+                {
+                  'is-valid':
+                    formik.touched.arbitration?.message && !formik.errors.arbitration?.message,
+                }
+              )}
+              autoComplete='off'
+              disabled={formik.isSubmitting || isUserLoading || currentUser?.role === 'user'}
+            />
+            {formik.touched.arbitration?.message && formik.errors.arbitration?.message && (
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>
+                  <span role='alert'>{formik.errors.arbitration?.message}</span>
+                </div>
+              </div>
+            )}
+            {/* end::Input */}
+          </div>
+
+          {/* begin::Input group */}
+
+          {/* {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
+            <div className='fv-row mb-7'>
+              <label className='required fw-bold fs-6 mb-2'>
+                {' '}
+                {intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
+              </label>
+
+              <MainCkeditor
+                formik={formik}
+                formikValue={formik.values?.arbitration?.message}
+                formikName={'arbitration.message'}
+              />
+
+              {formik.touched?.arbitration?.message && formik.errors?.arbitration?.message && (
+                <div className='fv-plugins-message-container'>
+                  <div className='fv-help-block'>
+                    <span role='alert'>{formik.errors?.arbitration?.message}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )} */}
 
           {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
             <div className='mb-7'>
@@ -488,6 +549,36 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 </div>
                 {/* end::Radio */}
               </div>
+            </div>
+          )}
+
+          {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
+            <div className='rating'>
+              <label className='fw-bold fs-6 mb-2'>
+                {' '}
+                {intl.formatMessage({id: 'AUTH.INPUT.RATE'})}
+              </label>
+
+              {/* ... [other rating buttons] */}
+              {[1, 2, 3, 4, 5].map((value) => (
+                <React.Fragment key={value}>
+                  <label className='rating-label' htmlFor={`kt_rating_2_input_${value}`}>
+                    <KTSVG
+                      path='/media/icons/duotune/general/gen029.svg'
+                      className='svg-icon svg-icon-1'
+                    />
+                  </label>
+                  <input
+                    className='rating-input'
+                    name='rating'
+                    value={value}
+                    type='radio'
+                    id={`kt_rating_2_input_${value}`}
+                    checked={formik.values.arbitration.rate === value}
+                    onChange={() => formik.setFieldValue('arbitration.rate', value)}
+                  />
+                </React.Fragment>
+              ))}
             </div>
           )}
 

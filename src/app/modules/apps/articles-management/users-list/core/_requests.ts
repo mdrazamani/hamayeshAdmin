@@ -56,7 +56,19 @@ const downloadArticles = (userId) => {
     responseType: 'blob', // Important: responseType should be 'blob' for binary data
   }).then((response) => {
     const blob = new Blob([response.data], {type: 'application/zip'})
-    saveAs(blob, 'articleFiles.zip')
+
+    // Extracting and decoding filename from the Content-Disposition header
+    const contentDisposition = response.headers['content-disposition']
+    let filename = 'articleFiles.zip' // Default filename
+    if (contentDisposition) {
+      const filenameRegex = /filename\*[^;=\n]*=(UTF-8'')?((['"]).*?\3|[^;\n]*)/
+      let matches = filenameRegex.exec(contentDisposition)
+      if (matches != null && matches[2]) {
+        filename = decodeURIComponent(matches[2].replace(/['"]/g, '')) // Decode and remove quotes around the filename
+      }
+    }
+
+    saveAs(blob, filename)
   })
 }
 

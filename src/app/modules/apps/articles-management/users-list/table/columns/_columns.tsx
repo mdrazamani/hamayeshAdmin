@@ -9,6 +9,7 @@ import {UserCustomHeader} from './UserCustomHeader'
 import {UserSelectionHeader} from './UserSelectionHeader'
 import {User} from '../../core/_models'
 import {UserCreatedAt} from './UserCreatedAt'
+import {UserRating} from './UserRating'
 
 const usersColumns: ReadonlyArray<Column<User>> = [
   {
@@ -22,6 +23,14 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     ),
     id: 'userId',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
+  },
+
+  {
+    Header: (props) => (
+      <UserCustomHeader tableProps={props} title='ARTICLE.TABLE.RATE' className='min-w-125px' />
+    ),
+    id: 'arbitration',
+    Cell: ({...props}) => <UserRating rate={props.data[props.row.index].arbitration?.rate} />,
   },
 
   {
