@@ -57,50 +57,50 @@ const HeaderUserMenu: FC = () => {
         </a>
       </div> */}
 
-      {/* <div
+      <div
         className='menu-item px-5'
         data-kt-menu-trigger='hover'
         data-kt-menu-placement='left-start'
         data-kt-menu-flip='bottom'
       >
         <a href='#' className='menu-link px-5'>
-          <span className='menu-title'>My Subscription</span>
+          <span className='menu-title'> {intl.formatMessage({id: 'MENU.PRICING'})}</span>
           <span className='menu-arrow'></span>
         </a>
 
         <div className='menu-sub menu-sub-dropdown w-175px py-4'>
           <div className='menu-item px-3'>
+            <Link to='#' className='menu-link px-5'>
+              {intl.formatMessage({id: 'MENU.GATEWAY.MANAGEMENT'})}
+            </Link>
+          </div>
+          <div className='menu-item px-3'>
             <a href='#' className='menu-link px-5'>
-              Referrals
+              {intl.formatMessage({id: 'MENU.DISCOUNT.MANAGEMENT'})}
             </a>
           </div>
 
           <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-5'>
-              Billing
-            </a>
+            <Link to='/billing/pricing-management/pricing' className='menu-link px-5'>
+              {intl.formatMessage({id: 'MENU.PRICING.MANAGEMENT'})}
+            </Link>
           </div>
 
           <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-5'>
-              Payments
-            </a>
+            <Link to='#' className='menu-link px-5'>
+              {intl.formatMessage({id: 'MENU.TRANSACTION.MANAGEMENT'})}
+            </Link>
           </div>
 
           <div className='menu-item px-3'>
-            <a href='#' className='menu-link d-flex flex-stack px-5'>
-              Statements
-              <i
-                className='fas fa-exclamation-circle ms-2 fs-7'
-                data-bs-toggle='tooltip'
-                title='View your statements'
-              ></i>
-            </a>
+            <Link to='#' className='menu-link d-flex flex-stack px-5'>
+              {intl.formatMessage({id: 'MENU.INVOICE.MANAGEMENT'})}
+            </Link>
           </div>
 
           <div className='separator my-2'></div>
 
-          <div className='menu-item px-3'>
+          {/* <div className='menu-item px-3'>
             <div className='menu-content px-3'>
               <label className='form-check form-switch form-check-custom form-check-solid'>
                 <input
@@ -113,9 +113,9 @@ const HeaderUserMenu: FC = () => {
                 <span className='form-check-label text-muted fs-7'>Notifications</span>
               </label>
             </div>
-          </div>
+          </div> */}
         </div>
-      </div> */}
+      </div>
 
       {/* <div className='menu-item px-5'>
         <a href='#' className='menu-link px-5'>

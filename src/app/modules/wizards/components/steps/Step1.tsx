@@ -2,13 +2,16 @@
 import {FC} from 'react'
 import {KTIcon} from '../../../../../_metronic/helpers'
 import {ErrorMessage, Field} from 'formik'
+import {useIntl} from 'react-intl'
 
 const Step1: FC = () => {
+  const intl = useIntl()
+
   return (
     <div className='w-100'>
       <div className='pb-10 pb-lg-15'>
         <h2 className='fw-bolder d-flex align-items-center text-dark'>
-          Choose Account Type
+          {intl.formatMessage({id: 'BILLING.CHOSE.TYPE'})}
           <i
             className='fas fa-exclamation-circle ms-2 fs-7'
             data-bs-toggle='tooltip'
@@ -16,14 +19,14 @@ const Step1: FC = () => {
           ></i>
         </h2>
 
-        <div className='text-gray-400 fw-bold fs-6'>
+        {/* <div className='text-gray-400 fw-bold fs-6'>
           If you need more info, please check out
           <a href='/dashboard' className='link-primary fw-bolder'>
             {' '}
             Help Page
           </a>
           .
-        </div>
+        </div> */}
       </div>
 
       <div className='fv-row'>
@@ -32,8 +35,8 @@ const Step1: FC = () => {
             <Field
               type='radio'
               className='btn-check'
-              name='accountType'
-              value='personal'
+              name='type'
+              value='article'
               id='kt_create_account_form_account_type_personal'
             />
             <label
@@ -43,15 +46,18 @@ const Step1: FC = () => {
               <KTIcon iconName='address-book' className='fs-3x me-5' />
 
               <span className='d-block fw-bold text-start'>
-                <span className='text-dark fw-bolder d-block fs-4 mb-2'>Personal Account</span>
+                <span className='text-dark fw-bolder d-block fs-4 mb-2'>
+                  {' '}
+                  {intl.formatMessage({id: 'BILLING.ARTICLE.TYPE'})}
+                </span>
                 <span className='text-gray-400 fw-bold fs-6'>
-                  If you need more info, please check it out
+                  {intl.formatMessage({id: 'BILLING.ARTICLE.TYPE.DESC'})}
                 </span>
               </span>
             </label>
           </div>
 
-          <div className='col-lg-6'>
+          {/* <div className='col-lg-6'>
             <Field
               type='radio'
               className='btn-check'
@@ -72,7 +78,7 @@ const Step1: FC = () => {
                 </span>
               </span>
             </label>
-          </div>
+          </div> */}
 
           <div className='text-danger mt-2'>
             <ErrorMessage name='accountType' />

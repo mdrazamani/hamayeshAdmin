@@ -328,5 +328,7 @@
   "AUTH.INPUT.RATE": "Rate :",
   "AUTH.INPUT.FILES": "Upload files",
   "ARTICLE.TABLE.RATE": "Rate",
-  "AUTH.INPUT.REFEREESEC": "Referee section"
+  "AUTH.INPUT.REFEREESEC": "Referee section",
+  "AUTH.INPUT.BILLING.TYPE": "Billing Type",
+  "AUTH.INPUT.BILLING.NAME": "Title"
 }

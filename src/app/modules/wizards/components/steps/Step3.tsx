@@ -79,9 +79,9 @@ const Step3: FC = () => {
       <div className='fv-row mb-0'>
         <label className='fs-6 fw-bold form-label required'>Contact Email</label>
 
-        <Field name='businessEmail' className='form-control form-control-lg form-control-solid' />
+        <Field name='description' className='form-control form-control-lg form-control-solid' />
         <div className='text-danger mt-2'>
-          <ErrorMessage name='businessEmail' />
+          <ErrorMessage name='description' />
         </div>
       </div>
     </div>

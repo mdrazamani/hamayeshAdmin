@@ -131,6 +131,19 @@ export function MenuInner() {
           />
         </MenuInnerWithSub>
       )}
+      {/* 
+      <MenuInnerWithSub
+        title={intl.formatMessage({id: 'MENU.PRICING'})}
+        to='/billing'
+        menuPlacement='bottom-start'
+        menuTrigger='click'
+      >
+        <MenuItem
+          icon='shield-tick'
+          to='/billing/pricing-management/pricing'
+          title={intl.formatMessage({id: 'MENU.PRICING.MANAGEMENT'})}
+        />
+      </MenuInnerWithSub> */}
       {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
         <MenuInnerWithSub
           title={intl.formatMessage({id: 'MENU.NEWS'})}

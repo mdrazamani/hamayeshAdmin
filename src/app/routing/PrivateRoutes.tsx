@@ -43,6 +43,8 @@ const PrivateRoutes = () => {
   const AxiesPage = lazy(() => import('../modules/apps/axies-management/AxiesPage'))
   const GalleryPage = lazy(() => import('../modules/apps/gallery-management/GalleryPage'))
 
+  const PricingPage = lazy(() => import('../modules/apps/pricing-management/PricingPage'))
+
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -61,14 +63,14 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         /> */}
-        {/* <Route
+        <Route
           path='crafted/pages/wizards/*'
           element={
             <SuspensedView>
               <WizardsPage />
             </SuspensedView>
           }
-        /> */}
+        />
         {/* <Route
           path='crafted/widgets/*'
           element={
@@ -93,6 +95,16 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         /> */}
+        {(currentUser?.role === 'admin' || currentUser?.role === 'user') && (
+          <Route
+            path='billing/pricing-management/*'
+            element={
+              <SuspensedView>
+                <PricingPage />
+              </SuspensedView>
+            }
+          />
+        )}
         {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
             path='users/user-management/*'

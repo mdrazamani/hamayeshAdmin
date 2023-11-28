@@ -8,8 +8,10 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Form, Formik, FormikValues} from 'formik'
 import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
+import {useIntl} from 'react-intl'
 
 const Horizontal: FC = () => {
+  const intl = useIntl()
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const stepper = useRef<StepperComponent | null>(null)
   const [currentSchema, setCurrentSchema] = useState(createAccountSchemas[0])
@@ -67,23 +69,23 @@ const Horizontal: FC = () => {
         >
           <div className='stepper-nav mb-5'>
             <div className='stepper-item current' data-kt-stepper-element='nav'>
-              <h3 className='stepper-title'>Account Type</h3>
+              <h3 className='stepper-title'>{intl.formatMessage({id: 'BILLING.TYPE'})}</h3>
             </div>
 
-            <div className='stepper-item' data-kt-stepper-element='nav'>
+            {/* <div className='stepper-item' data-kt-stepper-element='nav'>
               <h3 className='stepper-title'>Account Info</h3>
-            </div>
+            </div> */}
 
             <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='stepper-title'>Business Info</h3>
+              <h3 className='stepper-title'>{intl.formatMessage({id: 'BILLING.PLAN'})}</h3>
             </div>
-
+            {/* 
             <div className='stepper-item' data-kt-stepper-element='nav'>
               <h3 className='stepper-title'>Billing Details</h3>
-            </div>
+            </div> */}
 
             <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='stepper-title'>Completed</h3>
+              <h3 className='stepper-title'>{intl.formatMessage({id: 'BILLING.COMPLETED'})}</h3>
             </div>
           </div>
 
@@ -94,17 +96,17 @@ const Horizontal: FC = () => {
                   <Step1 />
                 </div>
 
-                <div data-kt-stepper-element='content'>
+                {/* <div data-kt-stepper-element='content'>
                   <Step2 />
-                </div>
+                </div> */}
 
                 <div data-kt-stepper-element='content'>
                   <Step3 />
                 </div>
-
+                {/* 
                 <div data-kt-stepper-element='content'>
                   <Step4 />
-                </div>
+                </div> */}
 
                 <div data-kt-stepper-element='content'>
                   <Step5 />
@@ -119,7 +121,7 @@ const Horizontal: FC = () => {
                       data-kt-stepper-action='previous'
                     >
                       <KTIcon iconName='arrow-left' className='fs-4 me-1' />
-                      Back
+                      {intl.formatMessage({id: 'BILLING.BACK'})}{' '}
                     </button>
                   </div>
 

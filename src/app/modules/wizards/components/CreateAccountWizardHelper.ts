@@ -1,61 +1,45 @@
 import * as Yup from 'yup'
 
-export interface ICreateAccount {
-  accountType: string
-  accountTeamSize: string
-  accountName: string
-  accountPlan: string
-  businessName: string
-  businessDescriptor: string
-  businessType: string
-  businessDescription: string
-  businessEmail: string
-  nameOnCard: string
-  cardNumber: string
-  cardExpiryMonth: string
-  cardExpiryYear: string
-  cardCvv: string
-  saveCard: string
+// Define a type for pricing rule
+export interface IPricingRule {
+  name: string
+  description: string
+  number: number
+  price: number
+  additionalInfo?: any // Adjust the type according to your needs
 }
 
+// Extend the ICreateAccount interface
+export interface ICreateAccount {
+  type: string
+  rules: IPricingRule[]
+  // ... other existing fields
+}
+
+// Define a validation schema for pricing rule
+const pricingRuleSchema = Yup.object().shape({
+  name: Yup.string().required().label('Rule Name'),
+  description: Yup.string().required().label('Description'),
+  number: Yup.number().required().label('Number'),
+  price: Yup.number().required().label('Price'),
+  additionalInfo: Yup.mixed().label('Additional Info'), // Adjust validation based on actual type
+})
+
+// Update validation schema to include validation for pricing fields
 const createAccountSchemas = [
   Yup.object({
-    accountType: Yup.string().required().label('Account Type'),
+    type: Yup.string().oneOf(['article']).required().label('Account Type'),
+    rules: Yup.array().of(pricingRuleSchema).required().label('Pricing Rules'),
+    // ... other validation objects
   }),
-  Yup.object({
-    accountName: Yup.string().required().label('Account Name'),
-  }),
-  Yup.object({
-    businessName: Yup.string().required().label('Business Name'),
-    businessDescriptor: Yup.string().required().label('Shortened Descriptor'),
-    businessType: Yup.string().required().label('Corporation Type'),
-    businessEmail: Yup.string().required().label('Contact Email'),
-  }),
-  Yup.object({
-    nameOnCard: Yup.string().required().label('Name On Card'),
-    cardNumber: Yup.string().required().label('Card Number'),
-    cardExpiryMonth: Yup.string().required().label('Expiration Month'),
-    cardExpiryYear: Yup.string().required().label('Expiration Year'),
-    cardCvv: Yup.string().required().label('CVV'),
-  }),
+  // ... other steps in the schema
 ]
 
+// Initial values for the form
 const inits: ICreateAccount = {
-  accountType: 'personal',
-  accountTeamSize: '50+',
-  accountName: '',
-  accountPlan: '1',
-  businessName: 'Keenthemes Inc.',
-  businessDescriptor: 'KEENTHEMES',
-  businessType: '1',
-  businessDescription: '',
-  businessEmail: 'corp@support.com',
-  nameOnCard: 'Max Doe',
-  cardNumber: '4111 1111 1111 1111',
-  cardExpiryMonth: '1',
-  cardExpiryYear: '2025',
-  cardCvv: '123',
-  saveCard: '1',
+  type: 'article',
+  rules: [], // Initialize as an empty array or with default values
+  // ... other initial values
 }
 
 export {createAccountSchemas, inits}
