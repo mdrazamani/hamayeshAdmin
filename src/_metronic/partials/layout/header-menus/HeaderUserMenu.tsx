@@ -93,7 +93,10 @@ const HeaderUserMenu: FC = () => {
           </div>
 
           <div className='menu-item px-3'>
-            <Link to='#' className='menu-link d-flex flex-stack px-5'>
+            <Link
+              to='/billing/invoice-management/invoice'
+              className='menu-link d-flex flex-stack px-5'
+            >
               {intl.formatMessage({id: 'MENU.INVOICE.MANAGEMENT'})}
             </Link>
           </div>

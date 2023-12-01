@@ -4,12 +4,11 @@ import {Step2} from './steps/Step2'
 import {Step3} from './steps/Step3'
 import {Step4} from './steps/Step4'
 import {Step5} from './steps/Step5'
-import {KTIcon} from '../../../../_metronic/helpers'
-import {StepperComponent} from '../../../../_metronic/assets/ts/components'
+import {KTIcon} from '../../../../../../_metronic/helpers'
+import {StepperComponent} from '../../../../../../_metronic/assets/ts/components'
 import {Form, Formik, FormikValues} from 'formik'
 import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
 import {useIntl} from 'react-intl'
-import {useAuth} from '../../auth'
 
 const Horizontal: FC = () => {
   const intl = useIntl()
@@ -18,7 +17,6 @@ const Horizontal: FC = () => {
   const [currentSchema, setCurrentSchema] = useState(createAccountSchemas[0])
   const [initValues] = useState<ICreateAccount>(inits)
   const [isSubmitButton, setSubmitButton] = useState(false)
-  const {pricingPlan} = useAuth()
 
   const loadStepper = () => {
     stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
@@ -74,45 +72,45 @@ const Horizontal: FC = () => {
               <h3 className='stepper-title'>{intl.formatMessage({id: 'BILLING.TYPE'})}</h3>
             </div>
 
-            <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='stepper-title'>
-                {intl.formatMessage({id: 'BILLING.WITHOUT.ARTICLE'})}
-              </h3>
-            </div>
-
             {/* <div className='stepper-item' data-kt-stepper-element='nav'>
+              <h3 className='stepper-title'>Account Info</h3>
+            </div> */}
+
+            <div className='stepper-item' data-kt-stepper-element='nav'>
               <h3 className='stepper-title'>{intl.formatMessage({id: 'BILLING.PLAN'})}</h3>
             </div>
+            {/* 
+            <div className='stepper-item' data-kt-stepper-element='nav'>
+              <h3 className='stepper-title'>Billing Details</h3>
+            </div> */}
 
             <div className='stepper-item' data-kt-stepper-element='nav'>
               <h3 className='stepper-title'>{intl.formatMessage({id: 'BILLING.COMPLETED'})}</h3>
-            </div> */}
+            </div>
           </div>
 
           <Formik validationSchema={currentSchema} initialValues={initValues} onSubmit={submitStep}>
             {() => (
               <Form className='mx-auto mw-600px w-100 pt-15 pb-10' id='kt_create_account_form'>
                 <div className='current' data-kt-stepper-element='content'>
-                  <Step1 items={pricingPlan.plans.find((item) => item.type === 'article')} />
-                </div>
-
-                <div data-kt-stepper-element='content'>
-                  <Step1
-                    items={pricingPlan.plans.find((item) => item.type === 'freeRegistration')}
-                  />
+                  <Step1 />
                 </div>
 
                 {/* <div data-kt-stepper-element='content'>
-                  <Step1 />
+                  <Step2 />
                 </div> */}
+
+                <div data-kt-stepper-element='content'>
+                  <Step3 />
+                </div>
                 {/* 
                 <div data-kt-stepper-element='content'>
                   <Step4 />
                 </div> */}
-                {/* 
+
                 <div data-kt-stepper-element='content'>
                   <Step5 />
-                </div> */}
+                </div>
 
                 <div className='d-flex flex-stack pt-15'>
                   <div className='mr-2'>
@@ -122,21 +120,20 @@ const Horizontal: FC = () => {
                       className='btn btn-lg btn-light-primary me-3'
                       data-kt-stepper-action='previous'
                     >
-                      <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />
+                      <KTIcon iconName='arrow-left' className='fs-4 me-1' />
                       {intl.formatMessage({id: 'BILLING.BACK'})}{' '}
                     </button>
                   </div>
 
-                  {!isSubmitButton && (
-                    <div>
-                      <button type='submit' className='btn btn-lg btn-primary me-3'>
-                        <span className='indicator-label'>
-                          {intl.formatMessage({id: 'BILLING.NEXT'})}
-                          <KTIcon iconName='arrow-left' className='fs-4 me-1' />
-                        </span>
-                      </button>
-                    </div>
-                  )}
+                  <div>
+                    <button type='submit' className='btn btn-lg btn-primary me-3'>
+                      <span className='indicator-label'>
+                        {!isSubmitButton && 'Continue'}
+                        {isSubmitButton && 'Submit'}
+                        <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </Form>
             )}

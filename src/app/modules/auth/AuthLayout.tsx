@@ -3,10 +3,10 @@ import {useEffect} from 'react'
 import {useIntl} from 'react-intl'
 import {Outlet} from 'react-router-dom'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
+import {Horizontal} from '../wizards/components/Horizontal'
 
-const AuthLayout = () => {
+const AuthLayout = ({pricingPlan}) => {
   const intl = useIntl()
-
   useEffect(() => {
     document.body.style.backgroundImage = `none`
     const root = document.getElementById('root')
@@ -73,6 +73,8 @@ const AuthLayout = () => {
             alt=''
           />
           {/* end::Image */}
+
+          {pricingPlan.plans?.length ? <Horizontal /> : null}
 
           {/* begin::Title */}
           {/* <h1 className='text-white fs-2qx fw-bolder text-center mb-7'>

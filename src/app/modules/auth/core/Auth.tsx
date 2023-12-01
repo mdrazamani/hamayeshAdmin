@@ -19,16 +19,20 @@ type AuthContextProps = {
   auth: any
   saveAuth: (auth: any) => void
   currentUser: UserModel | undefined
+  pricingPlan: any
   setCurrentUser: Dispatch<SetStateAction<UserModel | undefined>>
   logout: () => void
+  setPricingPlan: Dispatch<SetStateAction<any>>
 }
 
 const initAuthContextPropsState = {
   auth: authHelper.getAuth(),
   saveAuth: () => {},
   currentUser: undefined,
+  pricingPlan: {},
   setCurrentUser: () => {},
   logout: () => {},
+  setPricingPlan: () => {},
 }
 
 const AuthContext = createContext<AuthContextProps>(initAuthContextPropsState)
@@ -40,6 +44,10 @@ const useAuth = () => {
 const AuthProvider: FC<WithChildren> = ({children}) => {
   const [auth, setAuth] = useState<any>(authHelper.getAuth())
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
+  const [pricingPlan, setPricingPlan] = useState<any>({
+    plans: [],
+    items: [],
+  })
 
   const saveAuth = (auth: any) => {
     setAuth(auth)
@@ -73,8 +81,10 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
         auth,
         saveAuth,
         currentUser,
+        pricingPlan,
         setCurrentUser,
         logout,
+        setPricingPlan,
       }}
     >
       {children}

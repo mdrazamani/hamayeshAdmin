@@ -1,11 +1,50 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
 import {KTIcon} from '../../../../../_metronic/helpers'
-import {ErrorMessage, Field} from 'formik'
+import {ErrorMessage, Field, useFormikContext} from 'formik'
 import {useIntl} from 'react-intl'
+import {useAuth} from '../../../auth'
+import clsx from 'clsx'
+import {useState} from 'react'
 
-const Step1: FC = () => {
+interface Step1Props {
+  items: any // Ideally, replace 'any' with a more specific type
+}
+
+const Step1: React.FC<Step1Props> = ({items}) => {
   const intl = useIntl()
+  const {setPricingPlan, pricingPlan} = useAuth()
+  const [selectedPlan, setSelectedPlan] = useState<any>({})
+  const {setFieldValue} = useFormikContext()
+
+  const handlePlanChange = (selectedRule) => {
+    setFieldValue('accountType', selectedRule._id) // Update the Formik's state
+
+    setSelectedPlan(selectedRule)
+    setPricingPlan((prev) => ({
+      ...prev,
+      items: [{itemType: items.type, item: selectedRule._id}],
+    }))
+  }
+  const handleNumberBlur = (event) => {
+    const numberValue = Number(event.target.value)
+    if (numberValue) {
+      setPricingPlan((prev) => {
+        // Assuming you always want to update the first item in the array
+        // If you have multiple items, you need to determine which one to update
+        const updatedItems = prev.items.map((item, index) => {
+          if (index === 0) {
+            return {...item, number: numberValue}
+          }
+          return item
+        })
+
+        return {
+          ...prev,
+          items: updatedItems,
+        }
+      })
+    }
+  }
 
   return (
     <div className='w-100'>
@@ -31,32 +70,52 @@ const Step1: FC = () => {
 
       <div className='fv-row'>
         <div className='row'>
-          <div className='col-lg-6'>
-            <Field
-              type='radio'
-              className='btn-check'
-              name='type'
-              value='article'
-              id='kt_create_account_form_account_type_personal'
-            />
-            <label
-              className='btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10'
-              htmlFor='kt_create_account_form_account_type_personal'
-            >
-              <KTIcon iconName='address-book' className='fs-3x me-5' />
+          {items.rules.map((item, index) => {
+            const radioId = `radio-${item._id}`
 
-              <span className='d-block fw-bold text-start'>
-                <span className='text-dark fw-bolder d-block fs-4 mb-2'>
-                  {' '}
-                  {intl.formatMessage({id: 'BILLING.ARTICLE.TYPE'})}
-                </span>
-                <span className='text-gray-400 fw-bold fs-6'>
-                  {intl.formatMessage({id: 'BILLING.ARTICLE.TYPE.DESC'})}
-                </span>
-              </span>
-            </label>
-          </div>
+            return (
+              <div className='col-lg-6' key={item._id}>
+                <Field
+                  type='radio'
+                  className='btn-check'
+                  name='accountType' // Make sure this is consistent
+                  value={item._id} // Unique value for each item
+                  id={radioId} // Unique id
+                  onChange={() => handlePlanChange(item)} // Handle change
+                />
+                <label
+                  className='btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10'
+                  htmlFor={radioId} // Should match the id of the Field
+                >
+                  <KTIcon iconName='address-book' className='fs-3x me-5' />
 
+                  <span className='d-block fw-bold text-start'>
+                    <span className='text-dark fw-bolder d-block fs-4 mb-2'>
+                      {item.name} {/* Display the item's name */}
+                    </span>
+                    <span className='text-gray-400 fw-bold fs-6'>
+                      {item.description} {/* Display the item's description */}
+                    </span>
+                  </span>
+                </label>
+              </div>
+            )
+          })}
+          {selectedPlan.additionalInfo?.number ? (
+            <div className='fv-row mb-8'>
+              <label className='form-label fw-bolder text-dark fs-6'>
+                {' '}
+                {intl.formatMessage({id: 'AUTH.INPUT.NUMBER'})}
+              </label>
+              <input
+                placeholder={intl.formatMessage({id: 'AUTH.INPUT.NUMBER'})}
+                type='number'
+                autoComplete='off'
+                className={clsx('form-control bg-transparent')}
+                onBlur={handleNumberBlur} // Add onBlur handler here
+              />
+            </div>
+          ) : null}
           {/* <div className='col-lg-6'>
             <Field
               type='radio'

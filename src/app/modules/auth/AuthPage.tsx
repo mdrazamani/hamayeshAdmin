@@ -4,17 +4,26 @@ import {ForgotPassword} from './components/ForgotPassword'
 import {Login} from './components/Login'
 import {AuthLayout} from './AuthLayout'
 import {ResetPassword} from './components/ResetPassword'
+import {useAuth} from './core/Auth'
+import {useEffect} from 'react'
 
-const AuthPage = () => (
-  <Routes>
-    <Route element={<AuthLayout />}>
-      <Route path='login' element={<Login />} />
-      <Route path='registration' element={<Registration />} />
-      <Route path='forgot-password' element={<ForgotPassword />} />
-      <Route path='reset-password' element={<ResetPassword />} />
-      <Route index element={<Login />} />
-    </Route>
-  </Routes>
-)
+const AuthPage = () => {
+  const {pricingPlan, setPricingPlan} = useAuth()
 
+  useEffect(() => {
+    console.log('saaaaaaaaaaaaaaaaaaa', pricingPlan)
+  }, [pricingPlan])
+
+  return (
+    <Routes>
+      <Route element={<AuthLayout pricingPlan={pricingPlan} />}>
+        <Route path='login' element={<Login />} />
+        <Route path='registration' element={<Registration setPricingPlan={setPricingPlan} />} />
+        <Route path='forgot-password' element={<ForgotPassword />} />
+        <Route path='reset-password' element={<ResetPassword />} />
+        <Route index element={<Login />} />
+      </Route>
+    </Routes>
+  )
+}
 export {AuthPage}

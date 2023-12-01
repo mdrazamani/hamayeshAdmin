@@ -17,6 +17,8 @@ export const VERIFY_CODE = `${API_URL}/auth/email-verified-send`
 export const VERIFY_EMAIL = `${API_URL}/auth/email-verified-check`
 
 export const STATES_URL = `${API_URL}/states`
+export const PLANS_URL = `${API_URL}/billing/pricing`
+
 export const getCitiesUrl = (stateId) => `${API_URL}/states/${stateId}/cities`
 
 // Server should return AuthModel
@@ -42,7 +44,8 @@ export function register(
   state,
   city,
   job,
-  profile
+  profile,
+  items
 ) {
   return axios.post(REGISTER_URL, {
     email,
@@ -59,6 +62,7 @@ export function register(
     city,
     job,
     profileImage: profile,
+    items,
   })
 }
 
@@ -135,5 +139,14 @@ export async function fetchCities(stateId) {
   } catch (error) {
     console.error('Failed to fetch cities', error)
     // Consider what you want to return in case of an error (e.g., null or an empty array)
+  }
+}
+
+export async function getPlans() {
+  try {
+    const response = await axios.get(PLANS_URL) // replace with your states API
+    return response.data.data // consider error handling and loading states
+  } catch (error) {
+    console.error('Failed to fetch states', error)
   }
 }

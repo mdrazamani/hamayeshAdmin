@@ -347,5 +347,17 @@
   "MENU.GATEWAY.MANAGEMENT": "مدیریت درگاه ها",
   "MENU.DISCOUNT.MANAGEMENT": "مدیریت تخفیف ها",
   "MENU.TRANSACTION.MANAGEMENT": "مدیریت تراکنش ها",
-  "MENU.INVOICE.MANAGEMENT": "مدیریت فاکتور ها"
+  "MENU.INVOICE.MANAGEMENT": "مدیریت فاکتور ها",
+  "AUTH.INPUT.NUMBER": "تعداد مقاله اضافی",
+  "INVOICE.TABLE.TYPE": "تعرفه انتخاب شده",
+  "INVOICE.TABLE.STATUS": "وضعیت فاکتور",
+  "INVOICE.TABLE.NUMBER": "تعداد مقاله",
+  "INVOICE.TABLE.TAX": "قیمت مالیت",
+  "INVOICE.TABLE.DISCOUNT": "قیمت تخفیف",
+  "INVOICE.TABLE.TOTAL": "قیمت نهایی",
+  "BILLING.TYPE": "ثبت نام بامقاله",
+  "BILLING.CHOSE.TYPE": "تعرفه های موجود",
+  "BILLING.WITHOUT.ARTICLE": "ثبت نام بدون مقاله",
+  "BILLING.NEXT": "ثبت نام بدون مقاله",
+  "BILLING.BACK": "ثبت نام بامقاله"
 }

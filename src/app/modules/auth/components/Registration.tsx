@@ -4,7 +4,14 @@ import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {fetchCities, fetchStates, getUserByToken, profileImage, register} from '../core/_requests'
+import {
+  fetchCities,
+  fetchStates,
+  getPlans,
+  getUserByToken,
+  profileImage,
+  register,
+} from '../core/_requests'
 import {Link} from 'react-router-dom'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
 import {useAuth} from '../core/Auth'
@@ -31,7 +38,7 @@ const initialValues = {
   // acceptTerms: false,
 }
 
-export function Registration() {
+export function Registration({setPricingPlan}) {
   const intl = useIntl()
 
   const handleImageChange = async (event) => {
@@ -109,7 +116,7 @@ export function Registration() {
   const [cities, setCities] = useState<ILocation[]>([]) // for storing cities based on selected state
 
   const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
+  const {saveAuth, setCurrentUser, pricingPlan} = useAuth()
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
@@ -130,7 +137,8 @@ export function Registration() {
           values.state,
           values.city,
           values.job,
-          values.profile
+          values.profile,
+          pricingPlan.items
         )
         saveAuth(auth.data)
         const {data: user} = await getUserByToken(auth.data.api_token)
@@ -163,8 +171,33 @@ export function Registration() {
     // similarly for fetchCities if needed
   }, [])
   useEffect(() => {
+    getPlans().then((data) =>
+      setPricingPlan((prev) => {
+        return {
+          ...prev,
+          plans: data.data,
+        }
+      })
+    )
+
+    return () => {
+      setPricingPlan(() => {
+        return {
+          items: {},
+          plans: [], // Set plans to an empty array
+        }
+      })
+    }
+    // similarly for fetchCities if needed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  useEffect(() => {
     PasswordMeterComponent.bootstrap()
   }, [])
+
+  useEffect(() => {
+    console.log(pricingPlan.items?.length)
+  }, [pricingPlan])
 
   const handleStateChange = async (event) => {
     const stateValue = event.target.value
@@ -683,7 +716,11 @@ export function Registration() {
           type='submit'
           id='kt_sign_up_submit'
           className='btn btn-lg btn-primary w-100 mb-5'
-          disabled={formik.isSubmitting || !formik.isValid /*|| !formik.values.acceptTerms*/}
+          disabled={
+            formik.isSubmitting ||
+            !formik.isValid ||
+            !pricingPlan.items?.length /*|| !formik.values.acceptTerms*/
+          }
         >
           {!loading && (
             <span className='indicator-label'>

@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from 'react'
-import {KTIcon} from '../../../../_metronic/helpers'
+import {KTIcon} from '../../../../../../_metronic/helpers'
 import {Step1} from './steps/Step1'
 import {Step2} from './steps/Step2'
 import {Step3} from './steps/Step3'
 import {Step4} from './steps/Step4'
 import {Step5} from './steps/Step5'
-import {StepperComponent} from '../../../../_metronic/assets/ts/components'
+import {StepperComponent} from '../../../../../../_metronic/assets/ts/components'
 import {Form, Formik, FormikValues} from 'formik'
 import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
 
@@ -201,9 +201,9 @@ const Vertical = () => {
         <Formik validationSchema={currentSchema} initialValues={initValues} onSubmit={submitStep}>
           {() => (
             <Form className='py-20 w-100 w-xl-700px px-9' noValidate id='kt_create_account_form'>
-              {/* <div className='current' data-kt-stepper-element='content'>
+              <div className='current' data-kt-stepper-element='content'>
                 <Step1 />
-              </div> */}
+              </div>
 
               <div data-kt-stepper-element='content'>
                 <Step2 />

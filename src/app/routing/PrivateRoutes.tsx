@@ -44,6 +44,7 @@ const PrivateRoutes = () => {
   const GalleryPage = lazy(() => import('../modules/apps/gallery-management/GalleryPage'))
 
   const PricingPage = lazy(() => import('../modules/apps/pricing-management/PricingPage'))
+  const InvoicePage = lazy(() => import('../modules/apps/invoice-management/InvoicePage'))
 
   return (
     <Routes>
@@ -95,12 +96,24 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         /> */}
-        {(currentUser?.role === 'admin' || currentUser?.role === 'user') && (
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
           <Route
             path='billing/pricing-management/*'
             element={
               <SuspensedView>
                 <PricingPage />
+              </SuspensedView>
+            }
+          />
+        )}
+        {(currentUser?.role === 'admin' ||
+          currentUser?.role === 'executive' ||
+          currentUser?.role === 'user') && (
+          <Route
+            path='billing/invoice-management/*'
+            element={
+              <SuspensedView>
+                <InvoicePage />
               </SuspensedView>
             }
           />

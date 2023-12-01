@@ -30,7 +30,7 @@ const AppRoutes: FC = () => {
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
-          <Route element={<AuthLayout />}>
+          <Route element={<AuthLayout pricingPlan={{}} />}>
             {/* Here we use the wrapper instead of the "VerifyEmail" component directly */}
             <Route path='verify-email' element={<VerifyEmailWrapper />} />
           </Route>
