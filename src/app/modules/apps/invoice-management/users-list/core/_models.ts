@@ -1,25 +1,22 @@
-  import {Response} from '../../../../../../_metronic/helpers'
+import {Response} from '../../../../../../_metronic/helpers'
 
-  // Define a type for PricingRule
-  export type PricingRule = {
-    _id?: string
-    name?: string
-    description?: string
-    number?: number
-    price?: number
-    additionalInfo?: any // Adjust the type according to your needs
-  }
+// Define a type for PricingRule
+export type PricingRule = {
+  item?: string
+  itemType?: string
+  number?: number
+}
 
-  export type User = {
-    id?: string
-    type?: string // Assuming type is a string, e.g., 'article'
-    rules?: Array<PricingRule>
-    createdAt?: Date
-  }
+export type User = {
+  id?: string
+  user?: string // Assuming type is a string, e.g., 'article'
+  items?: Array<PricingRule>
+  createdAt?: Date
+}
 
-  export type UsersQueryResponse = Response<Array<User>>
+export type UsersQueryResponse = Response<Array<User>>
 
-  export const initialUser: User = {
-    type: 'article',
-    rules: [], // Initialize with an empty array of rules or default values
-  }
+export const initialUser: User = {
+  user: '',
+  items: [], // Initialize with an empty array of rules or default values
+}

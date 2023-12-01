@@ -70,6 +70,8 @@ export type ListViewContextProps = {
   setItemIdForUpdate: Dispatch<SetStateAction<ID>>
   isAllSelected: boolean
   disabled: boolean
+  setItemIdForCreateInvoice?: Dispatch<SetStateAction<ID>>
+  itemIdForCreateInvoice?: ID
 }
 
 export const initialListView: ListViewContextProps = {

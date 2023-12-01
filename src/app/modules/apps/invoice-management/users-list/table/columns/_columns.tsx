@@ -9,6 +9,7 @@ import {UserCustomHeader} from './UserCustomHeader'
 import {UserSelectionHeader} from './UserSelectionHeader'
 import {User} from '../../core/_models'
 import {UserCreatedAt} from './UserCreatedAt'
+import {UserInfoCell1} from './UserInfoCell1'
 
 const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
 const savedLanguage = savedLangSetting.selectedLang
@@ -18,6 +19,13 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     Header: (props) => <UserSelectionHeader tableProps={props} />,
     id: 'selection',
     Cell: ({...props}) => <UserSelectionCell id={props.data[props.row.index].id} />,
+  },
+  {
+    Header: (props) => (
+      <UserCustomHeader tableProps={props} title='INVOICE.TABLE.TYPE' className='min-w-300px' />
+    ),
+    id: 'user',
+    Cell: ({...props}) => <UserInfoCell1 user={props.data[props.row.index].user} />,
   },
   {
     Header: (props) => (

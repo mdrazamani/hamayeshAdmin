@@ -13,7 +13,6 @@ import {finder} from '../../_metronic/helpers/HomePageFinder'
 
 const PrivateRoutes = () => {
   const {currentUser} = useAuth()
-  console.log(currentUser)
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
   const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))

@@ -7,6 +7,7 @@ import {ID, KTIcon, QUERIES} from '../../../../../../../_metronic/helpers'
 import {useListView} from '../../core/ListViewProvider'
 import {useQueryResponse} from '../../core/QueryResponseProvider'
 import {deleteUser} from '../../core/_requests'
+import {useListView as useListView1} from '../../../../invoice-management/users-list/core/ListViewProvider'
 
 type Props = {
   id: ID
@@ -14,6 +15,7 @@ type Props = {
 
 const UserActionsCell: FC<Props> = ({id}) => {
   const {setItemIdForUpdate} = useListView()
+  const {setItemIdForCreateInvoice} = useListView1()
   const {query} = useQueryResponse()
   const queryClient = useQueryClient()
   const intl = useIntl()
@@ -25,7 +27,11 @@ const UserActionsCell: FC<Props> = ({id}) => {
   const openEditModal = () => {
     setItemIdForUpdate(id)
   }
-
+  const openCreateInvoiceModal = () => {
+    if (setItemIdForCreateInvoice) {
+      setItemIdForCreateInvoice(id)
+    }
+  }
   const deleteItem = useMutation(() => deleteUser(id), {
     // 💡 response of the mutation is passed to onSuccess
     onSuccess: () => {
@@ -57,6 +63,14 @@ const UserActionsCell: FC<Props> = ({id}) => {
           <a className='menu-link px-3' onClick={openEditModal}>
             {intl.formatMessage({
               id: 'COL.ACTIONS.EDIT',
+            })}{' '}
+          </a>
+        </div>
+
+        <div className='menu-item px-3'>
+          <a className='menu-link px-3' onClick={openCreateInvoiceModal}>
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.CREATE.INVOICE',
             })}{' '}
           </a>
         </div>

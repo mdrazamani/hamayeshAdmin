@@ -5,14 +5,9 @@ import {Login} from './components/Login'
 import {AuthLayout} from './AuthLayout'
 import {ResetPassword} from './components/ResetPassword'
 import {useAuth} from './core/Auth'
-import {useEffect} from 'react'
 
 const AuthPage = () => {
   const {pricingPlan, setPricingPlan} = useAuth()
-
-  useEffect(() => {
-    console.log('saaaaaaaaaaaaaaaaaaa', pricingPlan)
-  }, [pricingPlan])
 
   return (
     <Routes>

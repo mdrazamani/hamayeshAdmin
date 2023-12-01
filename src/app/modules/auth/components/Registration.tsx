@@ -195,10 +195,6 @@ export function Registration({setPricingPlan}) {
     PasswordMeterComponent.bootstrap()
   }, [])
 
-  useEffect(() => {
-    console.log(pricingPlan.items?.length)
-  }, [pricingPlan])
-
   const handleStateChange = async (event) => {
     const stateValue = event.target.value
     formik.setFieldValue('state', stateValue) // update formik state

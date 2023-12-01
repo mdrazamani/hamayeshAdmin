@@ -4,6 +4,7 @@ import {useIntl} from 'react-intl'
 import {useMutation, useQueryClient} from 'react-query'
 import {MenuComponent} from '../../../../../../../_metronic/assets/ts/components'
 import {ID, KTIcon, QUERIES} from '../../../../../../../_metronic/helpers'
+import {useAuth} from '../../../../../auth'
 import {useListView} from '../../core/ListViewProvider'
 import {useQueryResponse} from '../../core/QueryResponseProvider'
 import {deleteUser} from '../../core/_requests'
@@ -17,6 +18,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
   const {query} = useQueryResponse()
   const queryClient = useQueryClient()
   const intl = useIntl()
+  const {currentUser} = useAuth()
 
   useEffect(() => {
     MenuComponent.reinitialization()
@@ -52,14 +54,17 @@ const UserActionsCell: FC<Props> = ({id}) => {
         className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4'
         data-kt-menu='true'
       >
+        {currentUser?.role === 'admin' && (
+          <div className='menu-item px-3'>
+            <a className='menu-link px-3' onClick={openEditModal}>
+              {intl.formatMessage({
+                id: 'COL.ACTIONS.EDIT',
+              })}{' '}
+            </a>
+          </div>
+        )}
         {/* begin::Menu item */}
-        <div className='menu-item px-3'>
-          <a className='menu-link px-3' onClick={openEditModal}>
-            {intl.formatMessage({
-              id: 'COL.ACTIONS.EDIT',
-            })}{' '}
-          </a>
-        </div>
+
         {/* end::Menu item */}
 
         {/* begin::Menu item */}

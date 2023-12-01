@@ -355,9 +355,9 @@
   "INVOICE.TABLE.TAX": "قیمت مالیت",
   "INVOICE.TABLE.DISCOUNT": "قیمت تخفیف",
   "INVOICE.TABLE.TOTAL": "قیمت نهایی",
-  "BILLING.TYPE": "ثبت نام بامقاله",
+  "BILLING.TYPE": "بامقاله",
   "BILLING.CHOSE.TYPE": "تعرفه های موجود",
-  "BILLING.WITHOUT.ARTICLE": "ثبت نام بدون مقاله",
-  "BILLING.NEXT": "ثبت نام بدون مقاله",
-  "BILLING.BACK": "ثبت نام بامقاله"
+  "BILLING.WITHOUT.ARTICLE": "بدون مقاله",
+  "BILLING.NEXT": "بدون مقاله",
+  "BILLING.BACK": "بامقاله"
 }

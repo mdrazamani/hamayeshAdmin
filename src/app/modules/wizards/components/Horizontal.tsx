@@ -36,7 +36,7 @@ const Horizontal: FC = () => {
     setSubmitButton(stepper.current.currentStepIndex === stepper.current.totalStepsNumber)
   }
 
-  const submitStep = (values: ICreateAccount, actions: FormikValues) => {
+  const submitStep = () => {
     if (!stepper.current) {
       return
     }
@@ -45,7 +45,7 @@ const Horizontal: FC = () => {
       stepper.current.goNext()
     } else {
       stepper.current.goto(1)
-      actions.resetForm()
+      // actions.resetForm()
     }
 
     setSubmitButton(stepper.current.currentStepIndex === stepper.current.totalStepsNumber)
@@ -89,7 +89,7 @@ const Horizontal: FC = () => {
             </div> */}
           </div>
 
-          <Formik validationSchema={currentSchema} initialValues={initValues} onSubmit={submitStep}>
+          <Formik validationSchema={currentSchema} initialValues={initValues} onSubmit={() => {}}>
             {() => (
               <Form className='mx-auto mw-600px w-100 pt-15 pb-10' id='kt_create_account_form'>
                 <div className='current' data-kt-stepper-element='content'>
@@ -129,7 +129,11 @@ const Horizontal: FC = () => {
 
                   {!isSubmitButton && (
                     <div>
-                      <button type='submit' className='btn btn-lg btn-primary me-3'>
+                      <button
+                        onClick={submitStep}
+                        type='button'
+                        className='btn btn-lg btn-primary me-3'
+                      >
                         <span className='indicator-label'>
                           {intl.formatMessage({id: 'BILLING.NEXT'})}
                           <KTIcon iconName='arrow-left' className='fs-4 me-1' />

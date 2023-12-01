@@ -3,7 +3,7 @@ import {KTIcon} from '../../../../../../_metronic/helpers'
 import {useListView} from '../core/ListViewProvider'
 
 const UserEditModalHeader = () => {
-  const {setItemIdForUpdate} = useListView()
+  const {setItemIdForUpdate, setItemIdForCreateInvoice} = useListView()
 
   const intl = useIntl()
   return (
@@ -16,7 +16,10 @@ const UserEditModalHeader = () => {
       <div
         className='btn btn-icon btn-sm btn-active-icon-primary'
         data-kt-users-modal-action='close'
-        onClick={() => setItemIdForUpdate(undefined)}
+        onClick={() => {
+          setItemIdForCreateInvoice?.(undefined)
+          setItemIdForUpdate(undefined)
+        }}
         style={{cursor: 'pointer'}}
       >
         <KTIcon iconName='cross' className='fs-1' />
