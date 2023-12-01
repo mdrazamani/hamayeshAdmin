@@ -87,7 +87,7 @@ const HeaderUserMenu: FC = () => {
           </div>
 
           <div className='menu-item px-3'>
-            <Link to='#' className='menu-link px-5'>
+            <Link to='/billing/transaction-management/transactions' className='menu-link px-5'>
               {intl.formatMessage({id: 'MENU.TRANSACTION.MANAGEMENT'})}
             </Link>
           </div>

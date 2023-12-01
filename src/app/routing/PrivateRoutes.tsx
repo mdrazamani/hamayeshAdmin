@@ -44,6 +44,9 @@ const PrivateRoutes = () => {
 
   const PricingPage = lazy(() => import('../modules/apps/pricing-management/PricingPage'))
   const InvoicePage = lazy(() => import('../modules/apps/invoice-management/InvoicePage'))
+  const TransactionPage = lazy(
+    () => import('../modules/apps/transaction-management/TransactionPage')
+  )
 
   return (
     <Routes>
@@ -101,6 +104,16 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <PricingPage />
+              </SuspensedView>
+            }
+          />
+        )}
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='billing/transaction-management/*'
+            element={
+              <SuspensedView>
+                <TransactionPage />
               </SuspensedView>
             }
           />
