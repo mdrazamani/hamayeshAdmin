@@ -82,6 +82,20 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     Header: (props) => (
       <UserCustomHeader
         tableProps={props}
+        title='INVOICE.TABLE.INVOICE.NUMBER'
+        className='min-w-125px'
+      />
+    ),
+    id: 'invoiceNumber',
+    Cell: ({...props}) => (
+      <UserTwoStepsCell phoneNumber={props.data[props.row.index].invoiceNumber} />
+    ),
+  },
+
+  {
+    Header: (props) => (
+      <UserCustomHeader
+        tableProps={props}
         title='BILLING.TABLE.UPDATEDAT'
         className='min-w-125px'
       />

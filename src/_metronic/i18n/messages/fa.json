@@ -359,5 +359,6 @@
   "BILLING.CHOSE.TYPE": "تعرفه های موجود",
   "BILLING.WITHOUT.ARTICLE": "بدون مقاله",
   "BILLING.NEXT": "بدون مقاله",
-  "BILLING.BACK": "بامقاله"
+  "BILLING.BACK": "بامقاله",
+  "INVOICE.TABLE.INVOICE.NUMBER": "شماره فاکتور"
 }

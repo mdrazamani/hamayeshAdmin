@@ -75,9 +75,9 @@ const HeaderUserMenu: FC = () => {
             </Link>
           </div>
           <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-5'>
+            <Link to='/billing/discount-management/discount' className='menu-link px-5'>
               {intl.formatMessage({id: 'MENU.DISCOUNT.MANAGEMENT'})}
-            </a>
+            </Link>
           </div>
 
           <div className='menu-item px-3'>
