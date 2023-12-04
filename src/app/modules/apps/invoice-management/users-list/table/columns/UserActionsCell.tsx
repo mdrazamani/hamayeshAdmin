@@ -14,7 +14,7 @@ type Props = {
 }
 
 const UserActionsCell: FC<Props> = ({id}) => {
-  const {setItemIdForUpdate} = useListView()
+  const {setItemIdForUpdate, setPayment} = useListView()
   const {query} = useQueryResponse()
   const queryClient = useQueryClient()
   const intl = useIntl()
@@ -26,6 +26,10 @@ const UserActionsCell: FC<Props> = ({id}) => {
 
   const openEditModal = () => {
     setItemIdForUpdate(id)
+  }
+
+  const openPaymentModal = () => {
+    setPayment?.(id)
   }
 
   const deleteItem = useMutation(() => deleteUser(id), {
@@ -63,6 +67,13 @@ const UserActionsCell: FC<Props> = ({id}) => {
             </a>
           </div>
         )}
+        <div className='menu-item px-3'>
+          <a className='menu-link px-3' onClick={openPaymentModal}>
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.PAYMENT',
+            })}{' '}
+          </a>
+        </div>
         {/* begin::Menu item */}
 
         {/* end::Menu item */}

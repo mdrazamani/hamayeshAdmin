@@ -6,11 +6,11 @@ import {UsersListWrapper} from './users-list/UsersList'
 const InvoicePage = () => {
   const intl = useIntl()
   const supporterManagementTitle = intl.formatMessage({
-    id: 'MENU.PRICING.MANAGEMENT',
+    id: 'MENU.INVOICE.MANAGEMENT',
     defaultMessage: 'مدیریت حامیان',
   })
   const usersListManagementTitle = intl.formatMessage({
-    id: 'MENU.PRICING.MANAGEMENT.LIST',
+    id: 'MENU.INVOICE.MANAGEMENT.LIST',
     defaultMessage: 'مدیریت کاربران',
   })
   const usersBreadcrumbs: Array<PageLink> = [

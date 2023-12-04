@@ -33,7 +33,7 @@ const UsersListSearchComponent = () => {
           data-kt-user-table-filter='search'
           className='form-control form-control-solid w-250px ps-14'
           placeholder={intl.formatMessage({
-            id: 'SEARCH.PRICING',
+            id: 'SEARCH.INVOICE',
           })}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

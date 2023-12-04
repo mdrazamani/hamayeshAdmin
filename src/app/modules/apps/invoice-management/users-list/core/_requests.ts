@@ -4,9 +4,13 @@ import {User, UsersQueryResponse} from './_models'
 
 const API_URL = process.env.REACT_APP_API_URL
 const GET_USERS_URL = `${API_URL}/billing/invoice`
+const GET_GATEWAY = `${API_URL}/billing/gateway`
 
 const getUsers = (query: string): Promise<UsersQueryResponse> => {
   return axios.get(`${GET_USERS_URL}?${query}`).then((d) => d.data.data)
+}
+const getGateway = (): Promise<UsersQueryResponse> => {
+  return axios.get(`${GET_GATEWAY}`).then((d) => d.data.data)
 }
 
 const getUserById = (id: ID): Promise<User | undefined> => {
@@ -39,4 +43,4 @@ const deleteSelectedUsers = (userIds: Array<ID>): Promise<void> => {
   return axios.all(requests).then(() => {})
 }
 
-export {getUsers, deleteUser, deleteSelectedUsers, getUserById, createUser, updateUser}
+export {getUsers, deleteUser, deleteSelectedUsers, getUserById, createUser, updateUser, getGateway}

@@ -6,11 +6,11 @@ import {UsersListWrapper} from './users-list/UsersList'
 const DiscountPage = () => {
   const intl = useIntl()
   const newsManagementTitle = intl.formatMessage({
-    id: 'MENU.NEWS.MANEGMENT',
+    id: 'MENU.DISCOUNT.MANEGMENT',
     defaultMessage: 'مدیریت اخبار',
   })
   const usersListManagementTitle = intl.formatMessage({
-    id: 'MENU.NEWS.MANAGEMENT.LIST',
+    id: 'MENU.DISCOUNT.MANAGEMENT.LIST',
     defaultMessage: 'مدیریت کاربران',
   })
   const usersBreadcrumbs: Array<PageLink> = [

@@ -48,6 +48,7 @@ const PrivateRoutes = () => {
     () => import('../modules/apps/transaction-management/TransactionPage')
   )
   const DiscountPage = lazy(() => import('../modules/apps/discount-management/DiscountPage'))
+  const Invoice = lazy(() => import('../modules/invoice/Invoice'))
 
   return (
     <Routes>
@@ -105,6 +106,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <PricingPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <Route
+            path='billing/invoice-management/payment'
+            element={
+              <SuspensedView>
+                <Invoice />
               </SuspensedView>
             }
           />

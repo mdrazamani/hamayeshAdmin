@@ -6,11 +6,11 @@ import {UsersListWrapper} from './users-list/UsersList'
 const TransactionPage = () => {
   const intl = useIntl()
   const newsCommentManagementTitle = intl.formatMessage({
-    id: 'MENU.NEWSCOMMENT.MANEGMENT',
+    id: 'MENU.TRANSACTION.MANEGMENT',
     defaultMessage: 'مدیریت تگ ها',
   })
   const usersListManagementTitle = intl.formatMessage({
-    id: 'MENU.NEWSCOMMENT.MANAGEMENT.LIST',
+    id: 'MENU.TRANSACTION.MANAGEMENT.LIST',
     defaultMessage: 'مدیریت کاربران',
   })
   const usersBreadcrumbs: Array<PageLink> = [

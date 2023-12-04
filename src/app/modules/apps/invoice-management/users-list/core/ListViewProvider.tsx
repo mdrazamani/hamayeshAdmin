@@ -23,6 +23,7 @@ const ListViewProvider: FC<WithChildren> = ({children}) => {
   const [itemIdForCreateInvoice, setItemIdForCreateInvoice] = useState<ID>(
     initialListView.itemIdForCreateInvoice
   )
+  const [payment, setPayment] = useState<ID>(initialListView.payment)
   return (
     <ListViewContext.Provider
       value={{
@@ -30,6 +31,8 @@ const ListViewProvider: FC<WithChildren> = ({children}) => {
         itemIdForUpdate,
         setItemIdForUpdate,
         setItemIdForCreateInvoice,
+        setPayment,
+        payment,
         itemIdForCreateInvoice,
         disabled,
         isAllSelected,

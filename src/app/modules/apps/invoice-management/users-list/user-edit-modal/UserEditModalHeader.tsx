@@ -3,7 +3,7 @@ import {KTIcon} from '../../../../../../_metronic/helpers'
 import {useListView} from '../core/ListViewProvider'
 
 const UserEditModalHeader = () => {
-  const {setItemIdForUpdate, setItemIdForCreateInvoice} = useListView()
+  const {setItemIdForUpdate, setItemIdForCreateInvoice, setPayment} = useListView()
 
   const intl = useIntl()
   return (
@@ -19,6 +19,7 @@ const UserEditModalHeader = () => {
         onClick={() => {
           setItemIdForCreateInvoice?.(undefined)
           setItemIdForUpdate(undefined)
+          setPayment?.(undefined)
         }}
         style={{cursor: 'pointer'}}
       >

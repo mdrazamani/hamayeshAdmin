@@ -23,7 +23,7 @@ const UsersListToolbar = () => {
       <button type='button' className='btn btn-primary' onClick={openAddUserModal}>
         <KTIcon iconName='plus' className='fs-2' />
         {intl.formatMessage({
-          id: 'ADD.NEWS',
+          id: 'ADD.DISCOUNT',
         })}{' '}
       </button>
       {/* end::Add user */}

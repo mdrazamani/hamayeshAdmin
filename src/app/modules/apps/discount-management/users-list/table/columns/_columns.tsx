@@ -20,7 +20,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='NEWS.TABLE.TITLE' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='DISCOUNT.TABLE.CODE' className='min-w-125px' />
     ),
     id: 'code',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
@@ -28,7 +28,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='NEWS.TABLE.WRITER' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='DISCOUNT.TABLE.TYPE' className='min-w-125px' />
     ),
     id: 'type',
     Cell: ({...props}) => <UserInfoCell1 user={props.data[props.row.index]} />,
@@ -36,7 +36,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='NEWS.TABLE.WRITER' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='DISCOUNT.TABLE.AMOUNT' className='min-w-125px' />
     ),
     id: 'amount',
     Cell: ({...props}) => <UserLastLoginCell1 national_id={props.data[props.row.index].amount} />,
@@ -44,7 +44,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='NEWS.TABLE.WRITER' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='DISCOUNT.TABLE.PERCENT' className='min-w-125px' />
     ),
     id: 'percent',
     Cell: ({...props}) => <UserLastLoginCell national_id={props.data[props.row.index].percent} />,
@@ -52,14 +52,22 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='NEWS.TABLE.WRITER' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='DISCOUNT.TABLE.USENUMBER'
+        className='min-w-125px'
+      />
     ),
     id: 'useNumber',
     Cell: ({...props}) => <UserTwoStepsCell phoneNumber={props.data[props.row.index].useNumber} />,
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='NEWS.TABLE.PUBLISHDATE' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='DISCOUNT.TABLE.EXPIRESAT'
+        className='min-w-125px'
+      />
     ),
     id: 'expiresAt',
     Cell: ({...props}) => <UserCreatedAt created_at={props.data[props.row.index].expiresAt} />,

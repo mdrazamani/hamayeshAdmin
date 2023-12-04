@@ -19,7 +19,7 @@ const usersColumns: ReadonlyArray<Column<User>> = [
   },
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.FULLNAME' className='min-w-125px' />
+      <UserCustomHeader tableProps={props} title='TRANSACTION.TABLE.USER' className='min-w-125px' />
     ),
     id: 'invoice.user',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index].invoice?.user} />,
@@ -27,7 +27,11 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.COMMENT' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='TRANSACTION.TABLE.TOTAL'
+        className='min-w-125px'
+      />
     ),
     id: 'invoice.total',
     Cell: ({...props}) => <UserTwoStepsCell comment={props.data[props.row.index].invoice?.total} />,
@@ -35,7 +39,11 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.STATUS' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='TRANSACTION.TABLE.STATUS'
+        className='min-w-125px'
+      />
     ),
     id: 'status',
     Cell: ({...props}) => <UserStatus national_id={props.data[props.row.index].status} />,
@@ -43,7 +51,11 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.IP' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='TRANSACTION.TABLE.GATEWAY'
+        className='min-w-125px'
+      />
     ),
     id: 'gateway',
     Cell: ({...props}) => (
@@ -53,7 +65,11 @@ const usersColumns: ReadonlyArray<Column<User>> = [
 
   {
     Header: (props) => (
-      <UserCustomHeader tableProps={props} title='COMMENT.TABLE.COMMENT' className='min-w-125px' />
+      <UserCustomHeader
+        tableProps={props}
+        title='TRANSACTION.TABLE.INVOICENUMBER'
+        className='min-w-125px'
+      />
     ),
     id: 'invoice.invoiceNumber',
     Cell: ({...props}) => (
