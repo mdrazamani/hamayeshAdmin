@@ -633,7 +633,7 @@ export function Registration({setPricingPlan}) {
         <div className='text-muted'>{intl.formatMessage({id: 'AUTH.INPUT.HELPER'})}</div>
       </div>
 
-      <div className='fv-row mb-8'>
+      {/* <div className='fv-row mb-8'>
         <label className='form-label fw-bolder text-dark fs-6'>
           {intl.formatMessage({id: 'AUTH.INPUT.IMAGE'})}
         </label>
@@ -643,8 +643,7 @@ export function Registration({setPricingPlan}) {
           className='form-control bg-transparent'
           onChange={handleImageChange}
         />
-        {/* Display path after image upload */}
-      </div>
+      </div> */}
       {/* end::Form group */}
 
       {/* begin::Form group Confirm password */}

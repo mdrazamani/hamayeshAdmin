@@ -382,5 +382,6 @@
   "MENU.INVOICE.MANAGEMENT.LIST": "لیست فاکتورها",
   "MENU.TRANSACTION.MANEGMENT": "مدیریت تراکنش ها",
   "MENU.TRANSACTION.MANAGEMENT.LIST": "لیست تراکنش ها",
-  "SEARCH.TRANSACTION": "جستجو تراکنش"
+  "SEARCH.TRANSACTION": "جستجو تراکنش",
+  "COL.ACTIONS.CREATE.INVOICE": "افزودن فاکتور"
 }

@@ -202,10 +202,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     }
   }
 
-  useEffect(() => {
-    console.log('sdfasdwasdwws', formik.values)
-  }, [formik.values])
-
   return (
     <>
       <form id='kt_modal_add_user_form' className='form' onSubmit={formik.handleSubmit} noValidate>
@@ -552,14 +548,13 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             </div>
           )}
 
-          {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
+          {/* {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
             <div className='rating'>
               <label className='fw-bold fs-6 mb-2'>
                 {' '}
                 {intl.formatMessage({id: 'AUTH.INPUT.RATE'})}
               </label>
 
-              {/* ... [other rating buttons] */}
               {[1, 2, 3, 4, 5].map((value) => (
                 <React.Fragment key={value}>
                   <label className='rating-label' htmlFor={`kt_rating_2_input_${value}`}>
@@ -580,7 +575,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 </React.Fragment>
               ))}
             </div>
-          )}
+          )} */}
 
           {/* begin::Input group */}
 

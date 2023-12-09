@@ -95,19 +95,22 @@ const Topbar: FC = () => {
           <Search />
         </div> */}
         {/* Activities */}
-        <div className={clsx('d-flex align-items-center ', toolbarButtonMarginClass)}>
-          {/* begin::Drawer toggle */}
-          <div
-            className={clsx(
-              'btn btn-icon btn-active-light-primary btn-custom',
-              toolbarButtonHeightClass
-            )}
-            id='kt_activities_toggle'
-          >
-            <KTIcon iconName='chart-simple' className={toolbarButtonIconSizeClass} />
+
+        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+          <div className={clsx('d-flex align-items-center ', toolbarButtonMarginClass)}>
+            {/* begin::Drawer toggle */}
+            <div
+              className={clsx(
+                'btn btn-icon btn-active-light-primary btn-custom',
+                toolbarButtonHeightClass
+              )}
+              id='kt_activities_toggle'
+            >
+              <KTIcon iconName='chart-simple' className={toolbarButtonIconSizeClass} />
+            </div>
+            {/* end::Drawer toggle */}
           </div>
-          {/* end::Drawer toggle */}
-        </div>
+        )}
 
         {/* NOTIFICATIONS */}
         {currentUser?.role === 'admin' && (
