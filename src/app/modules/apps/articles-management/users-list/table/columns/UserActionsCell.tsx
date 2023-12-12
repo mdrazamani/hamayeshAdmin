@@ -13,7 +13,8 @@ type Props = {
 }
 
 const UserActionsCell: FC<Props> = ({id}) => {
-  const {setItemIdForUpdate} = useListView()
+  const {setItemIdForUpdate, setItemIdForTrack, setItemIdForReferee, setItemIdForRefereeResult} =
+    useListView()
   const {query} = useQueryResponse()
   const queryClient = useQueryClient()
   const intl = useIntl()
@@ -26,6 +27,16 @@ const UserActionsCell: FC<Props> = ({id}) => {
     setItemIdForUpdate(id)
   }
 
+  const openTrackingModal = () => {
+    setItemIdForTrack?.(id)
+  }
+
+  const openRefereeModal = () => {
+    setItemIdForReferee?.(id)
+  }
+  const openRefereeResultModal = () => {
+    setItemIdForRefereeResult?.(id)
+  }
   const deleteItem = useMutation(() => deleteUser(id), {
     // 💡 response of the mutation is passed to onSuccess
     onSuccess: () => {
@@ -67,6 +78,29 @@ const UserActionsCell: FC<Props> = ({id}) => {
           <a className='menu-link px-3' onClick={openEditModal}>
             {intl.formatMessage({
               id: 'COL.ACTIONS.EDIT',
+            })}{' '}
+          </a>
+        </div>
+
+        <div className='menu-item px-3'>
+          <a className='menu-link px-3' onClick={openTrackingModal}>
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.TRACK',
+            })}{' '}
+          </a>
+        </div>
+        <div className='menu-item px-3'>
+          <a className='menu-link px-3' onClick={openRefereeModal}>
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.REFEREE',
+            })}{' '}
+          </a>
+        </div>
+
+        <div className='menu-item px-3'>
+          <a className='menu-link px-3' onClick={openRefereeResultModal}>
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.REFEREE.RESULT',
             })}{' '}
           </a>
         </div>

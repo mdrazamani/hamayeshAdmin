@@ -15,6 +15,12 @@ const ListViewContext = createContext<ListViewContextProps>(initialListView)
 
 const ListViewProvider: FC<WithChildren> = ({children}) => {
   const [selected, setSelected] = useState<Array<ID>>(initialListView.selected)
+  const [itemIdForTrack, setItemIdForTrack] = useState<ID>(initialListView.itemIdForTrack)
+  const [itemIdForReferee, setItemIdForReferee] = useState<ID>(initialListView.itemIdForReferee)
+  const [itemIdForRefereeResult, setItemIdForRefereeResult] = useState<ID>(
+    initialListView.itemIdForRefereeResult
+  )
+
   const [itemIdForUpdate, setItemIdForUpdate] = useState<ID>(initialListView.itemIdForUpdate)
   const {isLoading} = useQueryResponse()
   const data = useQueryResponseData()
@@ -24,6 +30,12 @@ const ListViewProvider: FC<WithChildren> = ({children}) => {
   return (
     <ListViewContext.Provider
       value={{
+        setItemIdForRefereeResult,
+        itemIdForRefereeResult,
+        setItemIdForReferee,
+        itemIdForReferee,
+        setItemIdForTrack,
+        itemIdForTrack,
         selected,
         itemIdForUpdate,
         setItemIdForUpdate,

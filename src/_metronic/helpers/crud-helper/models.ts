@@ -74,6 +74,12 @@ export type ListViewContextProps = {
   itemIdForCreateInvoice?: ID
   setPayment?: Dispatch<SetStateAction<ID>>
   payment?: ID
+  setItemIdForTrack?: Dispatch<SetStateAction<ID>>
+  itemIdForTrack?: ID
+  itemIdForReferee?: ID
+  setItemIdForReferee?: Dispatch<SetStateAction<ID>>
+  itemIdForRefereeResult?: ID
+  setItemIdForRefereeResult?: Dispatch<SetStateAction<ID>>
 }
 
 export const initialListView: ListViewContextProps = {

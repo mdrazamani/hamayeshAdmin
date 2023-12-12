@@ -383,5 +383,9 @@
   "MENU.TRANSACTION.MANEGMENT": "مدیریت تراکنش ها",
   "MENU.TRANSACTION.MANAGEMENT.LIST": "لیست تراکنش ها",
   "SEARCH.TRANSACTION": "جستجو تراکنش",
-  "COL.ACTIONS.CREATE.INVOICE": "افزودن فاکتور"
+  "COL.ACTIONS.CREATE.INVOICE": "افزودن فاکتور",
+  "AUTH.INPUT.REVIEW": "ارسال به نویسنده جهت بازنگری",
+  "COL.ACTIONS.TRACK": "مشاهده روند",
+  "COL.ACTIONS.REFEREE": "اختصاص به داور",
+  "COL.ACTIONS.REFEREE.RESULT": "نتایج داوری"
 }

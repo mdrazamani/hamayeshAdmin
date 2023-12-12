@@ -32,7 +32,6 @@ const ListsWidget5: React.FC<Props> = ({className}) => {
         </div>
       </div>
       {/* end::Header */}
-      {/* begin::Body */}
       <div className='card-body pt-5'>
         {/* begin::Timeline */}
         <div className='timeline-label'>
@@ -52,8 +51,7 @@ const ListsWidget5: React.FC<Props> = ({className}) => {
             </div>
             {/* end::Text */}
           </div>
-          {/* end::Item */}
-          {/* begin::Item */}
+
           <div className='timeline-item'>
             {/* begin::Label */}
             <div className='timeline-label fw-bold text-gray-800 fs-6'>10:00</div>

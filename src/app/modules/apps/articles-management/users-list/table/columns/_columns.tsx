@@ -29,8 +29,8 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     Header: (props) => (
       <UserCustomHeader tableProps={props} title='ARTICLE.TABLE.RATE' className='min-w-125px' />
     ),
-    id: 'arbitration',
-    Cell: ({...props}) => <UserRating rate={props.data[props.row.index].arbitration?.rate} />,
+    id: 'rate',
+    Cell: ({...props}) => <UserRating rate={props.data[props.row.index].rate} />,
   },
 
   {

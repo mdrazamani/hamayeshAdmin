@@ -7,7 +7,7 @@ import {UserEditModal} from './user-edit-modal/UserEditModal'
 import {KTCard} from '../../../../../_metronic/helpers'
 
 const UsersList = () => {
-  const {itemIdForUpdate} = useListView()
+  const {itemIdForUpdate, itemIdForTrack, itemIdForReferee, itemIdForRefereeResult} = useListView()
   return (
     <>
       <KTCard>
@@ -15,6 +15,9 @@ const UsersList = () => {
         <UsersTable />
       </KTCard>
       {itemIdForUpdate !== undefined && <UserEditModal />}
+      {itemIdForTrack !== undefined && <UserEditModal />}
+      {itemIdForReferee !== undefined && <UserEditModal />}
+      {itemIdForRefereeResult !== undefined && <UserEditModal />}
     </>
   )
 }

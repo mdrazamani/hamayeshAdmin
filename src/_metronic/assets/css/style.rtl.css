@@ -43205,7 +43205,7 @@ code:not([class*=language-]) {
 .timeline-label:before {
   content: "";
   position: absolute;
-  right: 51px;
+  right: 181px;
   width: 3px;
   top: 0;
   bottom: 0;
@@ -43221,7 +43221,7 @@ code:not([class*=language-]) {
   margin-bottom: 0;
 }
 .timeline-label .timeline-label {
-  width: 50px;
+  width: 180px;
   flex-shrink: 0;
   position: relative;
   color: var(--bs-gray-800);

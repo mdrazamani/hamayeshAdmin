@@ -6,6 +6,8 @@ import {User, UsersQueryResponse} from './_models'
 const API_URL = process.env.REACT_APP_API_URL
 const GET_USERS_URL = `${API_URL}/articles`
 const USER_URL = `${API_URL}/article-categories`
+const USER_URL1 = `${API_URL}/admin/users`
+const GET_USERS_URL1 = `${API_URL}/judging`
 
 const getUsers = (query: string): Promise<UsersQueryResponse> => {
   return axios.get(`${GET_USERS_URL}?${query}`).then((d) => d.data.data)
@@ -28,6 +30,13 @@ const createUser = (user) => {
 const updateUser = (id, user: User): Promise<User | undefined> => {
   return axios
     .patch(`${GET_USERS_URL}/${id}`, user)
+    .then((response: AxiosResponse<Response<User>>) => response.data)
+    .then((response: Response<User>) => response.data)
+}
+
+const updateReferees = (id, user: User): Promise<User | undefined> => {
+  return axios
+    .post(`${GET_USERS_URL1}`, {article: id, referees: user})
     .then((response: AxiosResponse<Response<User>>) => response.data)
     .then((response: Response<User>) => response.data)
 }
@@ -80,8 +89,12 @@ const deleteSelectedUsers = (userIds: Array<ID>): Promise<void> => {
 const getAllCategories = () => {
   return axios.get(`${USER_URL}`).then((d) => d.data.data)
 }
+const getAllUsers = () => {
+  return axios.get(`${USER_URL1}?role=referee`).then((d) => d.data.data)
+}
 export {
   getUsers,
+  getAllUsers,
   deleteUser,
   deleteSelectedUsers,
   getUserById,
@@ -89,4 +102,5 @@ export {
   updateUser,
   getAllCategories,
   downloadArticles,
+  updateReferees,
 }

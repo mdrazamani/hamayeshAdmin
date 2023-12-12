@@ -16,7 +16,7 @@ import {useAuth} from '../../../../auth'
 
 import {profileImage} from '../../../../auth/core/_requests'
 
-import MainCkeditor from '../../../../ckeditor/MainCkeditor'
+import RangeInput from '../../../../../../_metronic/helpers/components/RangeInput'
 
 type Props = {
   isUserLoading: boolean
@@ -365,17 +365,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
           </label>
           <div className='separator border-5 mb-15'></div>
 
-          {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
+          {/* {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
             <>
               <div className='fv-row mb-7'>
-                {/* begin::Label */}
                 <label className='fw-bold fs-6 mb-2'>
                   {' '}
                   {intl.formatMessage({id: 'AUTH.INPUT.FILES'})}
                 </label>
-                {/* end::Label */}
 
-                {/* begin::Input */}
                 <input
                   type='file'
                   className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
@@ -384,18 +381,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 />
               </div>
             </>
-          )}
+          )} */}
 
-          <div className='fv-row mb-7'>
-            {/* begin::Label */}
+          {/* <div className='fv-row mb-7'>
             <label className='fw-bold fs-6 mb-2'>
               {' '}
               {intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
             </label>
 
-            {/* end::Label */}
-
-            {/* begin::Input */}
             <textarea
               placeholder={intl.formatMessage({id: 'AUTH.INPUT.MESSAGE'})}
               {...formik.getFieldProps('arbitration.message')}
@@ -421,8 +414,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 </div>
               </div>
             )}
-            {/* end::Input */}
-          </div>
+          </div> */}
 
           {/* begin::Input group */}
 
@@ -449,7 +441,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             </div>
           )} */}
 
-          {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
+          {(currentUser?.role === 'admin' || currentUser?.role === 'scientific') && (
             <div className='mb-7'>
               {/* begin::Label */}
               <label className='required fw-bold fs-6 mb-5'>
@@ -468,9 +460,9 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                     {...formik.getFieldProps('status')}
                     name='status'
                     type='radio'
-                    value='pending'
+                    value='review'
                     id='kt_modal_update_role_option_0'
-                    checked={formik.values.status === 'pending'}
+                    checked={formik.values.status === 'review'}
                     disabled={formik.isSubmitting || isUserLoading}
                   />
 
@@ -479,7 +471,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                   {/* begin::Label */}
                   <label className='form-check-label' htmlFor='kt_modal_update_role_option_0'>
                     <div className='fw-bolder text-gray-800'>
-                      {intl.formatMessage({id: 'AUTH.INPUT.PENDING'})}
+                      {intl.formatMessage({id: 'AUTH.INPUT.REVIEW'})}
                     </div>
                   </label>
                   {/* end::Label */}
@@ -527,9 +519,9 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                     {...formik.getFieldProps('status')}
                     name='status'
                     type='radio'
-                    value='success'
+                    value='accepted'
                     id='kt_modal_update_role_option_2'
-                    checked={formik.values.status === 'success'}
+                    checked={formik.values.status === 'accepted'}
                     disabled={formik.isSubmitting || isUserLoading}
                   />
 
@@ -546,6 +538,9 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
                 {/* end::Radio */}
               </div>
             </div>
+          )}
+          {(currentUser?.role === 'admin' || currentUser?.role === 'scientific') && (
+            <RangeInput formik={formik} intl={intl} isUserLoading={isUserLoading} />
           )}
 
           {/* {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
