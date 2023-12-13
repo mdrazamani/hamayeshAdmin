@@ -86,18 +86,7 @@ const UsersListFilter = () => {
                   id: 'MENU.ARTICLES.FILTER_OPTION_STATUS_PENDING',
                 })}
               </option>
-              <option value='review'>
-                {' '}
-                {intl.formatMessage({
-                  id: 'MENU.ARTICLES.FILTER_OPTION_STATUS_REVIEW',
-                })}
-              </option>
-              <option value='reviewed'>
-                {' '}
-                {intl.formatMessage({
-                  id: 'MENU.ARTICLES.FILTER_OPTION_STATUS_REVIEWED',
-                })}
-              </option>
+
               <option value='accepted'>
                 {' '}
                 {intl.formatMessage({
@@ -108,24 +97,6 @@ const UsersListFilter = () => {
                 {' '}
                 {intl.formatMessage({
                   id: 'MENU.ARTICLES.FILTER_OPTION_STATUS_FAILED',
-                })}
-              </option>
-              <option value='changed'>
-                {' '}
-                {intl.formatMessage({
-                  id: 'MENU.ARTICLES.FILTER_OPTION_STATUS_CHANGED',
-                })}
-              </option>
-              <option value='reviewedAgain'>
-                {' '}
-                {intl.formatMessage({
-                  id: 'MENU.ARTICLES.FILTER_OPTION_STATUS_REVIEWDAGAIN',
-                })}
-              </option>
-              <option value='new'>
-                {' '}
-                {intl.formatMessage({
-                  id: 'MENU.ARTICLES.FILTER_OPTION_STATUS_NEW',
                 })}
               </option>
             </select>

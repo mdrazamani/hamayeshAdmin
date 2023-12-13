@@ -49,6 +49,9 @@ const PrivateRoutes = () => {
   )
   const DiscountPage = lazy(() => import('../modules/apps/discount-management/DiscountPage'))
   const Invoice = lazy(() => import('../modules/invoice/Invoice'))
+  const JudgingArticlesPage = lazy(
+    () => import('../modules/apps/judgingArticles-management/JudgingArticlesPage')
+  )
 
   return (
     <Routes>
@@ -289,7 +292,6 @@ const PrivateRoutes = () => {
           />
         )}
         {(currentUser?.role === 'admin' ||
-          currentUser?.role === 'referee' ||
           currentUser?.role === 'scientific' ||
           currentUser?.role === 'user') && (
           <Route
@@ -297,6 +299,17 @@ const PrivateRoutes = () => {
             element={
               <SuspensedView>
                 <ArticlesPage />
+              </SuspensedView>
+            }
+          />
+        )}
+
+        {currentUser?.role === 'referee' && (
+          <Route
+            path='articles/judgement-management/*'
+            element={
+              <SuspensedView>
+                <JudgingArticlesPage />
               </SuspensedView>
             }
           />

@@ -1,23 +1,17 @@
 // @ts-nocheck
 
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useState} from 'react'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import {isNotEmpty, KTSVG} from '../../../../../../_metronic/helpers'
-import {User} from '../core/_models'
+import {isNotEmpty} from '../../../../../../_metronic/helpers'
 import {useListView} from '../core/ListViewProvider'
 import {UsersListLoading} from '../components/loading/UsersListLoading'
-import {createUser, getAllCategories, updateUser} from '../core/_requests'
+import {createUser, updateUser} from '../core/_requests'
 import {useQueryResponse} from '../core/QueryResponseProvider'
 import {useIntl} from 'react-intl'
 import {useLang} from '../../../../../../_metronic/i18n/Metronici18n'
 import {useAuth} from '../../../../auth'
 import clsx from 'clsx'
-import {useMutation} from 'react-query'
-import {
-  downloadArticles,
-  downloadReferee,
-} from '../../../judgingArticles-management/users-list/core/_requests'
 
 type Props = {
   isUserLoading: boolean
@@ -138,17 +132,6 @@ const UserRefereeResultModal: FC<Props> = ({user, isUserLoading}) => {
     return (total / rates.length).toFixed(2) // Two decimal places
   }
 
-  const downloadItem = useMutation(
-    async (id) => {
-      return downloadReferee(id)
-    },
-    {
-      onSuccess: () => {
-        // Code for success
-      },
-    }
-  )
-
   return (
     <>
       <form id='kt_modal_add_user_form' className='form' onSubmit={formik.handleSubmit} noValidate>
@@ -166,7 +149,7 @@ const UserRefereeResultModal: FC<Props> = ({user, isUserLoading}) => {
           <div className='accordion' id='kt_accordion_1'>
             {!isUserLoading &&
               user.referees?.map((referee, index) => (
-                <div className='accordion-item' key={referee.id}>
+                <div className='accordion-item' key={referee._id}>
                   <h2 className='accordion-header' id={`kt_accordion_1_header_${index + 1}`}>
                     <button
                       className='accordion-button fs-4 fw-bold collapsed'
@@ -191,16 +174,6 @@ const UserRefereeResultModal: FC<Props> = ({user, isUserLoading}) => {
                     <div className='accordion-body'>
                       <div>
                         <div className='d-flex flex-column'>
-                          <li className='d-flex align-items-center py-2'>
-                            <span className='bullet me-5'></span>{' '}
-                            <a
-                              onClick={async () => await downloadItem.mutateAsync(referee.id)}
-                              className='btn btn-primary'
-                            >
-                              <i className='bi bi-download fs-4 me-2'></i>{' '}
-                              {intl.formatMessage({id: 'REFEREE.REFEREE_FILE'})}
-                            </a>
-                          </li>
                           <li className='d-flex align-items-center py-2'>
                             <span className='bullet me-5'></span>{' '}
                             <h6>{intl.formatMessage({id: 'RATE.ASSIGNED_DATE'})}</h6>

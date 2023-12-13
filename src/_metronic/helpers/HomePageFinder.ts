@@ -7,7 +7,7 @@ export const finder = (role: string | undefined) => {
     case 'executive':
       return '/users/user-management/users'
     case 'referee':
-      return '/articles/article-management/articles'
+      return '/articles/judgement-management/judgement'
     case 'scientific':
       return '/articles/articlecategories-management/articlecategories'
     default:

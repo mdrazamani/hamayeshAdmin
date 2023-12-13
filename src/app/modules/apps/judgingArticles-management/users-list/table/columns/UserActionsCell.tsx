@@ -11,9 +11,10 @@ import {deleteUser, downloadArticles} from '../../core/_requests'
 
 type Props = {
   id: ID
+  articleId: ID
 }
 
-const UserActionsCell: FC<Props> = ({id}) => {
+const UserActionsCell: FC<Props> = ({id, articleId}) => {
   const {setItemIdForUpdate, setItemIdForTrack, setItemIdForReferee, setItemIdForRefereeResult} =
     useListView()
   const {query} = useQueryResponse()
@@ -36,9 +37,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
   const openRefereeModal = () => {
     setItemIdForReferee?.(id)
   }
-  const openRefereeResultModal = () => {
-    setItemIdForRefereeResult?.(id)
-  }
+
   const deleteItem = useMutation(() => deleteUser(id), {
     // 💡 response of the mutation is passed to onSuccess
     onSuccess: () => {
@@ -49,7 +48,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
 
   const downloadItem = useMutation(
     async () => {
-      return downloadArticles(id)
+      return downloadArticles(articleId)
     },
     {
       onSuccess: () => {
@@ -101,27 +100,7 @@ const UserActionsCell: FC<Props> = ({id}) => {
           </div>
         )}
 
-        <div className='menu-item px-3'>
-          <a className='menu-link px-3' onClick={openRefereeResultModal}>
-            {intl.formatMessage({
-              id: 'COL.ACTIONS.REFEREE.RESULT',
-            })}{' '}
-          </a>
-        </div>
-        {/* end::Menu item */}
-
         {/* begin::Menu item */}
-        <div className='menu-item px-3'>
-          <a
-            className='menu-link px-3'
-            data-kt-users-table-filter='delete_row'
-            onClick={async () => await deleteItem.mutateAsync()}
-          >
-            {intl.formatMessage({
-              id: 'COL.ACTIONS.REMOVE',
-            })}{' '}
-          </a>
-        </div>
 
         <div className='menu-item px-3'>
           <a
@@ -131,6 +110,17 @@ const UserActionsCell: FC<Props> = ({id}) => {
           >
             {intl.formatMessage({
               id: 'COL.ACTIONS.DOWNLOAD',
+            })}{' '}
+          </a>
+        </div>
+        <div className='menu-item px-3'>
+          <a
+            className='menu-link px-3'
+            data-kt-users-table-filter='delete_row'
+            onClick={async () => await deleteItem.mutateAsync()}
+          >
+            {intl.formatMessage({
+              id: 'COL.ACTIONS.REMOVE',
             })}{' '}
           </a>
         </div>

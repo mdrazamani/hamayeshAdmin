@@ -360,10 +360,6 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               </div>
             )}
           </div>
-          <label className='fw-bold fs-3 mb-2 mt-10'>
-            {intl.formatMessage({id: 'AUTH.INPUT.REFEREESEC'})}
-          </label>
-          <div className='separator border-5 mb-15'></div>
 
           {/* {(currentUser?.role === 'admin' || currentUser?.role === 'referee') && (
             <>
@@ -440,6 +436,14 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
               )}
             </div>
           )} */}
+          {(currentUser?.role === 'admin' || currentUser?.role === 'scientific') && (
+            <>
+              <label className='fw-bold fs-3 mb-2 mt-10'>
+                {intl.formatMessage({id: 'AUTH.INPUT.REFEREESEC'})}
+              </label>
+              <div className='separator border-5 mb-15'></div>
+            </>
+          )}
 
           {(currentUser?.role === 'admin' || currentUser?.role === 'scientific') && (
             <div className='mb-7'>

@@ -192,12 +192,20 @@ export function MenuInner() {
               title={intl.formatMessage({id: 'MENU.ARTICLECATEGORY.MANAGEMENT'})}
             />
           )}
-
-          <MenuItem
-            icon='shield-tick'
-            to='/articles/article-management/articles'
-            title={intl.formatMessage({id: 'MENU.ARTICLES.MANAGEMENT'})}
-          />
+          {currentUser?.role !== 'referee' && (
+            <MenuItem
+              icon='shield-tick'
+              to='/articles/article-management/articles'
+              title={intl.formatMessage({id: 'MENU.ARTICLES.MANAGEMENT'})}
+            />
+          )}
+          {currentUser?.role === 'referee' && (
+            <MenuItem
+              icon='shield-tick'
+              to='/articles/judgement-management/judgement'
+              title={intl.formatMessage({id: 'MENU.JUDGEMENT.MANAGEMENT'})}
+            />
+          )}
         </MenuInnerWithSub>
       )}
       {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (

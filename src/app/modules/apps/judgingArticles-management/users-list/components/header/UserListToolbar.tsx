@@ -21,12 +21,12 @@ const UsersListToolbar = () => {
       {/* end::Export */}
 
       {/* begin::Add user */}
-      <button type='button' className='btn btn-primary' onClick={openAddUserModal}>
+      {/* <button type='button' className='btn btn-primary' onClick={openAddUserModal}>
         <KTIcon iconName='plus' className='fs-2' />
         {intl.formatMessage({
           id: 'ADD.ARTICLE',
         })}{' '}
-      </button>
+      </button> */}
       {/* end::Add user */}
     </div>
   )
