@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {CKEditor} from '@ckeditor/ckeditor5-react'
 import Editor from '../../../build/ckeditor'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 import {useThemeMode} from '../../../_metronic/partials/layout/theme-mode/ThemeModeProvider'
 import './style.css'
+
 const decodeHtmlEntities = (input: any) => {
   if (input !== null) {
     return input.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
@@ -83,7 +86,8 @@ export default function MainCkeditor({formik, formikValue, formikName}) {
 
   return (
     <CKEditor
-      editor={Editor.Editor}
+      // editor={Editor.Editor}
+      editor={ClassicEditor}
       data={editorContent}
       onChange={(event, editor) => {
         const data = (editor as any).getData()

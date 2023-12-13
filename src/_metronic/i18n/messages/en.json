@@ -383,5 +383,9 @@
   "MENU.INVOICE.MANAGEMENT.LIST": "List of Invoices",
   "MENU.TRANSACTION.MANEGMENT": "Transaction Management",
   "MENU.TRANSACTION.MANAGEMENT.LIST": "List of Transactions",
-  "SEARCH.TRANSACTION": "Search Transaction"
+  "SEARCH.TRANSACTION": "Search Transaction",
+  "teasers": "teasers",
+  "addNewTiser": "add new teaser",
+  "cover": "cover",
+  "video": "video"
 }

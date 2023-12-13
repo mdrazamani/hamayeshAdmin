@@ -13,6 +13,7 @@ import DatePicker from '../../../../d-components/calendar'
 import changeFormat from '../../../../d-components/dateConverter'
 
 import MainCkeditor from '../../../../ckeditor/MainCkeditor'
+import TeaserAdminPanel from '../../../../d-components/teaser'
 
 const EventDetails = (eventDetails: any) => {
   const intl = useIntl()
@@ -99,9 +100,19 @@ const EventDetails = (eventDetails: any) => {
     Object.keys(currentValues).forEach((key) => {
       // If the current form values are different from the initial ones, add them to the changes object.
       if (currentValues[key] !== initialValues[key]) {
-        changes[key] = currentValues[key]
+        // changes[key] = currentValues[key]
+        if (key === 'teasers') {
+          // ایجاد یک نسخه جدید از teasers بدون فیلد _id
+          changes[key] = currentValues[key].map(({_id, ...rest}) => rest)
+        } else {
+          changes[key] = currentValues[key]
+        }
       }
     })
+    changes.dates = {
+      start: changeFormat(currentValues.dates.start),
+      // ... سایر فیلدهای تاریخ
+    }
     return {
       ...changes,
       writingArticles: currentValues.writingArticles,
@@ -380,6 +391,7 @@ const EventDetails = (eventDetails: any) => {
                 />
               </div>
             </div>
+
             <div className='row mb-6' style={{marginTop: '100px'}}>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>
                 {intl.formatMessage({id: 'hamayesh.poster'})}
@@ -445,6 +457,27 @@ const EventDetails = (eventDetails: any) => {
                 )}
               </div>
             </div>
+
+            {/* {---------------------------------------------------} */}
+            <div className='row mb-4' style={{marginTop: '100px'}}>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                {intl.formatMessage({id: 'teasers'})}
+              </label>
+
+              <div className='col-lg-8'>
+                <TeaserAdminPanel
+                  teasers={formik.values.teasers}
+                  onDelete={(index) => {
+                    // ایجاد یک نسخه جدید از لیست teasers بدون آیتم حذف شده
+                    const updatedTeasers = formik.values.teasers.filter((_, i) => i !== index)
+                    // به‌روزرسانی formik.values.teasers
+                    formik.setFieldValue('teasers', updatedTeasers)
+                  }}
+                  formik={formik}
+                />
+              </div>
+            </div>
+            {/* {---------------------------------------------------} */}
 
             <div className='fv-row mb-7' style={{marginTop: '100px'}}>
               {/* begin::Label */}

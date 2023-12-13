@@ -411,5 +411,9 @@
   "MENU.ARTICLES.FILTER_RESET": "تنظیم مجدد",
   "MENU.ARTICLES.FILTER_APPLY": "اعمال تنظیمات",
   "MENU.JUDGEMENT.MANAGEMENT": "داوری مقالات",
-  "REFEREE.REFEREE_FILE": "دانلود فایل های داور"
+  "REFEREE.REFEREE_FILE": "دانلود فایل های داور",
+  "teasers": "تیزر ها",
+  "addNewTiser": "افزودن تیزر جدید",
+  "cover": "کاور",
+  "video": "ویدیو"
 }
