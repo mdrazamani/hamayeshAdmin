@@ -290,7 +290,7 @@ const EventDetails = (eventDetails: any) => {
   }
 
   useEffect(() => {
-    console.log('sssssssssssssssss', formik.values.dates.refeeResult)
+    console.log('sssssssssssssssss', formik.values.teasers)
   }, [formik.values])
 
   return (
@@ -469,7 +469,9 @@ const EventDetails = (eventDetails: any) => {
                   teasers={formik.values.teasers}
                   onDelete={(index) => {
                     // ایجاد یک نسخه جدید از لیست teasers بدون آیتم حذف شده
-                    const updatedTeasers = formik.values.teasers.filter((_, i) => i !== index)
+                    const updatedTeasers = formik.values.teasers.filter(
+                      (item, i) => item._id !== index
+                    )
                     // به‌روزرسانی formik.values.teasers
                     formik.setFieldValue('teasers', updatedTeasers)
                   }}
