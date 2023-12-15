@@ -13,6 +13,7 @@ import {useAuth} from '../../../../auth'
 import {Horizontal} from '../../../../wizards/components/Horizontal'
 import Invoice from '../../../../invoice/Invoice'
 import {useQuery} from 'react-query'
+import Invoice1 from '../../../../invoice/Invoice1'
 
 type Props = {
   isUserLoading: boolean
@@ -177,7 +178,7 @@ const UserPaymentModal: FC<Props> = ({user, isUserLoading}) => {
               data-kt-scroll-wrappers='#kt_modal_add_user_scroll'
               data-kt-scroll-offset='300px'
             >
-              <Invoice invoice={user} gateway={gateway} />
+              <Invoice1 invoice={user} gateway={gateway} />
             </div>
           </Form>
         )}
