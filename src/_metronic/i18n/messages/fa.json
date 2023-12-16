@@ -415,5 +415,12 @@
   "teasers": "تیزر ها",
   "addNewTiser": "افزودن تیزر جدید",
   "cover": "کاور",
-  "video": "ویدیو"
+  "video": "ویدیو",
+  "INVOICE.NUMBER": "شماره فاکتور :‌",
+  "INVOICE.ISSUE.DATE": "تاریخ ثبت فاکتور",
+  "INVOICE.DUE.DATE": "مدت اعتبار فاکتور",
+  "INVOICE.ISSUE.FOR": "فروشنده",
+  "INVOICE.ISSUE.BY": "خریدار",
+  "INVOICE.PRINT": "پرینت فاکتور",
+  "INVOICE.PAY": "پرداخت فاکتور"
 }

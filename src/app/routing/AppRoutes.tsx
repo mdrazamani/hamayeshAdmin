@@ -14,6 +14,7 @@ import {App} from '../App'
 import {AuthLayout} from '../modules/auth/AuthLayout'
 import VerifyEmailWrapper from '../modules/auth/components/VerifyEmailWrapper'
 import {finder} from '../../_metronic/helpers/HomePageFinder'
+import Subscription from '../modules/errors/components/Subscription'
 
 /**
  * Base URL of the website.
@@ -34,7 +35,7 @@ const AppRoutes: FC = () => {
             {/* Here we use the wrapper instead of the "VerifyEmail" component directly */}
             <Route path='verify-email' element={<VerifyEmailWrapper />} />
           </Route>
-
+          <Route path='subscription/view' element={<Subscription />} />
           {currentUser ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />

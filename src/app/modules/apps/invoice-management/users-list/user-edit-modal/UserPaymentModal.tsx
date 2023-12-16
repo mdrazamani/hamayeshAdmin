@@ -7,7 +7,6 @@ import {UsersListLoading} from '../components/loading/UsersListLoading'
 import {createUser, getGateway, updateUser} from '../core/_requests'
 import {useQueryResponse} from '../core/QueryResponseProvider'
 import {useIntl} from 'react-intl'
-import {getPlans} from '../../../../auth/core/_requests'
 import {Formik, Form, useFormik} from 'formik'
 import {useAuth} from '../../../../auth'
 import {Horizontal} from '../../../../wizards/components/Horizontal'
@@ -22,7 +21,7 @@ type Props = {
 
 const UserPaymentModal: FC<Props> = ({user, isUserLoading}) => {
   const intl = useIntl()
-  const {setPricingPlan, pricingPlan, currentUser} = useAuth()
+  const {pricingPlan, currentUser} = useAuth()
   const {data: gateway} = useQuery(
     `${QUERIES.USERS_LIST}`,
     () => {
@@ -109,31 +108,6 @@ const UserPaymentModal: FC<Props> = ({user, isUserLoading}) => {
     },
   })
 
-  useEffect(() => {
-    getPlans().then((data) =>
-      setPricingPlan((prev) => {
-        return {
-          ...prev,
-          plans: data.data,
-        }
-      })
-    )
-
-    return () => {
-      setPricingPlan(() => {
-        return {
-          items: {},
-          plans: [], // Set plans to an empty array
-        }
-      })
-    }
-    // similarly for fetchCities if needed
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    console.log('userForEdit', userForEdit)
-  }, [userForEdit])
   return (
     <>
       <Formik

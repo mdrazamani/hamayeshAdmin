@@ -52,7 +52,6 @@ const PrivateRoutes = () => {
   const JudgingArticlesPage = lazy(
     () => import('../modules/apps/judgingArticles-management/JudgingArticlesPage')
   )
-
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -134,7 +133,9 @@ const PrivateRoutes = () => {
             }
           />
         )}
-        {(currentUser?.role === 'admin' || currentUser?.role === 'executive') && (
+        {(currentUser?.role === 'admin' ||
+          currentUser?.role === 'executive' ||
+          currentUser?.role === 'user') && (
           <Route
             path='billing/transaction-management/*'
             element={
@@ -324,6 +325,7 @@ const PrivateRoutes = () => {
             }
           />
         )}
+
         {/* Page Not Found */}
         <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>

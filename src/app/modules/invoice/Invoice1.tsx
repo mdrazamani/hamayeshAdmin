@@ -2,8 +2,9 @@ import axios from 'axios'
 import React, {FC, useEffect} from 'react'
 import {useIntl} from 'react-intl'
 import {QueryClient, useMutation} from 'react-query'
-import {ID} from '../../../_metronic/helpers'
+import {ID, toAbsoluteUrl} from '../../../_metronic/helpers'
 import {UserCreatedAt} from '../apps/articles-management/users-list/table/columns/UserCreatedAt'
+import {useAuth} from '../auth'
 type Props = {
   invoice?: any
   gateway?: any
@@ -13,6 +14,7 @@ const GET_USERS_URL = `${API_URL}/billing/payment`
 
 const Invoice1: FC<Props> = ({invoice, gateway}) => {
   const intl = useIntl()
+  const {currentUser} = useAuth()
 
   useEffect(() => {
     console.log('gateway', gateway)
@@ -22,39 +24,24 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
     console.log('invoice', invoice)
   }, [invoice])
 
-  const payment = (invoice: ID, gateway: ID): Promise<void> => {
+  const payment = (invoice: ID, gateway: ID, userId): Promise<void> => {
     const data = {
       invoice: invoice,
       gateway: gateway,
+      ...(currentUser?.role === 'admin' ? {userId} : {}),
     }
-    return axios.post(`${GET_USERS_URL}`, data).then((response) => {
-      debugger
-      const htmlDoc = new DOMParser().parseFromString(response.data, 'text/html')
-      const formElement = htmlDoc.querySelector('form')
-      const formAction = formElement ? formElement.action : ''
-      const formData = formElement ? new FormData(formElement) : new FormData()
+    return axios
+      .post(`${GET_USERS_URL}`, data)
+      .then((response) => {
+        const redirectUrl = response.data.data.redirectUrl
 
-      // Dynamically create a form in the document
-      const dynamicForm = document.createElement('form')
-      dynamicForm.action = formAction
-      dynamicForm.method = 'POST'
-
-      // Append form fields to the dynamic form
-      formData.forEach((value, key) => {
-        const inputField = document.createElement('input')
-        inputField.type = 'hidden'
-        inputField.name = key
-        inputField.value = value.toString()
-        dynamicForm.appendChild(inputField)
+        // Redirect the user to the payment gateway URL
+        window.location.href = redirectUrl
       })
-
-      // Append the dynamic form to the document and submit it
-      document.body.appendChild(dynamicForm)
-      dynamicForm.submit()
-    })
+      .catch((error) => {})
   }
 
-  const payItem = useMutation(() => payment(invoice.id, gateway.data[0]._id), {
+  const payItem = useMutation(() => payment(invoice.id, gateway.data[0]._id, invoice?.user?.id), {
     // 💡 response of the mutation is passed to onSuccess
     onSuccess: () => {},
   })
@@ -67,26 +54,29 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
             <div className='mt-n1'>
               <div className='d-flex flex-stack pb-10'>
                 <a href='#'>
-                  <img alt='Logo' src='assets/media/svg/brand-logos/code-lab.svg' />
-                </a>
-                <a href='#' className='btn btn-sm btn-success'>
-                  Pay Now
+                  <img alt='Logo' src={toAbsoluteUrl('/media/logos/custom-2.svg')} />
                 </a>
               </div>
               <div className='m-0'>
                 <div className='fw-bold fs-3 text-gray-800 mb-8'>
-                  Invoice #{invoice?.invoiceNumber}
+                  {intl.formatMessage({id: 'INVOICE.NUMBER'})} {invoice?.invoiceNumber}
                 </div>
                 <div className='row g-5 mb-11'>
                   <div className='col-sm-6'>
-                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>Issue Date:</div>
+                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>
+                      {' '}
+                      {intl.formatMessage({id: 'INVOICE.ISSUE.DATE'})}
+                    </div>
                     <div className='fw-bold fs-6 text-gray-800'>
                       {' '}
                       <UserCreatedAt created_at={invoice?.createdAt} />
                     </div>
                   </div>
                   <div className='col-sm-6'>
-                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>Due Date:</div>
+                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>
+                      {' '}
+                      {intl.formatMessage({id: 'INVOICE.DUE.DATE'})}
+                    </div>
                     <div className='fw-bold fs-6 text-gray-800 d-flex align-items-center flex-wrap'>
                       <span className='pe-2'>02 May 2021</span>
                       <span className='fs-7 text-danger d-flex align-items-center'>
@@ -97,7 +87,10 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
                 </div>
                 <div className='row g-5 mb-12'>
                   <div className='col-sm-6'>
-                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>Issue For:</div>
+                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>
+                      {' '}
+                      {intl.formatMessage({id: 'INVOICE.ISSUE.FOR'})}
+                    </div>
                     <div className='fw-bold fs-6 text-gray-800'>KeenThemes Inc.</div>
                     <div className='fw-semibold fs-7 text-gray-600'>
                       8692 Wild Rose Drive
@@ -106,7 +99,10 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
                     </div>
                   </div>
                   <div className='col-sm-6'>
-                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>Issued By:</div>
+                    <div className='fw-semibold fs-7 text-gray-600 mb-1'>
+                      {' '}
+                      {intl.formatMessage({id: 'INVOICE.ISSUE.BY'})}
+                    </div>
                     <div className='fw-bold fs-6 text-gray-800'>
                       {' '}
                       {invoice?.user?.firstName} {invoice?.user?.lastName}
@@ -244,7 +240,7 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
               onClick={() => window.print()}
               // onClick='window.print();'
             >
-              Print Invoice
+              {intl.formatMessage({id: 'INVOICE.PRINT'})}
             </button>
           </div>
           <button
@@ -252,7 +248,7 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
             className='btn btn-primary my-1'
             onClick={async () => await payItem.mutateAsync()}
           >
-            Create Invoice
+            {intl.formatMessage({id: 'INVOICE.PAY'})}
           </button>
         </div>
       </div>

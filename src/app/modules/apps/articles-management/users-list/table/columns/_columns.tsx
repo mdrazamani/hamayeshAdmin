@@ -11,7 +11,7 @@ import {User} from '../../core/_models'
 import {UserCreatedAt} from './UserCreatedAt'
 import {UserRating} from './UserRating'
 
-const usersColumns: ReadonlyArray<Column<User>> = [
+const usersColumns = [
   {
     Header: (props) => <UserSelectionHeader tableProps={props} />,
     id: 'selection',
@@ -24,6 +24,13 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     id: 'userId',
     Cell: ({...props}) => <UserInfoCell user={props.data[props.row.index]} />,
   },
+  {
+    Header: (props) => (
+      <UserCustomHeader tableProps={props} title='ARTICLE.TABLE.TITLE' className='min-w-125px' />
+    ),
+    id: 'title',
+    Cell: ({...props}) => <UserTwoStepsCell phoneNumber={props.data[props.row.index].title} />,
+  },
 
   {
     Header: (props) => (
@@ -31,14 +38,6 @@ const usersColumns: ReadonlyArray<Column<User>> = [
     ),
     id: 'rate',
     Cell: ({...props}) => <UserRating rate={props.data[props.row.index].rate} />,
-  },
-
-  {
-    Header: (props) => (
-      <UserCustomHeader tableProps={props} title='ARTICLE.TABLE.TITLE' className='min-w-125px' />
-    ),
-    id: 'title',
-    Cell: ({...props}) => <UserTwoStepsCell phoneNumber={props.data[props.row.index].title} />,
   },
 
   {

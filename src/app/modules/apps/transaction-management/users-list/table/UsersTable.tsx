@@ -1,4 +1,4 @@
-import {useMemo} from 'react'
+import {useEffect, useMemo} from 'react'
 import {ColumnInstance, Row, useTable} from 'react-table'
 import {CustomHeaderColumn} from './columns/CustomHeaderColumn'
 import {CustomRow} from './columns/CustomRow'
@@ -8,12 +8,23 @@ import {User} from '../core/_models'
 import {UsersListLoading} from '../components/loading/UsersListLoading'
 import {UsersListPagination} from '../components/pagination/UsersListPagination'
 import {KTCardBody} from '../../../../../../_metronic/helpers'
+import {useAuth} from '../../../../auth'
 
 const UsersTable = () => {
   const users = useQueryResponseData()
   const isLoading = useQueryResponseLoading()
   const data = useMemo(() => users, [users])
-  const columns = useMemo(() => usersColumns, [])
+  const {currentUser} = useAuth()
+  const columns = useMemo(() => {
+    const filteredColumns = usersColumns.filter((column) => {
+      // Customize this condition based on your logic
+      if (currentUser?.role === 'user') {
+        return column.id !== 'invoice.user' && column.id !== 'selection'
+      }
+      return true // Include all columns for other roles
+    })
+    return filteredColumns
+  }, [currentUser])
   const {getTableProps, getTableBodyProps, headers, rows, prepareRow} = useTable({
     columns,
     data,

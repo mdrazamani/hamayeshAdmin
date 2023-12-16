@@ -67,24 +67,27 @@ const HeaderUserMenu: FC = () => {
           <span className='menu-title'> {intl.formatMessage({id: 'MENU.PRICING'})}</span>
           <span className='menu-arrow'></span>
         </a>
-
         <div className='menu-sub menu-sub-dropdown w-175px py-4'>
-          <div className='menu-item px-3'>
-            <Link to='#' className='menu-link px-5'>
-              {intl.formatMessage({id: 'MENU.GATEWAY.MANAGEMENT'})}
-            </Link>
-          </div>
-          <div className='menu-item px-3'>
-            <Link to='/billing/discount-management/discount' className='menu-link px-5'>
-              {intl.formatMessage({id: 'MENU.DISCOUNT.MANAGEMENT'})}
-            </Link>
-          </div>
+          {currentUser?.role === 'admin' && (
+            <>
+              <div className='menu-item px-3'>
+                <Link to='#' className='menu-link px-5'>
+                  {intl.formatMessage({id: 'MENU.GATEWAY.MANAGEMENT'})}
+                </Link>
+              </div>
+              <div className='menu-item px-3'>
+                <Link to='/billing/discount-management/discount' className='menu-link px-5'>
+                  {intl.formatMessage({id: 'MENU.DISCOUNT.MANAGEMENT'})}
+                </Link>
+              </div>
 
-          <div className='menu-item px-3'>
-            <Link to='/billing/pricing-management/pricing' className='menu-link px-5'>
-              {intl.formatMessage({id: 'MENU.PRICING.MANAGEMENT'})}
-            </Link>
-          </div>
+              <div className='menu-item px-3'>
+                <Link to='/billing/pricing-management/pricing' className='menu-link px-5'>
+                  {intl.formatMessage({id: 'MENU.PRICING.MANAGEMENT'})}
+                </Link>
+              </div>
+            </>
+          )}
 
           <div className='menu-item px-3'>
             <Link to='/billing/transaction-management/transactions' className='menu-link px-5'>
