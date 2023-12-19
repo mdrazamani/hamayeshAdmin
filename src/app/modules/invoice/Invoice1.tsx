@@ -119,23 +119,37 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
                     <table className='table mb-3'>
                       <thead>
                         <tr className='border-bottom fs-6 fw-bold text-muted'>
-                          <th className='min-w-175px pb-2'>Description</th>
-                          <th className='min-w-70px text-end pb-2'>Hours</th>
-                          <th className='min-w-80px text-end pb-2'>Rate</th>
-                          <th className='min-w-100px text-end pb-2'>Amount</th>
+                          <th className='min-w-100px pb-2'>
+                            {' '}
+                            {intl.formatMessage({id: 'INVOICE.ITEM.DESC'})}
+                          </th>
+                          <th className='min-w-70px text-start pb-2'>
+                            {' '}
+                            {intl.formatMessage({id: 'INVOICE.ITEM.PRICE'})}
+                          </th>
+                          <th className='min-w-100px text-start pb-2'>
+                            {' '}
+                            {intl.formatMessage({id: 'INVOICE.ITEM.ADD.PRICE'})}
+                          </th>
+                          <th className='min-w-100px text-start pb-2'>
+                            {' '}
+                            {intl.formatMessage({id: 'INVOICE.ITEM.ADD.AMOUNT'})}
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         {invoice.items?.map((item) => {
                           return (
-                            <tr className='fw-bold text-gray-700 fs-5 text-end'>
+                            <tr className='fw-bold text-gray-700 fs-5 text-start'>
                               <td className='d-flex align-items-center pt-11'>
                                 <i className='fa fa-genderless text-success fs-1 me-2'></i>
                                 {item.item.name}
                               </td>
 
-                              <td className='pt-11'>{item.item.price}</td>
-                              <td className='pt-11'>{item.item.additionalInfo.price}</td>
+                              <td className='pt-11'>{item.item.price?.toLocaleString('fa-IR')}</td>
+                              <td className='pt-11'>
+                                {Number(item.item.additionalInfo.price)?.toLocaleString('fa-IR')}
+                              </td>
                               <td className='pt-11 fs-5 pe-lg-6 text-dark fw-bolder'>
                                 {item.number}
                               </td>
@@ -145,28 +159,47 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
                       </tbody>
                     </table>
                   </div>
-                  <div className='d-flex justify-content-end'>
+                  <div className='d-flex justify-content-start'>
                     <div className='mw-300px'>
                       <div className='d-flex flex-stack mb-3'>
-                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>Subtotal:</div>
-                        <div className='text-end fw-bold fs-6 text-gray-800'>
-                          {invoice?.subtotal}
-                        </div>
-                      </div>
-                      <div className='d-flex flex-stack mb-3'>
-                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>VAT 9%</div>
-                        <div className='text-end fw-bold fs-6 text-gray-800'>
+                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>
                           {' '}
-                          {invoice?.taxPrice}
+                          {intl.formatMessage({id: 'INVOICE.SUBTOTAL'})}
+                        </div>
+                        <div className='text-start fw-bold fs-6 text-gray-800'>
+                          {invoice?.subtotal?.toLocaleString('fa-IR')} ریال
                         </div>
                       </div>
                       <div className='d-flex flex-stack mb-3'>
-                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>Subtotal + VAT</div>
-                        <div className='text-end fw-bold fs-6 text-gray-800'> {invoice?.total}</div>
+                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>
+                          {' '}
+                          {intl.formatMessage({id: 'INVOICE.VALT'})}
+                          9%
+                        </div>
+                        <div className='text-start fw-bold fs-6 text-gray-800'>
+                          {' '}
+                          {invoice?.taxPrice?.toLocaleString('fa-IR')} ریال
+                        </div>
+                      </div>
+                      <div className='d-flex flex-stack mb-3'>
+                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>
+                          {' '}
+                          {intl.formatMessage({id: 'INVOICE.SUBTOTAL'})}+{' '}
+                          {intl.formatMessage({id: 'INVOICE.VALT'})}
+                        </div>
+                        <div className='text-start fw-bold fs-6 text-gray-800'>
+                          {' '}
+                          {invoice?.total?.toLocaleString('fa-IR')} ریال
+                        </div>
                       </div>
                       <div className='d-flex flex-stack'>
-                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>Total</div>
-                        <div className='text-end fw-bold fs-6 text-gray-800'> {invoice?.total}</div>
+                        <div className='fw-semibold pe-10 text-gray-600 fs-7'>
+                          {' '}
+                          {intl.formatMessage({id: 'INVOICE.TOTAL'})}
+                        </div>
+                        <div className='text-start fw-bold fs-6 text-gray-800'>
+                          {invoice?.total?.toLocaleString('fa-IR')} ریال
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -174,7 +207,7 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
               </div>
             </div>
           </div>
-          <div className='m-0'>
+          {/* <div className='m-0'>
             <div className='d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten'>
               <div className='mb-8'>
                 {invoice?.paymentStatus === 'pending' && (
@@ -230,7 +263,7 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className='d-flex flex-stack flex-wrap mt-lg-20 pt-13'>
           <div className='my-1 me-5'>

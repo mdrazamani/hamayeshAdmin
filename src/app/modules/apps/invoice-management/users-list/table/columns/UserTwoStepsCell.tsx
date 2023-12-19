@@ -1,11 +1,11 @@
 import {FC} from 'react'
 
 type Props = {
-  phoneNumber?: string
+  phoneNumber?: number
 }
 
 const UserTwoStepsCell: FC<Props> = ({phoneNumber}) => (
-  <> {phoneNumber && <div className='fw-bolder'>{phoneNumber}</div>}</>
+  <> {phoneNumber && <div className='fw-bolder'>{phoneNumber?.toLocaleString('fa-IR')}</div>}</>
 )
 
 export {UserTwoStepsCell}

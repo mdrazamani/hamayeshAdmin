@@ -378,7 +378,7 @@
   "MENU.DISCOUNT.MANAGEMENT.LIST": "لیست تخفیفات",
   "ADD.DISCOUNT": "افزودن تخفیف",
   "SEARCH.DISCOUNT": "جستجو تخفیف",
-  "SEARCH.INVOICE": "جستجو قاکتور",
+  "SEARCH.INVOICE": "جستجو فاکتور",
   "MENU.INVOICE.MANAGEMENT.LIST": "لیست فاکتورها",
   "MENU.TRANSACTION.MANEGMENT": "مدیریت تراکنش ها",
   "MENU.TRANSACTION.MANAGEMENT.LIST": "لیست تراکنش ها",
@@ -422,5 +422,12 @@
   "INVOICE.ISSUE.FOR": "فروشنده",
   "INVOICE.ISSUE.BY": "خریدار",
   "INVOICE.PRINT": "پرینت فاکتور",
-  "INVOICE.PAY": "پرداخت فاکتور"
+  "INVOICE.PAY": "پرداخت فاکتور",
+  "INVOICE.ITEM.DESC": "توضیحات",
+  "INVOICE.ITEM.PRICE": "قیمت",
+  "INVOICE.ITEM.ADD.PRICE": "قیمت اضافه",
+  "INVOICE.ITEM.ADD.AMOUNT": "تعداد اضافه",
+  "INVOICE.SUBTOTAL": "قیمت کل",
+  "INVOICE.TOTAL": "قیمت نهایی",
+  "INVOICE.VALT": "مالیات"
 }
