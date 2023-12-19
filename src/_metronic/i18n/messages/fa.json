@@ -429,5 +429,8 @@
   "INVOICE.ITEM.ADD.AMOUNT": "تعداد اضافه",
   "INVOICE.SUBTOTAL": "قیمت کل",
   "INVOICE.TOTAL": "قیمت نهایی",
-  "INVOICE.VALT": "مالیات"
+  "INVOICE.VALT": "مالیات",
+  "PAYMENT.MESSAGE": "درصورت کسر شدن مبلغ از حساب شما طی ۷۲ ساعت آینده بازگردانده میشود",
+  "PAYMENT.ORDER.SUMMERY": "خلاصه فاکتور",
+  "BACK.PANEL": "بازگشت به پنل"
 }

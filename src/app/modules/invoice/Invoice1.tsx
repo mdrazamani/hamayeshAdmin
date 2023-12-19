@@ -52,11 +52,6 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
         <div className='d-flex flex-column flex-xl-row'>
           <div className='flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0'>
             <div className='mt-n1'>
-              <div className='d-flex flex-stack pb-10'>
-                <a href='#'>
-                  <img alt='Logo' src={toAbsoluteUrl('/media/logos/custom-2.svg')} />
-                </a>
-              </div>
               <div className='m-0'>
                 <div className='fw-bold fs-3 text-gray-800 mb-8'>
                   {intl.formatMessage({id: 'INVOICE.NUMBER'})} {invoice?.invoiceNumber}
@@ -91,11 +86,12 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
                       {' '}
                       {intl.formatMessage({id: 'INVOICE.ISSUE.FOR'})}
                     </div>
-                    <div className='fw-bold fs-6 text-gray-800'>KeenThemes Inc.</div>
+                    <div className='fw-bold fs-6 text-gray-800'>{invoice.organizer?.name}</div>
                     <div className='fw-semibold fs-7 text-gray-600'>
-                      8692 Wild Rose Drive
+                      {invoice?.organizer?.details?.address?.state}{' '}
+                      {invoice?.organizer?.details?.address?.city}
                       <br />
-                      Livonia, MI 48150
+                      {invoice?.organizer?.details?.address?.address}
                     </div>
                   </div>
                   <div className='col-sm-6'>
@@ -148,7 +144,9 @@ const Invoice1: FC<Props> = ({invoice, gateway}) => {
 
                               <td className='pt-11'>{item.item.price?.toLocaleString('fa-IR')}</td>
                               <td className='pt-11'>
-                                {Number(item.item.additionalInfo.price)?.toLocaleString('fa-IR')}
+                                {Number(item.item.additionalInfo?.price || 0)?.toLocaleString(
+                                  'fa-IR'
+                                )}
                               </td>
                               <td className='pt-11 fs-5 pe-lg-6 text-dark fw-bolder'>
                                 {item.number}

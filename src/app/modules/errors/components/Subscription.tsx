@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import axios from 'axios'
-import React, {FC, useEffect} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import {useIntl} from 'react-intl'
 import {QueryClient, useMutation} from 'react-query'
 import {useLocation} from 'react-router-dom'
@@ -23,13 +23,15 @@ const Subscription: FC<Props> = ({invoice, gateway}) => {
   const status = queryParams.get('status')
   const token = queryParams.get('token')
 
+  const [paymentStatus, setPeymentStatus] = useState()
+
   useEffect(() => {
     if (status && token) {
       // Make your axios request here
       axios
         .post(`${GET_USERS_URL}`, {status, token})
         .then((response) => {
-          // Handle the response if needed
+          setPeymentStatus(response.data.data)
         })
         .catch((error) => {
           // Handle errors
@@ -42,6 +44,10 @@ const Subscription: FC<Props> = ({invoice, gateway}) => {
 
     // return () => clearTimeout(redirectTimeout)
   }, [status, token])
+
+  useEffect(() => {
+    console.log(paymentStatus?.status)
+  }, [paymentStatus])
 
   return (
     <div
@@ -102,7 +108,7 @@ const Subscription: FC<Props> = ({invoice, gateway}) => {
                   style={{textAlign: 'center', paddingBottom: '10px'}}
                 >
                   <div style={{textAlign: 'center', margin: '0 60px 34px 60px'}}>
-                    <div style={{marginBottom: '10px'}}>
+                    {/* <div style={{marginBottom: '10px'}}>
                       <a href='https://keenthemes.com' rel='noopener' target='_blank'>
                         <img
                           alt='Logo'
@@ -110,7 +116,7 @@ const Subscription: FC<Props> = ({invoice, gateway}) => {
                           style={{height: '35px'}}
                         />
                       </a>
-                    </div>
+                    </div> */}
                     <div style={{marginBottom: '15px'}}>
                       <img
                         alt='Logo'
@@ -128,95 +134,97 @@ const Subscription: FC<Props> = ({invoice, gateway}) => {
                       <p
                         style={{
                           marginBottom: '9px',
-                          color: '#181C32',
+                          color: paymentStatus?.status ? '#50cd89' : '#f1416c',
                           fontSize: '22px',
                           fontWeight: '700',
                         }}
                       >
-                        Premium account is set!
+                        {paymentStatus?.message}
                       </p>
-                      <p style={{marginBottom: '2px', color: '#7E8299'}}>
-                        Lots of people make mistakes while creating
-                      </p>
-                      <p style={{marginBottom: '2px', color: '#7E8299'}}>
-                        paragraphs. Some writers just put whitespace in
-                      </p>
-                      <p style={{marginBottom: '2px', color: '#7E8299'}}>
-                        their text in random places
-                      </p>
+                      {!paymentStatus?.status && (
+                        <p style={{marginBottom: '2px', color: '#7E8299'}}>
+                          {intl.formatMessage({id: 'PAYMENT.MESSAGE'})}{' '}
+                        </p>
+                      )}
                     </div>
                     <div style={{marginBottom: '15px'}}>
                       <h3
                         style={{
-                          textAlign: 'left',
+                          textAlign: 'right',
                           color: '#181C32',
                           fontSize: '18px',
                           fontWeight: '600',
                           marginBottom: '22px',
                         }}
                       >
-                        Order summary
+                        {intl.formatMessage({id: 'PAYMENT.ORDER.SUMMERY'})}{' '}
                       </h3>
-                      <div style={{paddingBottom: '9px'}}>
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            color: '#7E8299',
-                            fontSize: '14px',
-                            fontWeight: '500',
-                            marginBottom: '8px',
-                            fontFamily: 'Arial, Helvetica, sans-serif',
-                          }}
-                        >
-                          <div>Business - Monthly invoice</div>
-                          <div>$120,00</div>
-                        </div>
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            color: '#7E8299',
-                            fontSize: '14px',
-                            fontWeight: '500',
-                            fontFamily: 'Arial, Helvetica, sans-serif',
-                          }}
-                        >
-                          <div>VAT (25%)</div>
-                          <div>$30,00</div>
-                        </div>
-                        <div
-                          className='separator separator-dashed'
-                          style={{margin: '15px 0'}}
-                        ></div>
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            color: '#7E8299',
-                            fontSize: '14px',
-                            fontWeight: '500',
-                            fontFamily: 'Arial, Helvetica, sans-serif',
-                          }}
-                        >
-                          <div>Total paid</div>
+                      {paymentStatus && (
+                        <div style={{paddingBottom: '9px'}}>
                           <div
                             style={{
-                              color: '#50cd89',
-                              fontWeight: '700',
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              color: '#7E8299',
+                              fontSize: '14px',
+                              fontWeight: '500',
+                              marginBottom: '8px',
                               fontFamily: 'Arial, Helvetica, sans-serif',
                             }}
                           >
-                            $150,00
+                            <div>{paymentStatus?.invoice?.items[0]?.item?.name}</div>
+                            <div>ریال {paymentStatus?.invoice?.subtotal}</div>
+                          </div>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              color: '#7E8299',
+                              fontSize: '14px',
+                              fontWeight: '500',
+                              fontFamily: 'Arial, Helvetica, sans-serif',
+                            }}
+                          >
+                            <div>
+                              {' '}
+                              {intl.formatMessage({id: 'INVOICE.VALT'})}
+                              (9%)
+                            </div>
+                            <div>ریال {paymentStatus?.invoice?.taxPrice}</div>
+                          </div>
+                          <div
+                            className='separator separator-dashed'
+                            style={{margin: '15px 0'}}
+                          ></div>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              color: '#7E8299',
+                              fontSize: '14px',
+                              fontWeight: '500',
+                              fontFamily: 'Arial, Helvetica, sans-serif',
+                            }}
+                          >
+                            <div> {intl.formatMessage({id: 'INVOICE.TOTAL'})}</div>
+                            <div
+                              style={{
+                                color: paymentStatus?.status ? '#50cd89' : '#f1416c',
+                                fontWeight: '700',
+                                fontFamily: 'Arial, Helvetica, sans-serif',
+                              }}
+                            >
+                              ریال {paymentStatus?.invoice?.total}{' '}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                     <a
                       href='../../billing/invoice-management/invoice'
                       target='_blank'
                       style={{
-                        backgroundColor: '#50cd89',
+                        backgroundColor: paymentStatus?.status ? '#50cd89' : '#f1416c',
                         borderRadius: '6px',
                         display: 'inline-block',
                         padding: '11px 19px',
@@ -225,7 +233,7 @@ const Subscription: FC<Props> = ({invoice, gateway}) => {
                         fontWeight: '500',
                       }}
                     >
-                      Download Invoice
+                      {intl.formatMessage({id: 'BACK.PANEL'})}
                     </a>
                   </div>
                 </td>
