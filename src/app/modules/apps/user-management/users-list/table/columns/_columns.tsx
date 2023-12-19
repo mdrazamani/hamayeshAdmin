@@ -11,7 +11,7 @@ import {User} from '../../core/_models'
 import {UserCreatedAt} from './UserCreatedAt'
 
 const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-const savedLanguage = savedLangSetting.selectedLang
+const savedLanguage = savedLangSetting.selectedLang || 'fa'
 
 const usersColumns: ReadonlyArray<Column<User>> = [
   {

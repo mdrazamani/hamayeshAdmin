@@ -3,7 +3,7 @@ import {FC} from 'react'
 
 const Dropdown3: FC = () => {
   const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-  const savedLanguage = savedLangSetting.selectedLang
+  const savedLanguage = savedLangSetting.selectedLang || 'fa'
   const isRtlLanguage = ['fa'].includes(savedLanguage)
   return (
     <div

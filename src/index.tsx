@@ -24,7 +24,7 @@ import StyleLoader from './StyleLoader'
 
 // Retrieve saved language from localStorage
 const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-const savedLanguage = savedLangSetting.selectedLang
+const savedLanguage = savedLangSetting.selectedLang || 'fa'
 // Check if the saved language is RTL
 const isRtlLanguage = ['fa'].includes(savedLanguage)
 
@@ -61,7 +61,6 @@ if (container) {
   createRoot(container).render(
     <>
       <StyleLoader isRtlLanguage={isRtlLanguage} />
-
       <QueryClientProvider client={queryClient}>
         <MetronicI18nProvider>
           <AuthProvider>

@@ -6,7 +6,7 @@ type Props = {
 
 const UserCreatedAt: FC<Props> = ({created_at}) => {
   const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-  const savedLanguage = savedLangSetting.selectedLang
+  const savedLanguage = savedLangSetting.selectedLang || 'fa'
 
   // Check if 'created_at' is provided
   if (!created_at) return null

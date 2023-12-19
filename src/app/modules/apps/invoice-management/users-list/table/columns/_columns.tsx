@@ -12,7 +12,7 @@ import {UserCreatedAt} from './UserCreatedAt'
 import {UserInfoCell1} from './UserInfoCell1'
 
 const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-const savedLanguage = savedLangSetting.selectedLang
+const savedLanguage = savedLangSetting.selectedLang || 'fa'
 
 const usersColumns: ReadonlyArray<Column<User>> = [
   {

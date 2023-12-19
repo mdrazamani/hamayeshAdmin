@@ -8,7 +8,7 @@ type Props = {
 
 const TablesWidget12: React.FC<Props> = ({className}) => {
   const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-  const savedLanguage = savedLangSetting.selectedLang
+  const savedLanguage = savedLangSetting.selectedLang || 'fa'
   const isRtlLanguage = ['fa'].includes(savedLanguage)
 
   return (

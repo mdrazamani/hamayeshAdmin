@@ -5,7 +5,7 @@ import {toAbsoluteUrl} from '../../_metronic/helpers'
 
 const MenuTestPage: FC = () => {
   const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-  const savedLanguage = savedLangSetting.selectedLang
+  const savedLanguage = savedLangSetting.selectedLang || 'fa'
   const isRtlLanguage = ['fa'].includes(savedLanguage)
   return (
     <div className='row'>

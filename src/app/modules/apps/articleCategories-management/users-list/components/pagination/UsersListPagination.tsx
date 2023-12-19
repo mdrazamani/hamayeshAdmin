@@ -31,7 +31,7 @@ const UsersListPagination = () => {
     updateState({page, items_per_page: pagination.items_per_page || 10})
   }
   const savedLangSetting = JSON.parse(localStorage.getItem('i18nConfig') || '{}')
-  const savedLanguage = savedLangSetting.selectedLang
+  const savedLanguage = savedLangSetting.selectedLang || 'fa'
 
   const PAGINATION_PAGES_COUNT = 5
   const sliceLinks = (pagination?: PaginationState) => {
