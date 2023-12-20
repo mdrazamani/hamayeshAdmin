@@ -8,7 +8,7 @@ import {useNavigate} from 'react-router-dom'
 import {useIntl} from 'react-intl'
 
 const initialValues = {
-  email: 'mohsen.rezvani.rad33@gmail.com',
+  email: 'admin@demo.com',
 }
 
 export function ForgotPassword() {
