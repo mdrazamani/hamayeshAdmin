@@ -132,7 +132,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     console.log(formik.values.isActive)
   }, [formik.values])
 
-  const userAvatarImg = toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${formik.values.image}`)
+  const userAvatarImg = `${process.env.REACT_APP_BASE_URL}/${formik.values.image}`
 
   return (
     <>

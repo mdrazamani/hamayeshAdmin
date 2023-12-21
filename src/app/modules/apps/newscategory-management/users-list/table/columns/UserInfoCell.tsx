@@ -16,7 +16,7 @@ const UserInfoCell: FC<Props> = ({user}) => (
         {user.image ? (
           <div className='symbol-label'>
             <img
-              src={toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${user.image}`)}
+              src={`${process.env.REACT_APP_BASE_URL}/${user.image}`}
               alt={user.title}
               className='w-100'
             />

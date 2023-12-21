@@ -137,7 +137,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     },
   })
 
-  const userAvatarImg = toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${formik.values.image}`)
+  const userAvatarImg = `${process.env.REACT_APP_BASE_URL}/${formik.values.image}`
   return (
     <>
       <form id='kt_modal_add_user_form' className='form' onSubmit={formik.handleSubmit} noValidate>

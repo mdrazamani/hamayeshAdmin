@@ -20,11 +20,10 @@ const HeaderUserMenu: FC = () => {
           <div className='symbol symbol-50px me-5'>
             <img
               alt='Logo'
-              src={toAbsoluteUrl(
-                currentUser?.profileImage
-                  ? `${process.env.REACT_APP_BASE_URL}/${currentUser?.profileImage}`
-                  : '/media/avatars/blank.png'
-              )}
+              src={
+                `${process.env.REACT_APP_BASE_URL}/${currentUser?.profileImage}` ||
+                toAbsoluteUrl('/media/avatars/blank.png')
+              }
             />
           </div>
 

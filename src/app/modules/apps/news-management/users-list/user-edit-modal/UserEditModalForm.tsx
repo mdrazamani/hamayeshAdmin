@@ -172,7 +172,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     },
   })
 
-  const userAvatarImg = toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${formik.values.image}`)
+  const userAvatarImg = `${process.env.REACT_APP_BASE_URL}/${formik.values.image}`
   const userOptions = userList.map((user) => ({
     value: user.id || '', // Ensure it's always a string
     label: `${user.title}`,

@@ -178,9 +178,8 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
             {/* begin::Image input */}
             <div className='image-gallery'>
               {formik.values.images?.map((imagePath, index) => {
-                const userAvatarImg = toAbsoluteUrl(
-                  `${process.env.REACT_APP_BASE_URL}/${imagePath.path}`
-                )
+                const userAvatarImg = `${process.env.REACT_APP_BASE_URL}/${imagePath.path}`
+
                 return (
                   <div key={index} className='image-container'>
                     {/* Image Preview */}

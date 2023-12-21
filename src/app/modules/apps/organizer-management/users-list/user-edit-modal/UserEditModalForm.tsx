@@ -181,7 +181,7 @@ const UserEditModalForm: FC<Props> = ({user, isUserLoading}) => {
     },
   })
 
-  const userAvatarImg = toAbsoluteUrl(`${process.env.REACT_APP_BASE_URL}/${formik.values.logo}`)
+  const userAvatarImg = `${process.env.REACT_APP_BASE_URL}/${formik.values.logo}`
   console.log(typeof formik.values.details) // check what it logs
 
   const [emails, setEmails] = useState<string[]>((user.details?.emails as string[]) || [''])
